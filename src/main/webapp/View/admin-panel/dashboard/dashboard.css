@@ -1,0 +1,65 @@
+.business-summary-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.business-summary {
+    background-color: white;
+    width: 28%;
+    display: flex;
+    box-sizing: border-box;
+    padding: 20px 20px;
+
+}
+
+.business-summary p {
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #7e7d7d;
+}
+
+.business-summary span {
+    font-size: 18px;
+}
+
+.business-summary img {
+    margin-right: 20px;
+}
+
+.product-list {
+    background-color: white;
+    padding: 20px;
+}
+
+.product-list h2 {
+    margin: 0;
+}
+
+.product-list table {
+    width: 90%;
+}
+
+.product-list table th {
+    padding: 30px 0;
+    text-align: left;
+}
+
+/* table,
+th,
+td {
+
+    border-collapse: collapse;
+} */
+
+.product-list table td {
+    padding-bottom: 10px;
+}
+
+.products {
+    height: 0vh;
+    overflow: scroll;
+}
+
