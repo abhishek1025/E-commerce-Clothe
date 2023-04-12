@@ -61,7 +61,7 @@
 
             <h1>Add Product</h1>
 
-            <form class="add-product-form">
+            <form method="post" action="../../../AddProduct" class="add-product-form" enctype="multipart/form-data">
 
                 <div class="input-fields-wrapper">
                     <div>
@@ -89,7 +89,7 @@
                     </div>
 
                     <div>
-                        <select required>
+                        <select name="productCategory" required>
                             <option value="">Select Category</option>
                             <option value="men">Men</option>
                             <option value="women">Women</option>
