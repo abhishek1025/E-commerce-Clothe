@@ -7,6 +7,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+.contact-us {
+  margin: 70px 0;
+}
+
 /* navigation bar css */
 
 .header {
@@ -15,7 +19,7 @@
 }
 
 .header-section-1,
-.header-section-2 > i {
+.header-section-2>i {
   font-size: 23px;
 }
 
@@ -52,18 +56,16 @@
 /* form css */
 
 .heading {
-  display: inline-block;
-  margin: 20px 230px;
-  font-size: 50px;
-  line-height: 77px;
-  position: relative;
+  margin: 20px auto;
+  width: 70%;
+  font-size: 30px;
 }
 
 .form {
   display: flex;
-  justify-content: space-around;
-  width: 81%;
-  margin: 10px auto;
+  justify-content: space-between;
+  width: 70%;
+  margin: 40px auto 10px auto;
 }
 
 .form input,
@@ -72,9 +74,14 @@ textarea {
   border: 1px solid;
 }
 
-.form-page-1 > input {
-  width: 245px;
-  height: 35px;
+.form-page-1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-page-1>input {
+  width: 45%;
   padding: 10px;
 }
 
@@ -84,8 +91,8 @@ textarea {
   flex-direction: column;
 }
 
-.form-page-2 > input {
-  height: 35px;
+.form-page-2>input {
+  width: 100%;
   padding: 10px;
 }
 
@@ -103,6 +110,7 @@ textarea {
   border: 0;
   cursor: pointer;
   border-radius: 7px;
+  margin-top: 20px;
 }
 
 .button-div-send button:hover {
@@ -111,9 +119,8 @@ textarea {
 }
 
 .heading-1 {
-  display: inline;
   font-size: 32px;
-  line-height: 38px;
+  margin-bottom: 20px;
 }
 
 .form-page-3 {
@@ -122,11 +129,18 @@ textarea {
 }
 
 .form-page-3 div {
-  width: 300px;
+
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  column-gap: 20px;
   margin-top: 20px;
 }
+
+.map-section {
+  margin-bottom: -1p;
+}
+
+
 
 /* footer page css */
 footer {
@@ -139,12 +153,12 @@ footer {
   justify-content: space-evenly;
 }
 
-.footer-section-1 > div > a {
+.footer-section-1>div>a {
   text-decoration: none;
   color: white;
 }
 
-.footer-section-1 > div > p {
+.footer-section-1>div>p {
   text-transform: uppercase;
 }
 
@@ -207,7 +221,7 @@ footer {
   font-size: 19px;
 }
 
-.footer-section-2 > div > span {
+.footer-section-2>div>span {
   text-transform: uppercase;
   font-size: 23px;
   /* font-size: 25px; */
