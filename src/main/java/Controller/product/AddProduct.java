@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import Model.Product;
+import Resources.MyConstants;
 
 /**
  * Servlet implementation class AddProduct
@@ -49,9 +50,6 @@ public class AddProduct extends HttpServlet {
 		float productRating = Float.parseFloat(request.getParameter("productRating"));
 		int productStock = Integer.parseInt(request.getParameter("productStock"));
 		
-		InputStream productImgStream = productImgPart.getInputStream();
-		
-		
 		Product product = new Product();
 		
 		product.setProductName(productName);
@@ -60,7 +58,17 @@ public class AddProduct extends HttpServlet {
 		product.setProductPrice(productPrice);
 		product.setProductRating(productRating);
 		product.setProductStock(productStock);
-		product.setProductImg(productImgStream);
+		
+		
+		String fileName = Product.getImageUrl(productImgPart);
+		
+		product.setProductImgUrl(fileName);
+		
+		String savePath = MyConstants.IMAGE_DIR;
+		
+		 if(!fileName.isEmpty() && fileName != null) {
+			 productImgPart.write(savePath + fileName);
+		}
 		
 		int result = 0;
 		
@@ -79,13 +87,13 @@ public class AddProduct extends HttpServlet {
 		if(result > 0)
 		{		
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Prodcuct Added');");
+			out.println("setTimeout(() => alert('Prodcuct Added'), 500);");
 //			out.println("location='index.jsp';");
 			out.println("</script>");
 			
 		} else {
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Unable to add product');");
+			out.println("setTimeout(() => alert(' Unable to add product'), 500);");
 //			out.println("location='index.jsp';");
 			out.println("</script>");
 		}

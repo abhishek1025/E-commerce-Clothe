@@ -1,15 +1,23 @@
 package Model;
 
+import java.io.File;
 import java.io.InputStream;
+import java.sql.Blob;
+
+import javax.servlet.http.Part;
+
+import Resources.MyConstants;
+
+
 
 
 public class Product {
 
-	private String productName, brandName, productCategory;
+	private String productName, brandName, productCategory, productImgUrl;
 	private float productPrice, productRating;
 	private int  productStock, productID;
-	private InputStream productImg;
-	private String productImgFromDB;
+	
+	
 	
 	public String getProductName() {
 		return productName;
@@ -58,16 +66,6 @@ public class Product {
 	public void setProductStock(int productStock) {
 		this.productStock = productStock;
 	}
-	
-	public InputStream getProductImg() {
-		return productImg;
-	}
-	
-	public void setProductImg(InputStream productImg) {
-		this.productImg = productImg;
-	}
-
-
 
 	public int getProductID() {
 		return productID;
@@ -77,14 +75,44 @@ public class Product {
 		this.productID = productID;
 	}
 
-	public String getProductImgFromDB() {
-		return productImgFromDB;
+	
+	
+	public static String getImageUrl(Part part) {
+		
+		String savePath = MyConstants.IMAGE_DIR;
+		
+		File fileSaveDir = new File(savePath);
+		
+		String imageUrlFromPart = null;
+		
+		if (!fileSaveDir.exists()) {
+			fileSaveDir.mkdir();
+		}
+		
+		String contentDisp = part.getHeader("content-disposition");
+		
+		String[] items = contentDisp.split(";");
+		
+		for (String s : items) {
+			if (s.trim().startsWith("filename")) {
+				imageUrlFromPart = s.substring(s.indexOf("=") + 2, s.length() - 1);
+			}
+		}
+		
+		if(imageUrlFromPart == null || imageUrlFromPart.isEmpty()) {
+			imageUrlFromPart = "no new img";
+		}
+		
+		return imageUrlFromPart;
 	}
 
-	public void setProductImgFromDB(String productImgFromDB) {
-		this.productImgFromDB = productImgFromDB;
+	public String getProductImgUrl() {
+		return productImgUrl;
 	}
-	
+
+	public void setProductImgUrl(String productImgUrl) {
+		this.productImgUrl = productImgUrl;
+	}
 	
 	
 	

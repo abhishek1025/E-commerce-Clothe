@@ -80,6 +80,8 @@
                 <h1>Edit Product Details</h1>
 
                 <form action="${pageContext.request.contextPath}/UpdateProductDetails" method="post" class="add-product-form" enctype="multipart/form-data">
+                
+                	<input type="hidden" name="productID" value="<%=product.getProductID() %>">
 
                     <div class="input-fields-wrapper">
                         <div>
@@ -87,7 +89,7 @@
                         </div>
 
                         <div>
-                            <input type="text" value="${product.getProductName()}" name="productName"  required>
+                            <input type="text" value="<%=product.getProductName()%>" name="productName"  required>
                         </div>
                     </div>
 
@@ -123,12 +125,14 @@
                         </div>
 
                         <div>
-                            <input type="file" name="productImage" id="productImage" accept="image/png,image/jpeg">
+                            <input type="file" name="productImage" id="productImage" accept="image/*" value="http://localhost:8080/images/<%=product.getProductImgUrl()%>">
+                            
+                             <input type="hidden" name="oldProductImgUrl" accept="image/png,image/jpeg" value="<%=product.getProductImgUrl()%>">
                         </div>
 
 
                         <div id="displayProductImg">
-                        	<img src="data:image/png;base64, <%=product.getProductImgFromDB()%>" alt="<%=product.getProductName()%>">
+                        	<img src="http://localhost:8080/images/<%=product.getProductImgUrl()%>" alt="<%=product.getProductName()%>">
                         </div>
 
 

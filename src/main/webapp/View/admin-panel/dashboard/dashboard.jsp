@@ -1,8 +1,13 @@
+<%@page import="Resources.MyConstants"%>
 <%@page import="Model.Product"%>
 <%@page import="java.util.List"%>
 <%@page import="Controller.product.ProductOperationsHandeler"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>    
+    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +21,37 @@
 </head>
 
 <body>
+
+ 	<%! int result = 0; %>
+	
+	<%
+    	String productID = request.getParameter("productID");
+		String operationType = request.getParameter("operationType");
+		
+		if(operationType != null && operationType.equals("delete")){		
+			result = ProductOperationsHandeler.deleteProduct(Integer.parseInt(productID));
+		}
+	%>
+
+	<sql:setDataSource var="dbConnect"
+		driver = "<%=MyConstants.DRIVER_NAME %>"
+		url= "<%=MyConstants.DB_URL %>"
+		user="root"
+		password=""		
+	/>
+	
+	<sql:query var="productsFromDB" dataSource="${dbConnect}">
+	
+		select * from products;
+		
+	</sql:query>
+	
+	<sql:query var="countProducts" dataSource="${dbConnect}">
+	
+		SELECT COUNT(productID) as totalNoOfProducts FROM Products;
+		
+	</sql:query>
+	
 
 
     <aside>
@@ -90,7 +126,10 @@
 
                     <div>
                         <p>Total Products</p>
-                        <span>124456</span>
+                        
+                        <c:forEach var="result" items="${countProducts.rows}">
+    						<span>${result.totalNoOfProducts}</span>
+						</c:forEach>
                     </div>
                 </div>
             </div>
@@ -101,69 +140,37 @@
 
                 <div style="border-top: 1px solid black; margin-top:15px"></div>
 
-                <table>
-                
-                    <tr>
-                        <th style="width: 10%;">SN</th>
-                        <th>Product Name</th>
-                        <th style="width: 20%;">Product Price</th>
-                        <th style="width: 15%;">Stock</th>
-                    </tr>
-                    
-                    <%
-                    
-                    	List<Product> products = ProductOperationsHandeler.getAllProducts();
+                    <div class="product-cards-wrapper">
+                    	<c:forEach var="product" items="${productsFromDB.rows}" >
+	                    	<div class="product-card">
+					            <img class="product-img" src="http://localhost:8080/images/${product.productImg}" alt="${product.productImg}">
+					            <p class="product-title">${product.productName}</p>
+                                
+					            <div class="product-desc">
+                                    <p><i>NPR</i> ${product.productPrice}</p>
+                                    <p>In Stock(${product.productStock})</p>
+                                </div>
+					
+					            <div class="product-card-btn">
+					
+								<a href="edit-product.jsp?operationType=update&productID=${product.productID}">
+					                <button class="edit-btn">
+					                    <img src="${pageContext.request.contextPath}/assets/edit.svg" height="12px"> <span>Edit</span>
+					                </button>
+					             </a>
+					
+								<a href="dashboard.jsp?operationType=delete&productID=${product.productID}">
+					                <button class="delete-btn">
+					                    <img src="${pageContext.request.contextPath}/assets/delete.svg" height="12px"><span>Delete</span>
+					                </button>
+								</a>
+								
+					            </div>
+					        </div>                    
+                    	</c:forEach>
                     	
-                    	int SN = 1; 
-                    
-                    	for(Product product: products){
-                    		
-                    %> 
-                    
-                    	<%-- <div>
-                    	
-                    	
-                    
-                    		<img src="data:image/png;base64, <%=product.getProductImgFromDB()%>" alt="Img" height="200px">
+                    </div>
 
-                    	
-                    	</div> --%>
-                    
-	                    <tr>
-	                        <td><%=SN++ %></td>
-	                        <td><%=product.getProductName() %></td>
-	                        <td><%=product.getProductPrice() %></td>
-	                        <td><%=product.getProductStock() %></td>
-	                        <td>
-	                             <a href="dashboard.jsp?operationType=delete&productID=<%=product.getProductID()%>">
-	                                <img src="${pageContext.request.contextPath}/assets/delete.svg" alt="Delete" height="18px">
-	                            </a> 
-	                            
-	                            <%-- <form method="post">
-	                            	<input type="hidden" name="deleteProductID" value="<%=product.getProductID()%>">
-	                            	
-	                            	<button type="submit"> 
-	                            		<img src="${pageContext.request.contextPath}/assets/delete.svg" alt="Delete" height="18px">
-	                            	</button>
-	                            	
-	                            </form> --%>
-	
-	                        </td>
-	
-	                        <td>
-	                            <a href="edit-product.jsp?operationType=update&productID=<%=product.getProductID()%>">
-	                                <img src="${pageContext.request.contextPath}/assets/edit.svg" alt="Edit" height="18px">
-	                            </a>
-	
-	                        </td>
-	                    </tr> 
-                    
-                    <%
-                    		
-                    	}
-                    %>
-                    
-                </table>
 
             </div>
 
@@ -172,32 +179,16 @@
     </div>
     
     
-    <%! int result = 0; %>
-	
-	<%
-    	String productID = request.getParameter("productID");
-		String operationType = request.getParameter("operationType");
-		
-		if(operationType != null && operationType.equals("delete")){		
-			result = ProductOperationsHandeler.deleteProduct(Integer.parseInt(productID));
-		}
-	%>
-    
     <%
 		if(result > 0){
 	%>
 			<script type="text/javascript">
-				alert("Product Deleted Succesfully");
+				setTimeout(() => alert('Product Deleted'), 300)
 			</script>
 	<%		
-		}/*  else if(result == 0){	 */	
+		}
 	%>
-		<%-- <script>
-			alert("Unable to delete product");
-		</script>
-	<%
-		}	
-	%> --%>
+
 	
     
 

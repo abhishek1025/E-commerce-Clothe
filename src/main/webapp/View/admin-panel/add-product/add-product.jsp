@@ -38,9 +38,11 @@
                 </div>
 
                 <div class="active-dashboard-tab panel-function">
-                    <img class="blue" src="${pageContext.request.contextPath}/assets/product.svg" alt="Dashboard" height="18.5px">
+                    <img class="blue" src="${pageContext.request.contextPath}/assets/product.svg" alt="Dashboard"
+                        height="18.5px">
 
-                    <a href="${pageContext.request.contextPath}/View/admin-panel/add-product/add-product.jsp"> Add Product </a>
+                    <a href="${pageContext.request.contextPath}/View/admin-panel/add-product/add-product.jsp"> Add
+                        Product </a>
                 </div>
 
                 <div class="panel-function">
@@ -62,7 +64,8 @@
 
                 <h1>Add Product</h1>
 
-                <form method="post" action="${pageContext.request.contextPath}/AddProduct" class="add-product-form" enctype="multipart/form-data">
+                <form method="post" action="${pageContext.request.contextPath}/AddProduct" class="add-product-form"
+                    enctype="multipart/form-data">
 
                     <div class="input-fields-wrapper">
                         <div>
@@ -106,7 +109,7 @@
                         </div>
 
                         <div>
-                            <input type="file" name="productImage" id="productImage" accept="image/png,image/jpeg">
+                            <input type="file" name="productImage" id="productImage" accept="image/*">
                         </div>
 
 
@@ -143,7 +146,7 @@
                             </div>
 
                             <div>
-                                <input type="number" name="productStock"  min="1" required>
+                                <input type="number" name="productStock" min="1" required>
                             </div>
                         </div>
 

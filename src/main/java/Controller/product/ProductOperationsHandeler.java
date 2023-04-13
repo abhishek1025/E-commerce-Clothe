@@ -3,7 +3,9 @@ package Controller.product;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +34,7 @@ public class ProductOperationsHandeler {
 		statement.setString(1, product.getProductName());
 		statement.setString(2,product.getBrandName());
 		statement.setString(3,product.getProductCategory());
-		statement.setBlob(4,product.getProductImg());
+		statement.setString(4, product.getProductImgUrl());
 		statement.setFloat(5,product.getProductPrice());
 		statement.setFloat(6,product.getProductRating());
 		statement.setInt(7,product.getProductStock());
@@ -78,10 +80,11 @@ public class ProductOperationsHandeler {
 		statement.setString(1, product.getProductName());
 		statement.setString(2,product.getBrandName());
 		statement.setString(3,product.getProductCategory());
-		statement.setBlob(4,product.getProductImg());
+		statement.setString(4,product.getProductImgUrl());
 		statement.setFloat(5,product.getProductPrice());
 		statement.setFloat(6,product.getProductRating());
 		statement.setInt(7,product.getProductStock());
+		statement.setInt(8, product.getProductID());
 		
 		int result = 0;
 		
@@ -114,16 +117,12 @@ public class ProductOperationsHandeler {
 			product.setProductName(productFromDB.getString(2));
 			product.setBrandName(productFromDB.getString(3));
 			product.setProductCategory(productFromDB.getString(4));
+			product.setProductImgUrl(productFromDB.getString(5));
 			product.setProductPrice(productFromDB.getFloat(6));
 			product.setProductRating(productFromDB.getFloat(7));
 			product.setProductStock(productFromDB.getInt(8));
 			
-			Blob productImgBlob = productFromDB.getBlob(5);
 			
-			String productImg = convertBlopToBase64(productImgBlob);
-            
-			product.setProductImgFromDB(productImg);
-
 		}
 		
 		
@@ -153,16 +152,17 @@ public class ProductOperationsHandeler {
 			product.setProductName(productsFromDB.getString(2));
 			product.setBrandName(productsFromDB.getString(3));
 			product.setProductCategory(productsFromDB.getString(4));
+			product.setProductImgUrl(productsFromDB.getString(5));
 			product.setProductPrice(productsFromDB.getFloat(6));
 			product.setProductRating(productsFromDB.getFloat(7));
 			product.setProductStock(productsFromDB.getInt(8));
 			
 			
-			Blob productImgBlob = productsFromDB.getBlob(5);
-			
-			String productImg = convertBlopToBase64(productImgBlob);
-            
-			product.setProductImgFromDB(productImg);
+//			Blob productImgBlob = productsFromDB.getBlob(5);
+//			
+//			String productImg = convertBlopToBase64(productImgBlob);
+//            
+//			product.setProductImgFromDB(productImg);
 
             
             allProducts.add(product);
@@ -174,28 +174,5 @@ public class ProductOperationsHandeler {
 		
 	}
 	
-	public static String convertBlopToBase64(Blob fileBlob) throws SQLException, IOException {
-		
-		byte[] imageData = fileBlob.getBytes(1, (int)fileBlob.length());
-		
-		// Create an image from the byte array
-		ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
-		BufferedImage image = ImageIO.read(bis);
-
-		 // Write the image to the response output stream
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		  
-		if(image != null) {
-		  ImageIO.write(image, "png", baos);
-		}
-		  
-		baos.flush();
-		byte[] imageBytes = baos.toByteArray();
-		baos.close();
-
-		// Convert the image byte array to a Base64-encoded string
-		String imgBase64 = Base64.getEncoder().encodeToString(imageBytes);
-		
-		return imgBase64;
-	}
+	
 }
