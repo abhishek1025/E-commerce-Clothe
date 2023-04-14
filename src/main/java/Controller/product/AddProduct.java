@@ -69,35 +69,32 @@ public class AddProduct extends HttpServlet {
 		 if(!fileName.isEmpty() && fileName != null) {
 			 productImgPart.write(savePath + fileName);
 		}
-		
-		int result = 0;
+	
 		
 		try {
-			result = ProductOperationsHandeler.addProduct(product);
+			
+			Boolean isProductAdded  = ProductOperationsHandeler.addProduct(product);
+			
+			PrintWriter out = response.getWriter();
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("./View/admin-panel/add-product/add-product.jsp");
+			dispatcher.include(request, response);
+			
+			if(isProductAdded)
+			{		
+				out.println("<script type=\"text/javascript\">");
+				out.println("setTimeout(() => alert('Prodcuct Added'), 500);");
+				out.println("</script>");
+				
+			} else {
+				out.println("<script type=\"text/javascript\">");
+				out.println("setTimeout(() => alert(' Unable to add product'), 500);");
+				out.println("</script>");
+			}
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		PrintWriter out = response.getWriter();
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./View/admin-panel/add-product/add-product.jsp");
-		dispatcher.include(request, response);
-		
-		if(result > 0)
-		{		
-			out.println("<script type=\"text/javascript\">");
-			out.println("setTimeout(() => alert('Prodcuct Added'), 500);");
-//			out.println("location='index.jsp';");
-			out.println("</script>");
-			
-		} else {
-			out.println("<script type=\"text/javascript\">");
-			out.println("setTimeout(() => alert(' Unable to add product'), 500);");
-//			out.println("location='index.jsp';");
-			out.println("</script>");
-		}
-		
 		
 	}
 

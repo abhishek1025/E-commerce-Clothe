@@ -7,8 +7,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Add Product</title>
-
+    
+	<!-- Google Font CDN  -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	    
+	 <!-- CSS Files-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/dashboard-sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/view-orders.css">
 </head>
@@ -48,7 +55,7 @@
 
                 <img class="blue" src="${pageContext.request.contextPath}/assets/cart.svg" alt="Dashboard" height="18.5px">
 
-                <a href="${pageContext.request.contextPath}/View/admin-panel/view-orders/view-orders.html">View Orders</a>
+                <a href="${pageContext.request.contextPath}/View/admin-panel/orders/view-orders.jsp">View Orders</a>
 
             </div>
 

@@ -16,20 +16,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    
+    <!-- Google Font CDN  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    
+    <!-- CSS files -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/dashboard-sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/dashboard.css">
 </head>
 
 <body>
 
- 	<%! int result = 0; %>
+ 	<%! Boolean isProductDeleted = false; %>
 	
 	<%
     	String productID = request.getParameter("productID");
 		String operationType = request.getParameter("operationType");
 		
 		if(operationType != null && operationType.equals("delete")){		
-			result = ProductOperationsHandeler.deleteProduct(Integer.parseInt(productID));
+			isProductDeleted = ProductOperationsHandeler.deleteProduct(Integer.parseInt(productID));
 		}
 	%>
 
@@ -39,18 +46,15 @@
 		user="root"
 		password=""		
 	/>
-	
+
 	<sql:query var="productsFromDB" dataSource="${dbConnect}">
-	
-		select * from products;
-		
+		select * from products;	
 	</sql:query>
-	
+		
 	<sql:query var="countProducts" dataSource="${dbConnect}">
-	
-		SELECT COUNT(productID) as totalNoOfProducts FROM Products;
-		
+			SELECT COUNT(productID) as totalNoOfProducts FROM Products;
 	</sql:query>
+	
 	
 
 
@@ -141,14 +145,15 @@
                 <div style="border-top: 1px solid black; margin-top:15px"></div>
 
                     <div class="product-cards-wrapper">
+                    
                     	<c:forEach var="product" items="${productsFromDB.rows}" >
 	                    	<div class="product-card">
 					            <img class="product-img" src="http://localhost:8080/images/${product.productImg}" alt="${product.productImg}">
 					            <p class="product-title">${product.productName}</p>
                                 
 					            <div class="product-desc">
-                                    <p><i>NPR</i> ${product.productPrice}</p>
-                                    <p>In Stock(${product.productStock})</p>
+                                    <p><i>NPR ${product.productPrice} </i></p>
+                                    <p>In Stock (${product.productStock})</p>
                                 </div>
 					
 					            <div class="product-card-btn">
@@ -180,13 +185,15 @@
     
     
     <%
-		if(result > 0){
+		if(isProductDeleted){
+			
+			isProductDeleted = false;
 	%>
 			<script type="text/javascript">
 				setTimeout(() => alert('Product Deleted'), 300)
 			</script>
 	<%		
-		}
+		} 
 	%>
 
 	

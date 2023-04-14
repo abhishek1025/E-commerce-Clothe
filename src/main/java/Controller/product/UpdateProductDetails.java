@@ -76,31 +76,31 @@ public class UpdateProductDetails extends HttpServlet {
 				 productImgPart.write(savePath + fileName);
 			}
 		}
-		
 	
-		int result = 0;
 		
 		try {
-			result = ProductOperationsHandeler.updateProductDetails(product);
+			
+			PrintWriter out = response.getWriter();
+			Boolean isProductDetailsChanged = ProductOperationsHandeler.updateProductDetails(product);
+			
+			if(isProductDetailsChanged)
+			{		
+				response.sendRedirect("./View/admin-panel/dashboard/dashboard.jsp");
+//				out.println("<script type=\"text/javascript\">");
+//				out.println("alert('Prodcuct Added');");
+//				out.println("</script>");
+			} else {
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Unable to Update Details of the product');");
+				out.println("</script>");
+			
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		PrintWriter out = response.getWriter();
-		
-		if(result > 0)
-		{		
-			response.sendRedirect("./View/admin-panel/dashboard/dashboard.jsp");
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Prodcuct Added');");
-			out.println("</script>");
+
 			
-		} else {
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Unable to add product');");
-			out.println("</script>");
-		}
-		
 		
 		
 	}
