@@ -1,15 +1,5 @@
 package Model;
 
-import java.io.File;
-import java.io.InputStream;
-import java.sql.Blob;
-
-import javax.servlet.http.Part;
-
-import Resources.MyConstants;
-
-
-
 
 public class Product {
 
@@ -73,37 +63,6 @@ public class Product {
 
 	public void setProductID(int productID) {
 		this.productID = productID;
-	}
-
-	
-	
-	public static String getImageUrl(Part part) {
-		
-		String savePath = MyConstants.IMAGE_DIR;
-		
-		File fileSaveDir = new File(savePath);
-		
-		String imageUrlFromPart = null;
-		
-		if (!fileSaveDir.exists()) {
-			fileSaveDir.mkdir();
-		}
-		
-		String contentDisp = part.getHeader("content-disposition");
-		
-		String[] items = contentDisp.split(";");
-		
-		for (String s : items) {
-			if (s.trim().startsWith("filename")) {
-				imageUrlFromPart = s.substring(s.indexOf("=") + 2, s.length() - 1);
-			}
-		}
-		
-		if(imageUrlFromPart == null || imageUrlFromPart.isEmpty()) {
-			imageUrlFromPart = "no new img";
-		}
-		
-		return imageUrlFromPart;
 	}
 
 	public String getProductImgUrl() {

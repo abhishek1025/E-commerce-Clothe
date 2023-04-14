@@ -1,7 +1,6 @@
 package Controller.product;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
@@ -22,10 +21,7 @@ import Resources.MyConstants;
  */
 @WebServlet("/AddProduct")
 
-//This annotation defines the maximum
-//file size which can be taken.
 @MultipartConfig(maxFileSize = 16177215)
-
 
 public class AddProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,13 +34,17 @@ public class AddProduct extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String productName = request.getParameter("productName");
 		String brandName = request.getParameter("brandName");
 		String productCategory = request.getParameter("productCategory");
 		Part productImgPart = request.getPart("productImage");
+		
+		System.out.print(request.getParameter("productPrice"));
 		
 		float productPrice = Float.parseFloat(request.getParameter("productPrice"));
 		float productRating = Float.parseFloat(request.getParameter("productRating"));
@@ -60,7 +60,7 @@ public class AddProduct extends HttpServlet {
 		product.setProductStock(productStock);
 		
 		
-		String fileName = Product.getImageUrl(productImgPart);
+		String fileName = ProductOperationsHandeler.getImageUrl(productImgPart);
 		
 		product.setProductImgUrl(fileName);
 		
@@ -95,7 +95,6 @@ public class AddProduct extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 }

@@ -1,5 +1,6 @@
 package Controller.product;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Part;
 
 import Controller.dbconnection.DbConnection;
 import Model.Product;
@@ -176,6 +178,37 @@ public class ProductOperationsHandeler {
 		return allProducts;
 		
 	}
+	
+
+	public static String getImageUrl(Part imgPart) {
+		
+		String savePath = MyConstants.IMAGE_DIR;
+		
+		File fileSaveDir = new File(savePath);
+		
+		String imageUrlFromPart = null;
+		
+		if (!fileSaveDir.exists()) {
+			fileSaveDir.mkdir();
+		}
+		
+		String contentDisp = imgPart.getHeader("content-disposition");
+		
+		String[] items = contentDisp.split(";");
+		
+		for (String s : items) {
+			if (s.trim().startsWith("filename")) {
+				imageUrlFromPart = s.substring(s.indexOf("=") + 2, s.length() - 1);
+			}
+		}
+		
+		if(imageUrlFromPart == null || imageUrlFromPart.isEmpty()) {
+			imageUrlFromPart = "no new img";
+		}
+		
+		return imageUrlFromPart;
+	}
+
 	
 	
 }

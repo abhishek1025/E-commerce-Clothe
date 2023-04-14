@@ -1,11 +1,9 @@
 package Controller.product;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,9 +19,7 @@ import Resources.MyConstants;
  * Servlet implementation class UpdateProductDetails
  */
 @WebServlet("/UpdateProductDetails")
-
-@MultipartConfig(maxFileSize = 16177215)
-
+@MultipartConfig(maxFileSize =  16177215)
 public class UpdateProductDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,9 +31,10 @@ public class UpdateProductDetails extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
 		int productID = Integer.parseInt(request.getParameter("productID"));
 		String productName = request.getParameter("productName");
 		String brandName = request.getParameter("brandName");
@@ -61,7 +58,7 @@ public class UpdateProductDetails extends HttpServlet {
 		product.setProductStock(productStock);
 		
 	
-		String fileName = Product.getImageUrl(productImgPart);
+		String fileName = ProductOperationsHandeler.getImageUrl(productImgPart);
 		
 		if(fileName.equals("no new img")) {
 			
@@ -101,8 +98,6 @@ public class UpdateProductDetails extends HttpServlet {
 		
 
 			
-		
-		
 	}
 
 }
