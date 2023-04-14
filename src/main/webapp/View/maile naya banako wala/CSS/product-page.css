@@ -1,0 +1,74 @@
+/* product page main content css starts from here */
+.product-banner img {
+  width: 100%;
+}
+
+.wrapper-product-page .product-banner {
+  border: 2px solid black;
+  width: 80%;
+  height: 190px;
+  margin: 30px auto;
+}
+
+.wrapper-product-page .brand-product > div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wrapper-product-page .product-section-contents {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.wrapper-product-page .product-details {
+  width: 80%;
+}
+
+.wrapper-product-page .product-details .row-1,
+.wrapper-product-page .product-details .row-2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper-product-page .product-details .price-and-rating {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+  align-items: center;
+}
+
+.wrapper-product-page .reset-apply-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper-product-page .reset-apply-button button {
+  all: unset;
+  padding: 8px;
+  border: 1px solid black;
+}
+
+.wrapper-product-page .reset-apply-button #apply-button {
+  background-color: black;
+  color: white;
+}
+
+.wrapper-product-page .product-details .product-image {
+  display: flex;
+  border: 2px solid grey;
+}
+
+.wrapper-product-page .product-details .product-image img {
+  width: 120px;
+  height: 215px;
+  margin: 0 auto;
+}
+
+.wrapper-product-page .product-details .product-descriptions span {
+  border: 3px solid #21c55d;
+  padding: 4px;
+  font-size: 14px;
+}
