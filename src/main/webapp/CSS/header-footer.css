@@ -15,7 +15,7 @@
 }
 
 .header-section-1,
-.header-section-2 > i {
+.header-section-2>i {
   font-size: 23px;
 }
 
@@ -29,6 +29,7 @@
   display: flex;
   justify-content: space-between;
 }
+
 
 .header-section-2 ul {
   display: flex;
@@ -54,6 +55,7 @@
 footer {
   background-color: #3d3d3d;
   color: white;
+  padding-top: 50px;
 }
 
 .footer-section-1 {
@@ -61,12 +63,12 @@ footer {
   justify-content: space-evenly;
 }
 
-.footer-section-1 > div > a {
+.footer-section-1>div>a {
   text-decoration: none;
   color: white;
 }
 
-.footer-section-1 > div > p {
+.footer-section-1>div>p {
   text-transform: uppercase;
 }
 
@@ -129,7 +131,7 @@ footer {
   font-size: 19px;
 }
 
-.footer-section-2 > div > span {
+.footer-section-2>div>span {
   text-transform: uppercase;
   font-size: 23px;
   /* font-size: 25px; */
