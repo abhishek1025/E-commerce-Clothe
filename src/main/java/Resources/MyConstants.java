@@ -16,4 +16,23 @@ public class MyConstants {
 	public static final String PRODUCT_DELETE_QUERY = "DELETE FROM Products where productID = ?";
 	
 	public static final String GET_PRODUCT_BY_ID_QUERY = "SELECT * FROM Products WHERE productID = ?";
+	
+	
+	public static String convertArrayToString(String[] array) {
+		
+		String result = "";
+		
+		for (String s : array) {
+		    result += "\"" + s.toLowerCase() + "\", ";
+		}
+		
+		result = result.substring(0, result.length() - 2);
+		
+		return result;
+	}
+	
+	
+	public static final String[] PRODUCT_BRANDS = {"Nike", "H&M", "Adidas", "Zara", "Lewis"};
+	public static final String[] PRODUCT_CATEGORIES = {"Men", "Women", "Kids", "Unisex"};
+	
 }

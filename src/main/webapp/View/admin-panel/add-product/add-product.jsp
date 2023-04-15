@@ -1,3 +1,4 @@
+<%@page import="Resources.MyConstants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <!DOCTYPE html>
     <html lang="en">
@@ -88,8 +89,15 @@
                             <label>Brand Name</label>
                         </div>
 
-                        <div>
-                            <input type="text" name="brandName" required>
+                        <div>                            
+                            <select name="brandName" required>
+                                <option value="">Select Brand</option>
+                                <%
+			  						for(String brand: MyConstants.PRODUCT_BRANDS){
+			 					%>
+	         	 					<option value="<%=brand.toLowerCase()%>"> <%=brand %> </option>
+	          					<%}%>
+                            </select>
                         </div>
                     </div>
 
@@ -101,10 +109,11 @@
                         <div>
                             <select name="productCategory" required>
                                 <option value="">Select Category</option>
-                                <option value="men">Men</option>
-                                <option value="women">Women</option>
-                                <option value="kids">Kids</option>
-                                <option value="unisex">Unisex</option>
+                                <%
+			  						for(String category: MyConstants.PRODUCT_CATEGORIES){
+			 					%>
+	         	 					<option value="<%=category.toLowerCase()%>"> <%=category %> </option>
+	          					<%}%>
                             </select>
                         </div>
                     </div>

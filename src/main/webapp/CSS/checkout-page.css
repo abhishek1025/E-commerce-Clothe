@@ -1,0 +1,148 @@
+body {
+    background-color: #f6f6f6;
+}
+
+.checkout-sec-wrapper {
+    width: 80%;
+    margin: auto;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins&display=swap");
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+.checkout-sec-wrapper>div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.cart-checkout-items {
+    width: 70%;
+}
+
+.cart-checkout-items table {
+    width: 100%;
+}
+
+.cart-checkout-items th {
+    text-align: left;
+    background-color: #e9e9e9;
+    padding: 15px 20px;
+}
+
+.cart-checkout-items td {
+    padding: 30px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+.cart-checkout-item-desc {
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
+}
+
+.cart-checkout-item-desc .item-img {
+    width: 70px;
+    height: 70px;
+}
+
+.cart-checkout-item-desc .item-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.cart-checkout-item-desc p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+
+.cart-checkout-item-quantity-wrapper {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.cart-checkout-delt-btn {
+    all: unset;
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.cart-checkout-item-quantity {
+    border: 1px solid #c9c9c9;
+    width: 55%;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 100px;
+
+}
+
+.cart-checkout-item-quantity input {
+    outline: none;
+    border: none;
+    padding: 3px 0;
+    background: none;
+    width: 50px;
+    text-align: center;
+}
+
+.cart-checkout-item-quantity button {
+    all: unset;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.order-price-details {
+    width: 24%;
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 250px;
+    box-sizing: border-box;
+}
+
+
+.order-price-details p {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-checkout-btn {
+    text-align: center;
+}
+
+
+.cart-checkout-btn button {
+    height: 45px;
+    width: 100%;
+    background-color: black;
+    color: white;
+    border: none;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+.cart-update-btn {
+    height: 45px;
+    width: 150px;
+    background: none;
+    border: 1px solid black;
+    margin-top: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+}

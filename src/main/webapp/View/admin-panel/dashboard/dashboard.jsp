@@ -56,8 +56,6 @@
 	</sql:query>
 	
 	
-
-
     <aside>
 
         <section class="admin-details-wrapper">
@@ -146,6 +144,7 @@
 
                     <div class="product-cards-wrapper">
                     
+                    	<!-- Displaying products -->
                     	<c:forEach var="product" items="${productsFromDB.rows}" >
 	                    	<div class="product-card">
 					            <img class="product-img" src="http://localhost:8080/images/${product.productImg}" alt="${product.productImg}">

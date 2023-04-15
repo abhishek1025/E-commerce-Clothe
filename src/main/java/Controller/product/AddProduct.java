@@ -25,73 +25,73 @@ import Resources.MyConstants;
 
 public class AddProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddProduct() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public AddProduct() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String productName = request.getParameter("productName");
 		String brandName = request.getParameter("brandName");
 		String productCategory = request.getParameter("productCategory");
 		Part productImgPart = request.getPart("productImage");
-		
+
 		System.out.print(request.getParameter("productPrice"));
-		
+
 		float productPrice = Float.parseFloat(request.getParameter("productPrice"));
 		float productRating = Float.parseFloat(request.getParameter("productRating"));
 		int productStock = Integer.parseInt(request.getParameter("productStock"));
-		
+
 		Product product = new Product();
-		
+
 		product.setProductName(productName);
 		product.setBrandName(brandName);
 		product.setProductCategory(productCategory);
 		product.setProductPrice(productPrice);
 		product.setProductRating(productRating);
 		product.setProductStock(productStock);
-		
-		
+
 		String fileName = ProductOperationsHandeler.getImageUrl(productImgPart);
-		
+
 		product.setProductImgUrl(fileName);
-		
+
 		String savePath = MyConstants.IMAGE_DIR;
-		
-		 if(!fileName.isEmpty() && fileName != null) {
-			 productImgPart.write(savePath + fileName);
+
+		if (!fileName.isEmpty() && fileName != null) {
+			productImgPart.write(savePath + fileName);
 		}
-	
-		
+
 		try {
-			
-			Boolean isProductAdded  = ProductOperationsHandeler.addProduct(product);
-			
+
+			Boolean isProductAdded = ProductOperationsHandeler.addProduct(product);
+
 			PrintWriter out = response.getWriter();
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("./View/admin-panel/add-product/add-product.jsp");
+
+			RequestDispatcher dispatcher = request
+					.getRequestDispatcher("./View/admin-panel/add-product/add-product.jsp");
 			dispatcher.include(request, response);
-			
-			if(isProductAdded)
-			{		
+
+			if (isProductAdded) {
 				out.println("<script type=\"text/javascript\">");
 				out.println("setTimeout(() => alert('Prodcuct Added'), 500);");
 				out.println("</script>");
-				
+
 			} else {
 				out.println("<script type=\"text/javascript\">");
 				out.println("setTimeout(() => alert(' Unable to add product'), 500);");
 				out.println("</script>");
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

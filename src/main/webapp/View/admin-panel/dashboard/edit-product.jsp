@@ -1,3 +1,4 @@
+<%@page import="Resources.MyConstants"%>
 <%@page import="Controller.product.ProductOperationsHandeler"%>
 <%@page import="Model.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -104,7 +105,14 @@
                         </div>
 
                         <div>
-                            <input type="text" name="brandName" value="<%=product.getBrandName() %>" required>
+                            <select name="brandName" id="brandName" required>
+                                <option value="">Select Brand</option>
+                                <%
+			  						for(String brand: MyConstants.PRODUCT_BRANDS){
+			 					%>
+	         	 					<option value="<%=brand.toLowerCase()%>"> <%=brand %> </option>
+	          					<%}%>
+                            </select>
                         </div>
                     </div>
 
@@ -114,13 +122,15 @@
                         </div>
 
                         <div>
-                            <select name="productCategory" required id="productCategory">
+                                                      
+                             <select name="productCategory" id="productCategory" required>
                                 <option value="">Select Category</option>
-                                <option value="men">Men</option>
-                                <option value="women">Women</option>
-                                <option value="kids">Kids</option>
-                                <option value="unisex">Unisex</option>
-                            </select>
+                                <%
+			  						for(String category: MyConstants.PRODUCT_CATEGORIES){
+			 					%>
+	         	 					<option value="<%=category.toLowerCase()%>"> <%=category %> </option>
+	          					<%}%>
+	          				</select>
                         </div>
                     </div>
 
@@ -189,14 +199,13 @@
         <script>
         
         	const selectCategoryEl = document.querySelector('#productCategory');
-        
+        	const selectBrandNameEl = document.querySelector('#brandName');
         	<% 
         	
         		if(product != null){
         	%>
-        	
         		selectCategoryEl.value = "<%=product.getProductCategory()%>";
-        	
+        		selectBrandNameEl.value = "<%=product.getBrandName()%>"
         	<% 
         		}
         	%>
