@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.wrapper-sign-in-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper-sign {
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  align-items: center;
+  width: 80%;
+}
+
+.wrapper-sign-in-page .company-desc-section {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.store-name {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.store-name h1 {
+  font-size: 30px;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+}
+
+.store-name a {
+  text-decoration: none;
+  color: black;
+}
+
+.store-name p a {
+  font-family: "Kaushan Script", cursive;
+  font-size: 23px;
+}
+
+.wrapper-sign-in-page .sign-in-form-section {
+  margin-top: 55px;
+}
+
+
+.wrapper-sign-in-page .sign-in-form-section form {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 30px;
+  width: 400px;
+  border: 1px solid;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-img-sec {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  margin-bottom: 30px;
+}
+
+.upload-img-sec button {
+  all: unset;
+  text-align: center;
+  cursor: pointer;
+}
+
+.wrapper-sign-in-page .view-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 20px 0;
+}
+
+.view-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+
+.wrapper-sign-in-page form input {
+  outline: none;
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid;
+}
+
+.wrapper-sign-in-page .full-name,
+.wrapper-sign-in-page .phone-address {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper-sign-in-page .full-name input,
+.wrapper-sign-in-page .phone-address input {
+  width: 45%;
+}
+
+.wrapper-sign-in-page .email-and-pass {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.wrapper-sign-in-page .button-sign-up {
+  width: 100%;
+  text-align: center;
+  margin: 30px 0;
+}
+
+.wrapper-sign-in-page .button-sign-up button {
+  all: unset;
+  background-color: #3d3d3d;
+  width: 155px;
+  height: 45px;
+  color: white;
+  border-radius: 3px;
+}

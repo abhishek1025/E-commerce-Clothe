@@ -12,3 +12,14 @@ cartHideBtn.onclick = () => {
     cartPreviewBg.style.height = "0vh";
     cartPreviewSec.style.right = "-300px";
 }
+
+const showSearchBoxBtn = document.querySelector("#show-search-box-btn")
+const searchBox = document.querySelector("#search-box")
+const searchFormSubmitBtn = document.querySelector("#search-form-submit-btn")
+
+showSearchBoxBtn.onclick = () => {
+    searchBox.style.width = "370px";
+    searchBox.style.visibility = "visible";
+    showSearchBoxBtn.style.display = "none";
+}
+

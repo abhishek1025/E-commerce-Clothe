@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins&display=swap");
+
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.wrapper-sign-in-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.wrapper-sign {
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  align-items: center;
+  width: 80%;
+}
+
+.store-name {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.store-name h1 {
+  font-size: 30px;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+}
+
+.store-name a {
+  text-decoration: none;
+  color: black;
+}
+
+.store-name p a {
+  font-family: "Kaushan Script", cursive;
+  font-size: 23px;
+}
+
+.wrapper-sign-in-page .sign-in-form-section>form {
+  text-align: center;
+  padding: 20px;
+  height: 350px;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.wrapper-sign-in-page #form-sign-in input {
+  width: 300px;
+  outline: none;
+  height: 35px;
+  border: none;
+  border-bottom: 1px solid;
+}
+
+.wrapper-sign-in-page .button-login-sign-in {
+  margin-top: 20px;
+}
+
+.wrapper-sign-in-page .button-login-sign-in button {
+  all: unset;
+  width: 155px;
+  height: 45px;
+  color: white;
+  border-radius: 3px;
+  background-color: #3d3d3d;
+  cursor: pointer;
+}
