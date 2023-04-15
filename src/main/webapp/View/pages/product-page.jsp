@@ -87,64 +87,9 @@
 	
 
   <div class="wrapper-product-page">
-
-    <header class="header">
-    
-      <div class="header-section-1">
-      
-        <div class="search-box" id="search-box">
-        
-          	<form action="${pageContext.request.contextPath}/View/pages/product-page.jsp" method="get">
-          	
-          		<input type="hidden" name="operationType" value="searchProducts">
-          	
-          		<select name="searchBy" id="searchBy" required>
-          			<option value="">Search By</option>
-          			<option value="productCategory">Category</option>
-          			<option value="productPrice">Price</option>
-          			<option value="brandName">Brand Name</option>
-          			<option value="productName">Product Name</option>
-          			
-          		</select>
-          		<%-- 
-          		value=" <%=request.getParameter("q") %> " 
-          		 --%>
-          		<%if(request.getParameter("q") != null){%>
-	          		<input type="search" id="searchBox" name="q" value="<%=request.getParameter("q") %>" required>
-          		<%} else {%>
-          			<input type="search" id="searchBox" name="q" required>          			
-          		<%}%>
-          		
-          		<button type="submit"> Search </button>
-          		
-          	</form>
-        </div>
-        
-        <div class="logo-text">
-          <p>Trendy Attire</p>
-        </div>
-        
-        <div class="profile-cart-icon">
-          <i class="fa-regular fa-user"></i>
-          <i class="fa-solid fa-cart-plus"></i>
-        </div>
-        
-      </div>
-
-      <div class="header-section-2">
-        <nav>
-          <ul>
-            <li><a href="../../home.html">Home</a></li>
-            <hr />
-            <li><a href="product-page.jsp">Products</a></li>
-            <hr />
-            <li><a href="contact-us.html">Contact us</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <div style=" border-bottom: 1px solid #ccc; margin-bottom:10px;"></div>
+	
+	<!-- Including Header JSP -->
+ 	<jsp:include page="/View/header.jsp"></jsp:include>
 
     <div class="product-banner">
       <img src="../../Images/product-page-banner.png" />
@@ -288,76 +233,9 @@
 
     </div>
 
-    <footer>
-
-      <div class="footer-section-1">
-
-        <div class="categories">
-          <p>Categories</p>
-          <br />
-          <a href="#">Men</a>
-          <a href="#">Women</a>
-          <a href="#">Kids</a>
-          <a href="#">Unisex</a>
-        </div>
-
-        <div class="account">
-          <p>Account</p>
-          <br />
-          <a href="#">Sign up</a>
-          <a href="#">Sign in</a>
-        </div>
-
-        <div class="quick-links">
-          <p>Quick Links</p>
-          <br />
-          <a href="#">Home</a>
-          <a href="#">Products</a>
-          <a href="#">Contact us</a>
-        </div>
-
-        <div class="sign-up">
-          <p>Sign up for newsletter</p>
-          <br />
-          <div class="text-button">
-            <input type="email" placeholder="Enter email address..." />
-            <div class="button-div-subscribe">
-              <button id="subscribe">Subscribe</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br />
-      <hr />
-      <br />
-      <div class="footer-section-2">
-        <div class="logo">
-          <p class="trendy">Trendy Attire</p>
-          <p class="transform">Transform your style</p>
-        </div>
-        <div class="store-location">
-          <span>Store Location</span>
-          <p>Kamalpokhari, Kathmandu</p>
-          <p>+977 984758877</p>
-          <p>trendy.attire@gmail.com</p>
-        </div>
-        <div class="socials">
-          <span>Follow us</span>
-          <br />
-          <i class="fa-brands fa-facebook"></i>
-          <i class="fa-brands fa-instagram"></i>
-          <i class="fa-brands fa-youtube"></i>
-        </div>
-      </div>
-      <br />
-      <hr />
-      <div class="footer-section-3">
-        <br />
-        <p>© 2023 Trendy Attire. All Rights Reserved.</p>
-        <br />
-      </div>
-    </footer>
-
+	
+	<!-- Including Footer  -->
+	<jsp:include page="/View/footer.jsp"></jsp:include>
 
   </div>
 
@@ -374,17 +252,13 @@
   				searchBoxEl.min = 0;
   				searchBoxEl.max = 5000;
   			} else{
-  				searchBoxEl.type = "search";
+  				searchBoxEl.type = "text";
   			}
   		}
  
   		searchByEl.onchange = (e) => {
   			changeInputType(e.target);
   		}
-  		
-  		<% if(request.getParameter("searchBy") != null) { %>
-  			searchByEl.value = "<%=request.getParameter("searchBy") %>";
-  		<%}%>
   		
   		changeInputType(searchByEl);  	
   		

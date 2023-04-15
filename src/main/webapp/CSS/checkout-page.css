@@ -1,17 +1,19 @@
-body {
-    background-color: #f6f6f6;
-}
-
-.checkout-sec-wrapper {
-    width: 80%;
-    margin: auto;
-}
 
 @import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins&display=swap");
 
 * {
     font-family: "Poppins", sans-serif;
 }
+
+.contact-us-page-body {
+    background-color: #f6f6f6;
+}
+
+.checkout-sec-wrapper {
+    width: 80%;
+    margin: 60px auto;
+}
+
 
 .checkout-sec-wrapper>div {
     display: flex;

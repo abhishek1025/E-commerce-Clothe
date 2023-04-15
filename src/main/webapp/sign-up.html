@@ -5,11 +5,10 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign up</title>
+  
+  <title>Trendy Attire | Sign up</title>
+  
   <link rel="stylesheet" href="CSS/sign-up.css" />
-
-
-
 </head>
 
 <body>
@@ -18,17 +17,17 @@
 
   <div class="store-name">
     <h1>
-      <a href="#">Trendy Attire</a>
+      <a href="home.jsp">Trendy Attire</a>
     </h1>
     <p>
-      <a href="#">Transform your style</a>
+      <a href="home.jsp">Transform your style</a>
     </p>
   </div>
 
   <section class="wrapper-sign-in-page">
     <div class="wrapper-sign">
       <div class="company-desc-section">
-        <img src="profile-man.png" alt="" />
+        <img src="Images/profile-man.png" alt="Banner" />
       </div>
 
       <div class="sign-in-form-section">
@@ -42,7 +41,7 @@
               <button id="imageInputBtn" type="button">
                 <i class="fa-solid fa-upload"></i> Upload Image
               </button>
-              <input type="file" id="imageInput" accept="image/*" style="display: none;">
+              <input type="file" id="imageInput" name="userImage" accept="image/*" style="display: none;">
             </div>
 
           </div>
@@ -61,7 +60,7 @@
           <div class="email-and-pass">
             <input type="email" name="email" placeholder="Email" required />
             <br />
-            <input type="password" name="email" placeholder="Password" required id="password" />
+            <input type="password" name="password" placeholder="Password" required id="password" />
             <br />
             <input type="password" placeholder="Confirm password" required id="confirmPassword" />
           </div>
@@ -78,46 +77,7 @@
   </section>
 
 
-  <script>
-
-
-    const signUpForm = document.querySelector("#sign-up-form")
-
-    const imageInputBtn = document.querySelector("#imageInputBtn");
-    const imageInput = document.querySelector("#imageInput");
-    const viewImg = document.querySelector("#view-image")
-
-    const passswordInputEl = document.querySelector("#password")
-    const confirmPassswordInputEl = document.querySelector("#confirmPassword")
-
-    signUpForm.onsubmit = (e) => {
-      e.preventDefault();
-
-      if (!imageInput.files[0]) {
-        alert("Please Upload Profile Image");
-        return;
-      }
-
-      if (passswordInputEl.value !== confirmPassswordInputEl.value) {
-        alert("Passwords don't match, please check it");
-        return;
-      }
-
-      signUpForm.submit();
-    }
-
-    imageInputBtn.onclick = () => imageInput.click();
-
-    imageInput.onchange = () => {
-      const selectedImg = imageInput.files[0];
-      const imgUrl = URL.createObjectURL(selectedImg);
-
-      viewImg.innerHTML = `<img src=${imgUrl} alt=${selectedImg.name}>`;
-    };
-
-
-
-  </script>
+  <script src="JS/sign-up.js"></script>
 
 </body>
 

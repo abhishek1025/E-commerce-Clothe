@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign in</title>
+  <title>Trendy Attire | Sign in</title>
   <link rel="stylesheet" href="CSS/sign-in.css" />
 </head>
 
@@ -13,34 +13,50 @@
 
   <div class="store-name">
     <h1>
-      <a href="#">Trendy Attire</a>
+      <a href="home.jsp">Trendy Attire</a>
     </h1>
     <p>
-      <a href="#">Transform your style</a>
+      <a href="home.jsp">Transform your style</a>
     </p>
   </div>
 
   <section class="wrapper-sign-in-page">
+  
     <div class="wrapper-sign">
+    
       <div class="company-desc-section">
-        <img src="profile-man.png" alt="" />
+        <img src="Images/profile-man.png" alt="Banner" />
       </div>
+      
       <div class="sign-in-form-section">
-        <form action="" id="form-sign-in">
+      
+        <form action="" id="form-sign-in" method="POST">
+        
           <h2>Sign in</h2>
+          
           <div class="email-pass">
+          
             <input type="text" name="email" placeholder="Email" required />
             <br />
             <br />
             <input type="password" name="password" placeholder="Password" required />
+            
           </div>
+          
           <div class="button-login-sign-in">
-            <button id="login-sign-in">Login</button>
+          
+            <button id="login-sign-in" type="submit">Login</button>
+            
           </div>
+          
           <p>Don't have an account? <a href="./sign-up.html">Sign up</a></p>
+          
         </form>
+        
       </div>
+      
     </div>
+    
   </section>
 </body>
 

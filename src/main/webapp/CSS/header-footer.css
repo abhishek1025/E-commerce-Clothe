@@ -10,9 +10,14 @@
 
 /* navigation bar css */
 
+.header-page-body{
+	background-color:white;
+}
+
 .header {
   width: 80%;
-  margin: 20px auto;
+  margin: 0px auto;
+  padding:20px 0;
 }
 
 .header-section-1,
@@ -184,6 +189,7 @@ footer {
   top: 0;
   background-color: white;
   transition: 0.3s;
+  z-index:111;
 }
 
 .cart-preview-wrapper-bg {
@@ -193,6 +199,7 @@ footer {
   height: 0;
   top: 0;
   left: 0;
+  z-index:11;
 }
 
 .cart-preview-items {
@@ -202,7 +209,6 @@ footer {
   row-gap: 40px;
   height: 65%;
   overflow: scroll;
-
 }
 
 .cart-preview-item {

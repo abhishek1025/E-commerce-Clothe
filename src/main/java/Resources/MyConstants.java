@@ -35,4 +35,6 @@ public class MyConstants {
 	public static final String[] PRODUCT_BRANDS = {"Nike", "H&M", "Adidas", "Zara", "Lewis"};
 	public static final String[] PRODUCT_CATEGORIES = {"Men", "Women", "Kids", "Unisex"};
 	
+	
+	public static final String URL_FOR_FILTERING_PRODUCTS = "View/pages/product-page.jsp?operationType=filterProducts&priceFrom=100&priceTo=5000&ratingFrom=0&ratingTo=5";
 }
