@@ -79,3 +79,16 @@ lowerSliderRating.oninput = function () {
     document.querySelector('#ratingTo').innerHTML = `<i class="fa-solid fa-star rating-icon"></i> ${upperRatingVal} `;
 };
 
+
+
+const addToCartBtnEl = document.querySelector("#addToCartBtn")
+
+if(addToCartBtnEl !== null){
+	
+	addToCartBtnEl.onclick = () => {
+		alert("Please sign in first to add the product in cart")
+	}
+	
+}
+
+

@@ -1,3 +1,5 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Controller.DatabaseOperations.manageCartItems.CartOperationsHandleler"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <head>
@@ -14,6 +16,7 @@
 
 	<jsp:include page="/View/header.jsp"></jsp:include>
 
+	<%! int totalCost; %>
 
     <div class="checkout-sec-wrapper">
 
@@ -21,148 +24,99 @@
 
         <div>
             <div class="cart-checkout-items">
-                <table cellspacing=0>
-                    <tr>
-                        <th style="width:50%">Product</th>
-                        <th style="width:20%">Price</th>
-                        <th>Quantity</th>
-                    </tr>
+            
+                <form method="POST" action="${pageContext.request.contextPath}/UpdateCartQuantity">
+                
+                	<table cellspacing=0>
+                    
+	                    <tr>
+	                        <th style="width:50%">Product</th>
+	                        <th style="width:20%">Price</th>
+	                        <th>Quantity</th>
+	                    </tr>
+	
+						
+						<%
+							ResultSet cartItems = CartOperationsHandleler.getAllCartItems(request);
+							int itemSN = -1;
+							totalCost = 0;
+							if(cartItems != null){
+								
+								while(cartItems.next()){
+									totalCost += (cartItems.getInt(5) * cartItems.getInt(3)); 								
+									itemSN++;
+						%>			
+									<tr>
+				                       <td>
+				                            <div class=" cart-checkout-item-desc">
+				                                <div class="item-img">
+				                                    <img src="http://localhost:8080/images/<%=cartItems.getString(4) %>" width="100px">
+				                                </div>
+				                                <div>
+				                                    <p>
+				                                       <%=cartItems.getString(2) %>
+				                                    </p>
+				                                </div>
+				                            </div>
+				                        </td>
+	
+				                        <td>
+				                            NPR <%=cartItems.getInt(3) %>
+				                        </td>
+	
+				                        <td>
+				                            <div class="cart-checkout-item-quantity-wrapper">
+				                            
+				                                <div class=" cart-checkout-item-quantity">
+				                                
+				                                    <button type="button" class="decreaseBtn" onclick="decreaseQuantity(<%=itemSN%>)">
+				                                        -
+				                                    </button>
+				                                    
+													<input type="hidden" name="cartItemID" value="<%=cartItems.getInt(1)%>"/>
+													
+				                                    <input type="number" min="1" name="quantity" value="<%=cartItems.getInt(5)%>" class="productQuantity">
+	
+				                                    <button type="button" class="increaseBtn" onclick="increaseQuantity(<%=itemSN%>)">
+				                                        +
+				                                    </button>
+				                                </div>
+	
+				                                
+				                                <a class="cart-checkout-delt-btn" href="${pageContext.request.contextPath}/View/pages/cart-checkout.jsp?cartOperationType=deleteCartItem&cartItemID=<%=cartItems.getInt(1)%>">
+				                                	<!-- <button type="button" class="cart-checkout-delt-btn"> -->
+				                                   		 &#10005;
+				                               		<!-- </button> -->
+				                                </a>
+				                                	
+	
+				                            </div>
+	
+				                        </td>
+				                    </tr>
+				                    
+						<%
+								}	
+							}
+						%>
+						                  
 
-                    <tr>
-
-                        <td>
-                            <div class=" cart-checkout-item-desc">
-                                <div class="item-img">
-                                    <img src="../../Images/kids.png" width="100px">
-                                </div>
-                                <div>
-                                    <p>
-                                        Legendary Whitetails Wmen's.
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td>
-                            NPR 2000
-                        </td>
-
-                        <td>
-                            <div class="cart-checkout-item-quantity-wrapper">
-                                <div class=" cart-checkout-item-quantity">
-                                    <button class="decreaseBtn" onclick="decreaseQuantity(0)">
-                                        -
-                                    </button>
-
-                                    <input type="number" min="1" value="1" class="productQuantity">
-
-                                    <button class="increaseBtn" onclick="increaseQuantity(0)">
-                                        +
-                                    </button>
-                                </div>
-
-                                <button class="cart-checkout-delt-btn">
-                                    &#10005;
-                                </button>
-                            </div>
-
-                        </td>
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            <div class=" cart-checkout-item-desc">
-                                <div class="item-img">
-                                    <img src="${pageContext.request.contextPath}/Images/kids.png" width="100px">
-                                </div>
-                                <div>
-                                    <p>
-                                        Legendary Whitetails Wmen's.
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td>
-                            NPR 2000
-                        </td>
-
-                        <td>
-                            <div class="cart-checkout-item-quantity-wrapper">
-                                <div class="cart-checkout-item-quantity">
-                                    <button class="decreaseBtn" onclick="decreaseQuantity(1)">
-                                        -
-                                    </button>
-
-                                    <input type="number" min="1" value="1" class="productQuantity">
-
-                                    <button class="increaseBtn" onclick="increaseQuantity(1)">
-                                        +
-                                    </button>
-                                </div>
-
-                                <button class="cart-checkout-delt-btn">
-                                    &#10005;
-                                </button>
-                            </div>
-
-                        </td>
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            <div class=" cart-checkout-item-desc">
-                                <div class="item-img">
-                                    <img src="${pageContext.request.contextPath}/Images/kids.png" width="100px">
-                                </div>
-                                <div>
-                                    <p>
-                                        Legendary Whitetails Wmen's.
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td>
-                            NPR 2000
-                        </td>
-
-                        <td>
-                            <div class="cart-checkout-item-quantity-wrapper">
-                                <div class=" cart-checkout-item-quantity">
-                                    <button class="decreaseBtn" onclick="decreaseQuantity(2)">
-                                        -
-                                    </button>
-
-                                    <input type="number" min="1" value="1" class="productQuantity">
-
-                                    <button class="increaseBtn" onclick="increaseQuantity(2)">
-                                        +
-                                    </button>
-                                </div>
-
-                                <button class="cart-checkout-delt-btn">
-                                    &#10005;
-                                </button>
-                            </div>
-
-                        </td>
-                    </tr>
-
-                </table>
-
-                <button class="cart-update-btn">Update Cart</button>
+                	</table>
+                
+                
+                	<button type="submit" class="cart-update-btn">Update Cart</button>
+                
+                </form>
+                
+                
+                
             </div>
 
             <div class="order-price-details">
-                <p><span>Subtotal</span> <span>NPR 1230</span></p>
+                <p><span>Subtotal</span> <span>NPR <%=totalCost %></span></p>
                 <p><span>Shipping Cost</span> <span>NPR 100</span></p>
                 <div style="border-top: 1px solid #ccc; margin:20px 0;"></div>
-                <p><span>Grand Total</span> <span>NPR 1330</span></p>
+                <p><span>Grand Total</span> <span>NPR <%=totalCost + 100 %></span></p>
 
                 <div class="cart-checkout-btn">
                     <button>

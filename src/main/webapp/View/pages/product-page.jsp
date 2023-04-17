@@ -1,3 +1,4 @@
+<%@page import="Controller.DatabaseOperations.UserOperationsHandleler"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="Resources.MyConstants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -13,8 +14,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>T R E N D Y A T T I R E | PRODUCTS </title>
-  <link rel="stylesheet" href="../../CSS/header-footer.css" />
-  <link rel="stylesheet" href="../../CSS/product-page.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/header-footer.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/product-page.css" />
   <script src="https://kit.fontawesome.com/1c6c06e40c.js" crossorigin="anonymous"></script>
 </head>
 
@@ -92,7 +93,7 @@
  	<jsp:include page="/View/header.jsp"></jsp:include>
 
     <div class="product-banner">
-      <img src="../../Images/product-page-banner.png" />
+      <img src="${pageContext.request.contextPath}/Images/product-page-banner.png" />
     </div>
 
 
@@ -209,7 +210,36 @@
 		
 		
 		            <div class="add-to-card-btn">
-		              <button><i class="fa-solid fa-bag-shopping"></i> Add to card</button>
+		              
+		              <form action="${pageContext.request.contextPath}/product-page" method="post">
+		             	
+		             	<input type="hidden" name="productID" value="${product.productID }"/>
+		             	<input type="hidden" name="productPrice" value="${product.productPrice}"/>
+		             	
+		             			             		
+		             <%
+		             	String[] userDataFromCookies = UserOperationsHandleler.getCookiesData(request);
+		             	
+		             	if(userDataFromCookies.length != 0){
+		             %>
+		             
+		             	<input type="hidden" name="userID" value="<%=userDataFromCookies[0]%>"/>
+		             
+		             	<button type="submit">
+		             			<i class="fa-solid fa-bag-shopping"></i> Add to card
+		             	</button>
+		             	
+		             <% } else { %>
+		             
+		             	<button type="button" id="addToCartBtn">
+		             			<i class="fa-solid fa-bag-shopping"></i> Add to card
+		             	</button>
+		             	
+		             <% } %>		
+		             				             	
+		             			              
+		              </form>
+		              
 		            </div>
 		
 		          </div>
@@ -239,30 +269,8 @@
 
   </div>
 
-  <script src="../../JS/product-page.js"></script>
-  
-  <script>
-  
-		const searchByEl = document.querySelector("#searchBy");
-		const searchBoxEl = document.querySelector("#searchBox");
-  
-  		const changeInputType = (element) => {
-  			if(element.value === "productPrice"){
-  				searchBoxEl.type = "number";
-  				searchBoxEl.min = 0;
-  				searchBoxEl.max = 5000;
-  			} else{
-  				searchBoxEl.type = "text";
-  			}
-  		}
- 
-  		searchByEl.onchange = (e) => {
-  			changeInputType(e.target);
-  		}
-  		
-  		changeInputType(searchByEl);  	
-  		
-  </script>
+  <script src="${pageContext.request.contextPath}/JS/product-page.js"></script>
+
 
 </body>
 

@@ -1,3 +1,6 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Controller.DatabaseOperations.manageCartItems.CartOperationsHandleler"%>
+<%@page import="Controller.DatabaseOperations.UserOperationsHandleler"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,6 +15,20 @@
 </head>
 
 <body>
+
+	<!-- Declaring global variables -->
+	<%! String[] userData = {}; %>
+	<%! int cartTotalCost; %> 
+	<%! int isCartItemDeleted = 0; %> 
+	
+	<%
+		userData = UserOperationsHandleler.getCookiesData(request); 
+	%>
+	
+	<!-- Cart Item Delete Operations -->
+	<%
+		isCartItemDeleted = CartOperationsHandleler.deletCartItem(request);
+	%>
 
     <script src="https://kit.fontawesome.com/1c6c06e40c.js" crossorigin="anonymous"></script>
     
@@ -57,61 +74,76 @@
             <div class="profile-cart-icons">
 
                 <div id="profile-display-btn">
+                
                     <i class="fa-regular fa-user"></i>
 
+					<!-- Displaying Profile Informations  -->
                     <div class="profile-drop-down">
                         <div>
+                        
+                        <%
+                        	if(userData.length != 0){	
+                        %>
+                        	<!-- User Image and name section -->
                             <div class="user-desc">
+                            
                                 <div class="user-img">
-                                    <img src="${pageContext.request.contextPath}/Images/rabi.jpg" alt="">
+                                    <img src="http://localhost:8080/images/userImages/<%=userData[3]%>" alt="">
                                 </div>
-                                <p>Rabi Giri</p>
+                                <p><%=userData[1]%> <%=userData[2]%></p>
+                                
                             </div>
-
-                            <div style="border-top: 1px solid #ccc; margin:15px 0;"></div>
-
+                            
+							<div style="border-top: 1px solid #ccc; margin:15px 0;"></div>
+                        	
+                        <%} %>
+                        
+							<!-- Links available for user-->
                             <ul class="user-functions">
-                                <!-- Display when user is not signed in -->
-                                 <li>
-                                    <a href="${pageContext.request.contextPath}/sign-in.html">
-                                        <i class="fa-solid fa-right-to-bracket"></i> Sign In
-                                    </a>
-                                </li>
+                            
+                            	<%
+                        			if(userData.length == 0){	
+                       			%>
+		                                <!-- Display when user is not signed in -->
+		                                 <li>
+		                                    <a href="${pageContext.request.contextPath}/sign-in.jsp">
+		                                        <i class="fa-solid fa-right-to-bracket"></i> Sign In
+		                                    </a>
+		                                </li>
+		
+		                                <li>
+		                                    <a href="${pageContext.request.contextPath}/sign-up.html">
+		                                        <i class="fa-solid fa-user-plus"></i> Sign Up
+		                                    </a>
+		                                </li> 
+                                
+                                 <%	 } else{  %>
+                                 		<li>
+		                                    <a href="#">
+		                                        <i class="fa-regular fa-user"></i> View Profile
+		                                    </a>
+		                                </li>
+		
+		                                <li>
+		                                    <a href="#">
+		                                        <i class="fa-solid fa-pen-to-square"></i> Manage Profile
+		                                    </a>
+		                                </li>
+		
+		                                <li>
+		                                    <a href="#">
+		                                        <i class="fa-solid fa-lock"></i> Change Password
+		                                    </a>
+		                                </li>
+		
+		                                <li>
+		                                    <a href="${pageContext.request.contextPath}/SignOutServlet">
+		                                        <i class="fa-solid fa-right-from-bracket"></i> Log Out
+		                                    </a>
+                                		</li>
+                                 <%} %>
 
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/sign-up.html">
-                                        <i class="fa-solid fa-user-plus"></i> Sign Up
-                                    </a>
-                                </li> 
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa-regular fa-user"></i> View Profile
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa-solid fa-pen-to-square"></i> Manage Profile
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa-solid fa-lock"></i> Change Password
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <span>
-                                            <i class="fa-solid fa-right-from-bracket"></i>
-                                        </span>
-                                        <span>
-                                            Log Out
-                                        </span>
-                                    </a>
-                                </li>
+                                
                             </ul>
 
                         </div>
@@ -146,6 +178,7 @@
     <div style="border-bottom: 1px solid #ccc; margin-bottom:10px;"></div>
 
     <div class="cart-preview-wrapper-bg" id="cart-preview-bg">
+    
         <div class="cart-preview-wrapper" id="cart-preview-sec">
 
             <p class="cart-preview-heading">
@@ -159,33 +192,70 @@
 
             <div class="cart-preview-items">
 
-                <div class="cart-preview-item">
+			<!-- Displaying Cart Items -->
+			<%				
+				ResultSet cartItems = CartOperationsHandleler.getAllCartItems(request);
+				int cartItemCount = 0;
+				cartTotalCost = 0;
+				if(cartItems != null){
+									
+					while(cartItems.next()){
+						
+						cartTotalCost += (cartItems.getInt(3) * cartItems.getInt(5));
+						cartItemCount++;
+						
+		%>				
+						<!-- Cart Item -->
+		                <div class="cart-preview-item">
+		
+		                    <div class="cart-preview-item-img">
+		                        <img src="http://localhost:8080/images/<%=cartItems.getString(4) %>" alt="">
+		                    </div>
+		
+		                    <div class="cart-preview-item-desc">
+		                    
+		                        <div>
+		                            <h3 class="item-name">
+		                               <%=cartItems.getString(2) %>
+		                            </h3>
+		                            <p class="item-price">
+		                                <span>NPR  <%=cartItems.getInt(3) %></span> X <%=cartItems.getInt(5)%>
+		                            </p>
+		                        </div>
+		
+		                        <div class="cart-preview-item-delt-btn">
+		                        
+		                            <form method="POST">
+		                            
+		                        		<input type="hidden" name="cartOperationType" value="deletCartItem">
+		                        		<input type="hidden" name="cartItemID" value="<%=cartItems.getInt(1)%>">
+		                        		
+		                            	<button type="submit">&#10005;</button>
+		                           		 
+		                            </form>
+		                        </div>
+		                        
+		                   	</div>
+		                   </div> 
+		<%
+					}
+					
+					if(cartItemCount == 0) {
+						cartTotalCost = 0;
+						out.print("<h2> No Items in the cart</h1");
+						
+					}
+					
+				} 
+					
+			%>
 
-                    <div class="cart-preview-item-img">
-                        <img src="${pageContext.request.contextPath}/Images/kids.png" alt="">
-                    </div>
-
-                    <div class="cart-preview-item-desc">
-                        <div>
-                            <h3 class="item-name">
-                                Legendary Whitetails Women's
-                            </h3>
-                            <p class="item-price">
-                                <span>NPR 1231.00</span> X 3
-                            </p>
-                        </div>
-
-                        <div class="cart-preview-item-delt-btn">
-                            <button>&#10005;</button>
-                        </div>
-                    </div>
-
-                </div>
+            
             </div>
 
             <div class="cart-preview-details">
                 <div style=" border-bottom: 2px solid #ccc; margin-bottom:10px;"></div>
-                <p><span>Subtotal:</span> <span>NPR 2000</span></p>
+                <p><span>Subtotal:</span> <span>NPR <%=cartTotalCost %></span></p>
 
                 <div class="card-checkout-btn">
                     <a href="${pageContext.request.contextPath}/View/pages/cart-checkout.jsp">
@@ -201,6 +271,17 @@
     </div>
 
     <script src="${pageContext.request.contextPath}/JS/header.js"></script>
+    
+    <script type="text/javascript">
+    	
+    	<% 
+    		if(isCartItemDeleted == 1){
+    			isCartItemDeleted = 0;
+    	%>
+    			setTimeout(()=> alert("Cart Item Deleted Sucessfully"), 500);
+    	<%	} %>
+    
+    </script>
 </body>
 
 </html>

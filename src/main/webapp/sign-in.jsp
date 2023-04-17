@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,11 +39,24 @@
           
           <div class="email-pass">
           
-            <input type="text" name="email" placeholder="Email" required />
-            <br />
-            <br />
-            <input type="password" name="password" placeholder="Password" required />
-            
+          	<%
+          		String isPasswordMatched = (String) request.getAttribute("isPasswordMatched");
+          	
+          		if(isPasswordMatched != null && isPasswordMatched.equals("wrong password")){
+          	%>		
+	          		<input type="text" name="email" placeholder="Email"  value="<%=request.getParameter("email") %>" required />
+	           		 <br />
+	            	<br />
+	            	<input type="password" name="password" placeholder="Password" value="<%=request.getParameter("password") %>" required />
+          	
+          	<%} else { %>
+          	
+          
+			 		<input type="text" name="email" placeholder="Email" required />
+		            <br />
+		            <br />
+		            <input type="password" name="password" placeholder="Password" required /> 
+            <%} %>
           </div>
           
           <div class="button-login-sign-in">
@@ -60,4 +76,4 @@
   </section>
 </body>
 
-</html>
+</html>    

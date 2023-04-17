@@ -11,10 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footer</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/header-footer.css">
-    <script src="https://kit.fontawesome.com/1c6c06e40c.js" crossorigin="anonymous"></script>
+   
 </head>
 
 <body>
+
+	 <script src="https://kit.fontawesome.com/1c6c06e40c.js" crossorigin="anonymous"></script>
+
     <footer>
 
         <div class="footer-section-1">

@@ -336,7 +336,8 @@ footer {
 
 .user-desc p {
   margin: 0;
-  font-size: 19px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .user-img {

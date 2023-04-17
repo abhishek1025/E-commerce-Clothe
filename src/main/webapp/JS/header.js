@@ -23,3 +23,23 @@ showSearchBoxBtn.onclick = () => {
     showSearchBoxBtn.style.display = "none";
 }
 
+
+const searchByEl = document.querySelector("#searchBy");
+const searchBoxEl = document.querySelector("#searchBox");
+
+const changeInputType = (element) => {
+  if(element.value === "productPrice"){
+  		searchBoxEl.type = "number";
+  			searchBoxEl.min = 0;
+  				searchBoxEl.max = 5000;
+  			} else{
+  				searchBoxEl.type = "text";
+  			}
+  		}
+ 
+  		searchByEl.onchange = (e) => {
+  			changeInputType(e.target);
+  		}
+  		
+  		changeInputType(searchByEl);    
+  		

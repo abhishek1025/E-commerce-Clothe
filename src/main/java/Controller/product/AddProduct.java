@@ -46,8 +46,6 @@ public class AddProduct extends HttpServlet {
 		String productCategory = request.getParameter("productCategory");
 		Part productImgPart = request.getPart("productImage");
 
-		System.out.print(request.getParameter("productPrice"));
-
 		float productPrice = Float.parseFloat(request.getParameter("productPrice"));
 		float productRating = Float.parseFloat(request.getParameter("productRating"));
 		int productStock = Integer.parseInt(request.getParameter("productStock"));
@@ -61,16 +59,10 @@ public class AddProduct extends HttpServlet {
 		product.setProductRating(productRating);
 		product.setProductStock(productStock);
 
-		String fileName = ProductOperationsHandeler.getImageUrl(productImgPart);
+		String fileName = MyConstants.getImageUrl(productImgPart, MyConstants.IMAGE_DIR);
 
 		product.setProductImgUrl(fileName);
-
-		String savePath = MyConstants.IMAGE_DIR;
-
-		if (!fileName.isEmpty() && fileName != null) {
-			productImgPart.write(savePath + fileName);
-		}
-
+		
 		try {
 
 			Boolean isProductAdded = ProductOperationsHandeler.addProduct(product);

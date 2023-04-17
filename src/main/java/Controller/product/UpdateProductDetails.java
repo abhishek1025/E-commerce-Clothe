@@ -1,3 +1,4 @@
+
 package Controller.product;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class UpdateProductDetails extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		int productID = Integer.parseInt(request.getParameter("productID"));
 		String productName = request.getParameter("productName");
 		String brandName = request.getParameter("brandName");
@@ -56,22 +58,13 @@ public class UpdateProductDetails extends HttpServlet {
 		product.setProductPrice(productPrice);
 		product.setProductRating(productRating);
 		product.setProductStock(productStock);
-		
-	
-		String fileName = ProductOperationsHandeler.getImageUrl(productImgPart);
+
+		String fileName = MyConstants.getImageUrl(productImgPart,  MyConstants.IMAGE_DIR);
 		
 		if(fileName.equals("no new img")) {
-			
-			product.setProductImgUrl(oldProductImgUrl);
-						
+			product.setProductImgUrl(oldProductImgUrl);		
 		} else{
 			product.setProductImgUrl(fileName);
-			
-			String savePath = MyConstants.IMAGE_DIR;
-			
-			 if(!fileName.isEmpty() && fileName != null) {
-				 productImgPart.write(savePath + fileName);
-			}
 		}
 	
 		
@@ -83,9 +76,7 @@ public class UpdateProductDetails extends HttpServlet {
 			if(isProductDetailsChanged)
 			{		
 				response.sendRedirect("./View/admin-panel/dashboard/dashboard.jsp");
-//				out.println("<script type=\"text/javascript\">");
-//				out.println("alert('Prodcuct Added');");
-//				out.println("</script>");
+				
 			} else {
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('Unable to Update Details of the product');");
