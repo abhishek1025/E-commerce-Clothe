@@ -1,5 +1,5 @@
 <%@page import="java.sql.ResultSet"%>
-<%@page import="Controller.DatabaseOperations.manageCartItems.CartOperationsHandleler"%>
+<%@page import="dao.CartDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <head>
@@ -16,7 +16,7 @@
 
 	<jsp:include page="/View/header.jsp"></jsp:include>
 
-	<%! int totalCost; %>
+	<%!int totalCost;%>
 
     <div class="checkout-sec-wrapper">
 
@@ -37,11 +37,11 @@
 	
 						
 						<%
-							ResultSet cartItems = CartOperationsHandleler.getAllCartItems(request);
+							ResultSet cartItems = CartDAO.getAllCartItems(request);
 							int itemSN = -1;
 							totalCost = 0;
 							if(cartItems != null){
-								
+																			
 								while(cartItems.next()){
 									totalCost += (cartItems.getInt(5) * cartItems.getInt(3)); 								
 									itemSN++;

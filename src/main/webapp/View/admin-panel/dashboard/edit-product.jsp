@@ -1,6 +1,6 @@
-<%@page import="Resources.MyConstants"%>
-<%@page import="Controller.product.ProductOperationsHandeler"%>
-<%@page import="Model.Product"%>
+<%@page import="appConstants.MyConstants"%>
+<%@page import="dao.ProductDAO"%>
+<%@page import="model.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <!DOCTYPE html>
     <html lang="en">
@@ -23,18 +23,18 @@
 
     <body>
     
-    	<%! Product product = null; %>
+    	<%!Product product = null;%>
     
     	<%
-	    	String operationType = request.getParameter("operationType");
-			String productID = request.getParameter("productID");
-			    		
-			if(operationType != null && productID != null && operationType.equals("update")){
-				
-				product = ProductOperationsHandeler.getProductById(Integer.parseInt(productID));
-				
-			}
-    	%>
+        	String operationType = request.getParameter("operationType");
+        		String productID = request.getParameter("productID");
+        		    		
+        		if(operationType != null && productID != null && operationType.equals("update")){
+        			
+        			product = ProductDAO.getProductById(Integer.parseInt(productID));
+        			
+        		}
+        	%>
     
         <aside>
 

@@ -1,6 +1,5 @@
-<%@page import="Controller.DatabaseOperations.UserOperationsHandleler"%>
-<%@page import="java.util.Arrays"%>
-<%@page import="Resources.MyConstants"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="appConstants.MyConstants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
@@ -21,7 +20,7 @@
 
 <body>
 
-	<%! int noOfProducts = 0; %>
+	<%int noOfProducts = 0; %>
 
 	<sql:setDataSource var="dbConnect"
 		driver = "<%=MyConstants.DRIVER_NAME %>"
@@ -32,56 +31,60 @@
 		
 	<sql:query var="productsFromDB" dataSource="${dbConnect}">
 	<%
-		/* Geting all the paramater from URL i.e. GET method */
-		String operationType = request.getParameter("operationType");
-		String[] categoriesArray = request.getParameterValues("category");
-		String[] brandsArray = request.getParameterValues("brand");
-		String priceFrom = request.getParameter("priceFrom");
-		String priceTo = request.getParameter("priceTo");
-		String ratingFrom = request.getParameter("ratingFrom");
-		String ratingTo = request.getParameter("ratingTo");
-		
-		String searchBy = request.getParameter("searchBy");
-		String searchContent = request.getParameter("q");
+	
+			/* Geting all the paramater from URL i.e. GET method */
+			String operationType = request.getParameter("operationType");
+			String[] categoriesArray = request.getParameterValues("category");
+			String[] brandsArray = request.getParameterValues("brand");
+			String priceFrom = request.getParameter("priceFrom");
+			String priceTo = request.getParameter("priceTo");
+			String ratingFrom = request.getParameter("ratingFrom");
+			String ratingTo = request.getParameter("ratingTo");
+			
+			String searchBy = request.getParameter("searchBy");
+			String searchContent = request.getParameter("q");
 
-		if(operationType == null) 
-		{
+			if(operationType == null) 
+			{
 	%>
 			SELECT * FROM products;
 	<%
-		} else if(operationType.equals("filterProducts")) 
-		{
-			/* Converting array to the string. This is default values for product category and brand name */
-			String categoriesString = MyConstants.convertArrayToString(MyConstants.PRODUCT_CATEGORIES);
-			String brandsString = MyConstants.convertArrayToString(MyConstants.PRODUCT_BRANDS);
+
+			} else if(operationType.equals("filterProducts")) 
+			{
+				/* Converting array to the string. This is default values for product category and brand name */
+				String categoriesString = MyConstants.convertArrayToString(MyConstants.PRODUCT_CATEGORIES);
+				String brandsString = MyConstants.convertArrayToString(MyConstants.PRODUCT_BRANDS);
+					
+				/* if user has selected one or more category, then converting it to the string*/
+				if(categoriesArray != null ){
+					categoriesString = MyConstants.convertArrayToString(categoriesArray);
+				}
 				
-			/* if user has selected one or more category, then converting it to the string*/
-			if(categoriesArray != null ){
-				categoriesString = MyConstants.convertArrayToString(categoriesArray);
-			}
-			
-			/* if user has selected one or more brand name, then converting it to the string*/
-			if(brandsArray != null){
-				brandsString =  MyConstants.convertArrayToString(brandsArray);
-			}	
+				/* if user has selected one or more brand name, then converting it to the string*/
+				if(brandsArray != null){
+					brandsString =  MyConstants.convertArrayToString(brandsArray);
+				}
 	%>
-			SELECT * FROM products WHERE productCategory IN (<%=categoriesString%>) AND brandName IN (<%=brandsString%>) 
-			AND (productPrice BETWEEN <%=Integer.parseInt(priceFrom)%> AND <%=Integer.parseInt(priceTo)%>) 
-			AND (productRating BETWEEN <%=Float.parseFloat(ratingFrom)%> AND <%=Float.parseFloat(ratingTo) %>); 
+				SELECT * FROM products WHERE productCategory IN (<%=categoriesString%>) AND brandName IN (<%=brandsString%>) 
+				AND (productPrice BETWEEN <%=Integer.parseInt(priceFrom)%> AND <%=Integer.parseInt(priceTo)%>) 
+				AND (productRating BETWEEN <%=Float.parseFloat(ratingFrom)%> AND <%=Float.parseFloat(ratingTo)%>); 
 	<%
-		} else if(operationType.equals("searchProducts")){	
-			
-			if(searchBy.equals("productPrice")){
-			%>
-				SELECT * FROM products WHERE productPrice BETWEEN <%=Float.parseFloat(searchContent) %> AND <%=Float.parseFloat(searchContent)+200.0 %> ;
-			<%
-			} else {
-			%>
-				SELECT * FROM products WHERE <%=searchBy%> LIKE "%<%=searchContent.toLowerCase()%>%";
-			<%
-			} 
-		}
-	%>
+	
+			} else if(operationType.equals("searchProducts")){	
+		
+				if(searchBy.equals("productPrice")){
+				%>
+						SELECT * FROM products WHERE productPrice BETWEEN <%=Float.parseFloat(searchContent) %> AND <%=Float.parseFloat(searchContent) + 200 %> ;
+				<%
+		
+				} else {
+				%>
+					SELECT * FROM products WHERE <%=searchContent%> LIKE "<%=searchContent.toLowerCase()%>";
+				<%
+				} 
+			}
+		%>
 	</sql:query>
 
 	
@@ -112,12 +115,14 @@
 	
 			  <p><a href="product-page.jsp">View All products</a></p>
 			  
+			  <!-- Displaying Product category for filtering -->
 			  <%
-			  	for(String category: MyConstants.PRODUCT_CATEGORIES){
+				for(String category: MyConstants.PRODUCT_CATEGORIES){
 			  %>
 	         	 <p>
-	         	 	<input type="checkbox" name="category" value="<%=category.toLowerCase()%>"> <%=category %>
+	         	 	<input type="checkbox" name="category" value="<%=category.toLowerCase()%>"> <%=category.toLowerCase()%>
 	         	 </p>
+	          
 	          <%}%>
 	          
 	        </div>
@@ -127,10 +132,10 @@
 	          <h2>Brand</h2>
 	        	
 	        	<%
-			  		for(String brandName: MyConstants.PRODUCT_BRANDS){
-			  	%>
+	        		for(String brandName: MyConstants.PRODUCT_BRANDS){
+				%>
 	         	 <p>
-	         	 	<input type="checkbox" name="brand" value="<%=brandName.toLowerCase()%>"> <%=brandName %>
+	         	 	<input type="checkbox" name="brand" value="<%=brandName.toLowerCase()%>"> <%=brandName.toLowerCase()%>
 	         	 </p>
 	          <%}%>
 	        
@@ -189,7 +194,10 @@
 			<!-- Displaying products in product page  -->
 			<c:forEach var="product" items="${productsFromDB.rows}" >
 			
-	 			<% noOfProducts++; %> 
+	 			<
+				 			p
+				 			 noOfProducts++
+				 			 %> 
 			
 				 <div class="product-card">
 		            <div class="product-image">
@@ -218,10 +226,11 @@
 		             	
 		             			             		
 		             <%
-		             	String[] userDataFromCookies = UserOperationsHandleler.getCookiesData(request);
-		             	
-		             	if(userDataFromCookies.length != 0){
-		             %>
+		             
+		             	String[] userDataFromCookies = UserDAO.getCookiesData(request);
+		             			             			             				             		             	
+						if(userDataFromCookies.length != 0){
+					  %>
 		             
 		             	<input type="hidden" name="userID" value="<%=userDataFromCookies[0]%>"/>
 		             

@@ -1,6 +1,6 @@
 <%@page import="java.sql.ResultSet"%>
-<%@page import="Controller.DatabaseOperations.manageCartItems.CartOperationsHandleler"%>
-<%@page import="Controller.DatabaseOperations.UserOperationsHandleler"%>
+<%@page import="dao.CartDAO"%>
+<%@page import="dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,17 +17,17 @@
 <body>
 
 	<!-- Declaring global variables -->
-	<%! String[] userData = {}; %>
-	<%! int cartTotalCost; %> 
-	<%! int isCartItemDeleted = 0; %> 
+	<%!String[] userData = {};%>
+	<%!int cartTotalCost;%> 
+	<%!int isCartItemDeleted = 0;%> 
 	
 	<%
-		userData = UserOperationsHandleler.getCookiesData(request); 
-	%>
+		userData = UserDAO.getCookiesData(request);
+ 	%>
 	
 	<!-- Cart Item Delete Operations -->
 	<%
-		isCartItemDeleted = CartOperationsHandleler.deletCartItem(request);
+	isCartItemDeleted = CartDAO.deletCartItem(request);
 	%>
 
     <script src="https://kit.fontawesome.com/1c6c06e40c.js" crossorigin="anonymous"></script>
@@ -82,8 +82,8 @@
                         <div>
                         
                         <%
-                        	if(userData.length != 0){	
-                        %>
+                                                if(userData.length != 0){
+                                                %>
                         	<!-- User Image and name section -->
                             <div class="user-desc">
                             
@@ -96,14 +96,16 @@
                             
 							<div style="border-top: 1px solid #ccc; margin:15px 0;"></div>
                         	
-                        <%} %>
+                        <%
+                        	                        }
+                        	                        %>
                         
 							<!-- Links available for user-->
                             <ul class="user-functions">
                             
                             	<%
-                        			if(userData.length == 0){	
-                       			%>
+                                                        	if(userData.length == 0){
+                                                        	%>
 		                                <!-- Display when user is not signed in -->
 		                                 <li>
 		                                    <a href="${pageContext.request.contextPath}/sign-in.jsp">
@@ -117,7 +119,9 @@
 		                                    </a>
 		                                </li> 
                                 
-                                 <%	 } else{  %>
+                                 <%
+                                                                  } else{
+                                                                  %>
                                  		<li>
 		                                    <a href="#">
 		                                        <i class="fa-regular fa-user"></i> View Profile
@@ -141,7 +145,9 @@
 		                                        <i class="fa-solid fa-right-from-bracket"></i> Log Out
 		                                    </a>
                                 		</li>
-                                 <%} %>
+                                 <%
+                                 }
+                                 %>
 
                                 
                             </ul>
@@ -193,18 +199,17 @@
             <div class="cart-preview-items">
 
 			<!-- Displaying Cart Items -->
-			<%				
-				ResultSet cartItems = CartOperationsHandleler.getAllCartItems(request);
-				int cartItemCount = 0;
-				cartTotalCost = 0;
-				if(cartItems != null){
-									
-					while(cartItems.next()){
-						
-						cartTotalCost += (cartItems.getInt(3) * cartItems.getInt(5));
-						cartItemCount++;
-						
-		%>				
+			<%
+			ResultSet cartItems = CartDAO.getAllCartItems(request);
+					int cartItemCount = 0;
+					cartTotalCost = 0;
+					if(cartItems != null){
+										
+						while(cartItems.next()){
+							
+							cartTotalCost += (cartItems.getInt(3) * cartItems.getInt(5));
+							cartItemCount++;
+			%>				
 						<!-- Cart Item -->
 		                <div class="cart-preview-item">
 		
