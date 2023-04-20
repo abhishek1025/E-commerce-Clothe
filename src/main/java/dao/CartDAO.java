@@ -17,6 +17,8 @@ public class CartDAO {
 		
 		String CARTITEM_UPDATE_QUERY = "UPDATE CartItems SET quantity = ? WHERE userID = ? AND productID = ?";
 		
+		
+		
 		if(con != null) {
 						
 			try {

@@ -1,7 +1,7 @@
-<%@page import="Resources.MyConstants"%>
-<%@page import="Model.Product"%>
+<%@page import="appConstants.MyConstants"%>
+<%@page import="dao.ProductDAO"%>
+<%@page import="model.Product"%>
 <%@page import="java.util.List"%>
-<%@page import="Controller.product.ProductOperationsHandeler"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -36,7 +36,7 @@
 		String operationType = request.getParameter("operationType");
 		
 		if(operationType != null && operationType.equals("delete")){		
-			isProductDeleted = ProductOperationsHandeler.deleteProduct(Integer.parseInt(productID));
+			isProductDeleted = ProductDAO.deleteProduct(Integer.parseInt(productID));
 		}
 	%>
 

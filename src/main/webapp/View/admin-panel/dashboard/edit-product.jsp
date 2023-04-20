@@ -26,7 +26,7 @@
     	<%!Product product = null;%>
     
     	<%
-        	String operationType = request.getParameter("operationType");
+        		String operationType = request.getParameter("operationType");
         		String productID = request.getParameter("productID");
         		    		
         		if(operationType != null && productID != null && operationType.equals("update")){

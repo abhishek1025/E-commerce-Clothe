@@ -81,14 +81,21 @@ lowerSliderRating.oninput = function () {
 
 
 
-const addToCartBtnEl = document.querySelector("#addToCartBtn")
+/*const addToCartBtnEl = document.querySelector("#addToCartBtn")
 
 if(addToCartBtnEl !== null){
-	
+	console.log('hi111')
+
 	addToCartBtnEl.onclick = () => {
 		alert("Please sign in first to add the product in cart")
+		console.log('hi 2')
 	}
 	
+}*/
+
+function displayMsg() {
+	alert("Please sign in first to add the product in cart")
 }
+
 
 

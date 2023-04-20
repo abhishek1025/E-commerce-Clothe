@@ -1,7 +1,13 @@
-<%@page import="dao.UserDAO"%>
-<%@page import="appConstants.MyConstants"%>
+<%@page import="dao.ProductDAO"%>
+<%@page import="utils.HandleFilterProductsOperations"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@page import="java.util.List"%>
+<%@page import="model.Product"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="appConstants.MyConstants"%>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %> 
     
@@ -20,75 +26,6 @@
 
 <body>
 
-	<%int noOfProducts = 0; %>
-
-	<sql:setDataSource var="dbConnect"
-		driver = "<%=MyConstants.DRIVER_NAME %>"
-		url= "<%=MyConstants.DB_URL %>"
-		user="root"
-		password=""		
-	/>
-		
-	<sql:query var="productsFromDB" dataSource="${dbConnect}">
-	<%
-	
-			/* Geting all the paramater from URL i.e. GET method */
-			String operationType = request.getParameter("operationType");
-			String[] categoriesArray = request.getParameterValues("category");
-			String[] brandsArray = request.getParameterValues("brand");
-			String priceFrom = request.getParameter("priceFrom");
-			String priceTo = request.getParameter("priceTo");
-			String ratingFrom = request.getParameter("ratingFrom");
-			String ratingTo = request.getParameter("ratingTo");
-			
-			String searchBy = request.getParameter("searchBy");
-			String searchContent = request.getParameter("q");
-
-			if(operationType == null) 
-			{
-	%>
-			SELECT * FROM products;
-	<%
-
-			} else if(operationType.equals("filterProducts")) 
-			{
-				/* Converting array to the string. This is default values for product category and brand name */
-				String categoriesString = MyConstants.convertArrayToString(MyConstants.PRODUCT_CATEGORIES);
-				String brandsString = MyConstants.convertArrayToString(MyConstants.PRODUCT_BRANDS);
-					
-				/* if user has selected one or more category, then converting it to the string*/
-				if(categoriesArray != null ){
-					categoriesString = MyConstants.convertArrayToString(categoriesArray);
-				}
-				
-				/* if user has selected one or more brand name, then converting it to the string*/
-				if(brandsArray != null){
-					brandsString =  MyConstants.convertArrayToString(brandsArray);
-				}
-	%>
-				SELECT * FROM products WHERE productCategory IN (<%=categoriesString%>) AND brandName IN (<%=brandsString%>) 
-				AND (productPrice BETWEEN <%=Integer.parseInt(priceFrom)%> AND <%=Integer.parseInt(priceTo)%>) 
-				AND (productRating BETWEEN <%=Float.parseFloat(ratingFrom)%> AND <%=Float.parseFloat(ratingTo)%>); 
-	<%
-	
-			} else if(operationType.equals("searchProducts")){	
-		
-				if(searchBy.equals("productPrice")){
-				%>
-						SELECT * FROM products WHERE productPrice BETWEEN <%=Float.parseFloat(searchContent) %> AND <%=Float.parseFloat(searchContent) + 200 %> ;
-				<%
-		
-				} else {
-				%>
-					SELECT * FROM products WHERE <%=searchContent%> LIKE "<%=searchContent.toLowerCase()%>";
-				<%
-				} 
-			}
-		%>
-	</sql:query>
-
-	
-	
 
   <div class="wrapper-product-page">
 	
@@ -192,26 +129,25 @@
 
 	
 			<!-- Displaying products in product page  -->
-			<c:forEach var="product" items="${productsFromDB.rows}" >
+			<%
+				List<Product> products = HandleFilterProductsOperations.displayProductsInProductPage(request);
 			
-	 			<
-				 			p
-				 			 noOfProducts++
-				 			 %> 
+				for(Product product: products){
+			%>
 			
 				 <div class="product-card">
 		            <div class="product-image">
-		              <img src="http://localhost:8080/images/${product.productImg}" alt="" />
+		              <img src="http://localhost:8080/images/<%=product.getProductImgUrl() %>" alt="" />
 		            </div>
 		
 		            <div class="product-descriptions">
-		              <h3>${product.productName }</h3>
-		              <p>${product.brandName}</p>
-		              <p>In Stock (${product.productStock})</p>
+		              <h3><%=product.getProductName() %></h3>
+		              <p><%=product.getBrandName() %></p>
+		              <p>In Stock (<%=product.getProductStock() %>)</p>
 		
 		              <div class="price-and-rating">
-		                <span>NPR ${product.productPrice}</span>
-		                <p><i class="fa-solid fa-star rating"></i>${product.productRating}</p>
+		                <span>NPR <%=product.getProductPrice() %></span>
+		                <p><i class="fa-solid fa-star rating"></i><%=product.getProductRating() %></p>
 		              </div>
 		
 		            </div>
@@ -221,10 +157,8 @@
 		              
 		              <form action="${pageContext.request.contextPath}/product-page" method="post">
 		             	
-		             	<input type="hidden" name="productID" value="${product.productID }"/>
-		             	<input type="hidden" name="productPrice" value="${product.productPrice}"/>
-		             	
-		             			             		
+		             	<input type="hidden" name="productID" value="<%=product.getProductID() %>"/>
+		             	<input type="hidden" name="productPrice" value="<%=product.getProductPrice() %>"/>
 		             <%
 		             
 		             	String[] userDataFromCookies = UserDAO.getCookiesData(request);
@@ -240,8 +174,8 @@
 		             	
 		             <% } else { %>
 		             
-		             	<button type="button" id="addToCartBtn">
-		             			<i class="fa-solid fa-bag-shopping"></i> Add to card
+		             	<button type="button" id="addToCartBtn" onclick="displayMsg()">
+		             			<i class="fa-solid fa-bag-shopping"></i> Add to card 
 		             	</button>
 		             	
 		             <% } %>		
@@ -253,17 +187,13 @@
 		
 		          </div>
 			
-			</c:forEach>
-			
 			 <%
-				if(noOfProducts == 0){
+				}
+				
+				if(products.size() == 0){
 			%>
 					<h1>No Results Found<h1>
-			<%
-				} else{
-					noOfProducts = 0;
-				}
-			%>
+			<% } %> 
 
         </div>
 

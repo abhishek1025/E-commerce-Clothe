@@ -1,6 +1,5 @@
 package dao;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,10 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.Part;
-
 import appConstants.MyConstants;
-import model.CartItem;
 import model.Product;
 
 public class ProductDAO {
@@ -119,8 +115,6 @@ public class ProductDAO {
 			
 			ResultSet productFromDB = statement.executeQuery();
 			
-			
-			
 			while(productFromDB.next()) {
 				
 				product = new Product();
@@ -145,41 +139,49 @@ public class ProductDAO {
 	
 	
 	
-		
 	
-	public static List<Product> getAllProducts() throws SQLException, IOException{
+	public static List<Product> getAllProducts(PreparedStatement statement) throws SQLException{
 		
 		//createing an arrray list
 		
 		List<Product> allProducts = new ArrayList<Product>();
 		
-		Connection con = DbConnection.getDbConnection();
-		
-		String selectQuery = "select * from Products";
-		
-		PreparedStatement statement = con.prepareStatement(selectQuery);
-		
-		ResultSet productsFromDB = statement.executeQuery();
-		
-		while(productsFromDB.next()) {
-			Product product = new Product();
+//		Connection con = DbConnection.getDbConnection();
+	
+//		if(con != null) {
 			
-			product.setProductID(productsFromDB.getInt(1));
-			product.setProductName(productsFromDB.getString(2));
-			product.setBrandName(productsFromDB.getString(3));
-			product.setProductCategory(productsFromDB.getString(4));
-			product.setProductImgUrl(productsFromDB.getString(5));
-			product.setProductPrice(productsFromDB.getFloat(6));
-			product.setProductRating(productsFromDB.getFloat(7));
-			product.setProductStock(productsFromDB.getInt(8));
-            
-            allProducts.add(product);
-		}
+//			try {
+				
+				ResultSet productsFromDB = statement.executeQuery();
+				
+				while(productsFromDB.next()) {
+					
+					Product product = new Product();
+					
+					product.setProductID(productsFromDB.getInt(1));
+					product.setProductName(productsFromDB.getString(2));
+					product.setBrandName(productsFromDB.getString(3));
+					product.setProductCategory(productsFromDB.getString(4));
+					product.setProductImgUrl(productsFromDB.getString(5));
+					product.setProductPrice(productsFromDB.getFloat(6));
+					product.setProductRating(productsFromDB.getFloat(7));
+					product.setProductStock(productsFromDB.getInt(8));
+		            
+		            allProducts.add(product);
+				}
+				
+				
+				return allProducts;
+				
+//			} catch (SQLException e) {
+//				System.out.println(1);
+//				e.printStackTrace();
+//				return allProducts;
+//			}	
+//		}
 		
-		con.close();
 		
-		return allProducts;
-		
+//		return allProducts;
 	}
 	
 

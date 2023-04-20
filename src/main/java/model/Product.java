@@ -5,7 +5,7 @@ public class Product {
 
 	private String productName, brandName, productCategory, productImgUrl;
 	private float productPrice, productRating;
-	private int  productStock, productID;
+	private int productStock, productID;
 	
 	
 	
