@@ -23,32 +23,39 @@
         <h1>SHOPPING CART</h1>
 
         <div>
+        
             <div class="cart-checkout-items">
             
-                <form method="POST" action="${pageContext.request.contextPath}/UpdateCartQuantity">
-                
-                	<table cellspacing=0>
-                    
-	                    <tr>
-	                        <th style="width:50%">Product</th>
-	                        <th style="width:20%">Price</th>
-	                        <th>Quantity</th>
-	                    </tr>
-	
+            	<form method="POST" action="${pageContext.request.contextPath}/cartOperationsServelt">
+	                
+		        	<input type="hidden" name="cartOperationType" value="updateCartQuantity">
+		                	
+					<table cellspacing=0>
+		                    
+						<tr>
+							<th style="width:50%">Product</th>
+							<th style="width:20%">Price</th>
+							<th>Quantity</th>
+				        </tr>
+            
+           			 <%
+           					CartDAO cartdao = new CartDAO();
+           			 
+							ResultSet cartItems = cartdao.getAllCartItems(request);
 						
-						<%
-							ResultSet cartItems = CartDAO.getAllCartItems(request);
 							int itemSN = -1;
 							totalCost = 0;
-							if(cartItems != null){
-																			
-								while(cartItems.next()){
+
+							if(cartItems != null) {
+											
+								while(cartItems.next()) {
+									
 									totalCost += (cartItems.getInt(5) * cartItems.getInt(3)); 								
 									itemSN++;
 						%>			
 									<tr>
 				                       <td>
-				                            <div class=" cart-checkout-item-desc">
+				                            <div class="cart-checkout-item-desc">
 				                                <div class="item-img">
 				                                    <img src="http://localhost:8080/images/<%=cartItems.getString(4) %>" width="100px">
 				                                </div>
@@ -83,7 +90,7 @@
 				                                </div>
 	
 				                                
-				                                <a class="cart-checkout-delt-btn" href="${pageContext.request.contextPath}/View/pages/cart-checkout.jsp?cartOperationType=deleteCartItem&cartItemID=<%=cartItems.getInt(1)%>">
+				                                <a class="cart-checkout-delt-btn" href="${pageContext.request.contextPath}/cartOperationsServelt?cartOperationType=deleteCartItem&cartItemID=<%=cartItems.getInt(1)%>">
 				                                	<!-- <button type="button" class="cart-checkout-delt-btn"> -->
 				                                   		 &#10005;
 				                               		<!-- </button> -->
@@ -96,35 +103,57 @@
 				                    </tr>
 				                    
 						<%
-								}	
+								}
+						
+								if(itemSN == -1){
+						%>
+									<tr>
+									
+										<td> - </td>
+										
+										<td> - </td>
+										
+										<td> - </td>
+									
+									</tr>
+							
+						<%		
+								}
 							}
 						%>
-						                  
-
-                	</table>
-                
-                
-                	<button type="submit" class="cart-update-btn">Update Cart</button>
-                
-                </form>
-                
-                
-                
+						
+					</table>
+					
+					<%
+						if(itemSN != -1){
+					%>
+							<button type="submit" class="cart-update-btn">Update Cart</button>
+					<%	} %>
+							
+							
+				</form>
+            
+						
             </div>
 
-            <div class="order-price-details">
-                <p><span>Subtotal</span> <span>NPR <%=totalCost %></span></p>
-                <p><span>Shipping Cost</span> <span>NPR 100</span></p>
-                <div style="border-top: 1px solid #ccc; margin:20px 0;"></div>
-                <p><span>Grand Total</span> <span>NPR <%=totalCost + 100 %></span></p>
 
-                <div class="cart-checkout-btn">
-                    <button>
-                        Proceed to Checkout
-                    </button>
-                </div>
-
-            </div>
+            <% if(totalCost != 0) { %>
+            
+				<div class="order-price-details">
+	                <p><span>Subtotal</span> <span>NPR <%=totalCost %></span></p>
+	                <p><span>Shipping Cost</span> <span>NPR 100</span></p>
+	                <div style="border-top: 1px solid #ccc; margin:20px 0;"></div>
+	                <p><span>Grand Total</span> <span>NPR <%=totalCost + 100 %></span></p>
+	
+	                <div class="cart-checkout-btn">
+	                    <button>
+	                        Proceed to Checkout
+	                    </button>
+	                </div>
+	
+	            </div>
+            <% } %>
+            
         </div>
 
     </div>

@@ -1,3 +1,4 @@
+<%@page import="dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -21,18 +22,22 @@
 </head>
 
 <body>
-    
-    <aside>
+
+   	<%! String[] adminData = {}; %>
+	<% adminData = UserDAO.getCookiesData(request, "adminData"); %>
+
+ 	<aside>
 
         <section class="admin-details-wrapper">
+        
             <div class="admin-img">
-                <img src="${pageContext.request.contextPath}/assets/admin.png" alt="Admin" height="130px">
+                <img src="http://localhost:8080/images/userImages/<%=adminData[2] %>" alt="Admin" height="130px">
             </div>
 
             <div class="admin-details">
-                <h3>Admin</h3>
-                <p>admin@gmail.com</p>
+                <h3><%=adminData[0]%>  <%=adminData[1] %></h3>
             </div>
+            
         </section>
 
         <section class="panel-functions">
@@ -56,6 +61,14 @@
                 <img class="blue" src="${pageContext.request.contextPath}/assets/cart.svg" alt="Dashboard" height="18.5px">
 
                 <a href="${pageContext.request.contextPath}/View/admin-panel/orders/view-orders.jsp">View Orders</a>
+
+            </div>
+            
+            <div class="panel-function">
+
+                <img src="${pageContext.request.contextPath}/assets/sign-out.svg" alt="Dashboard" height="18.5px">
+
+                <a href="${pageContext.request.contextPath}/SignOutServlet">Sign out</a>
 
             </div>
 

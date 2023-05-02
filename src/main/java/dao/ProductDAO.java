@@ -43,24 +43,35 @@ public class ProductDAO {
 		return false;
 	}
 	
-	public static Boolean deleteProduct(int productID) throws SQLException {
+	public static Boolean deleteProduct(int productID) {
 		
 		Connection con = DbConnection.getDbConnection();
 		
 		if(con != null) {
+			
 			String deletQuery = MyConstants.PRODUCT_DELETE_QUERY;
 			
-			PreparedStatement statement = con.prepareStatement(deletQuery);
-			
-			statement.setInt(1, productID);
-			
-			int result = statement.executeUpdate();
-			
-			con.close();
-			
-			if(result > 0) {
-				return true;
+			try {
+				
+				PreparedStatement statement = con.prepareStatement(deletQuery);
+				
+				statement.setInt(1, productID);
+				
+				int result = statement.executeUpdate();
+				
+				con.close();
+				
+				if(result > 0) {
+					return true;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+				return false;
 			}
+
 		}
 		
 		return false;
@@ -90,9 +101,12 @@ public class ProductDAO {
 			
 			int result = statement.executeUpdate();
 			
+			con.close();
+			
 			if(result > 0) {
 				return true;
 			}
+			
 		}
 		
 		return false;
@@ -133,24 +147,26 @@ public class ProductDAO {
 
 		}
 		
+		con.close();
+		
 		return product;	
 		
 	}
 	
 	
-	
-	
-	public static List<Product> getAllProducts(PreparedStatement statement) throws SQLException{
+	public static List<Product> getAllProducts(boolean filterProductUsingStock){
 		
 		//createing an arrray list
 		
 		List<Product> allProducts = new ArrayList<Product>();
 		
-//		Connection con = DbConnection.getDbConnection();
+		Connection con = DbConnection.getDbConnection();
 	
-//		if(con != null) {
+		if(con != null) {
 			
-//			try {
+			try {
+				
+				PreparedStatement statement = con.prepareStatement(MyConstants.GET_All_PRODUCTS_QUERY);
 				
 				ResultSet productsFromDB = statement.executeQuery();
 				
@@ -167,22 +183,42 @@ public class ProductDAO {
 					product.setProductRating(productsFromDB.getFloat(7));
 					product.setProductStock(productsFromDB.getInt(8));
 		            
-		            allProducts.add(product);
+		            /*
+		             * To display in products in product page, we need to display the products with stock.
+		             * If the request for all products is made from product page, the filterProductUsingStock will be true.
+		             * and if the stock of product is not zero, then the product is added to array list
+		             * Simultaneously, if the request is made from dashboard page, we need to display all the product whether 
+		             * its quantity is zero or not.
+		             * 
+		             */
+					if(filterProductUsingStock && product.getProductStock() != 0) {
+						
+						allProducts.add(product);
+						
+					} else if(!filterProductUsingStock) {
+						
+						allProducts.add(product);
+						
+					}
+					
+					
 				}
 				
+				con.close();	
 				
 				return allProducts;
-				
-//			} catch (SQLException e) {
-//				System.out.println(1);
-//				e.printStackTrace();
-//				return allProducts;
-//			}	
-//		}
+						
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return allProducts;
+			}	
+		}
 		
-		
-//		return allProducts;
+		return allProducts;
 	}
+	
+	
+	
 	
 
 	

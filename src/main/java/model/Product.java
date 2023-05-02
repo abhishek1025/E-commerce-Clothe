@@ -8,7 +8,6 @@ public class Product {
 	private int productStock, productID;
 	
 	
-	
 	public String getProductName() {
 		return productName;
 	}

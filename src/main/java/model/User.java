@@ -1,8 +1,8 @@
 package model;
 
 public class User {
-	int userID;
-	String fName, lName, phoneNum, address, email, password, userImgUrl;
+	private int userID;
+	private String fName, lName, phoneNum, address, email, password, userImgUrl;
 
 	public User(String fName, String lName, String phoneNum, String address, String email, String password, String userImgUrl) {
 		this.fName = fName;

@@ -28,11 +28,14 @@ public class SignOutServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// Clear cookie
 		Cookie[] cookies = request.getCookies();
 		
     	if(cookies != null){
+    		
 	    	for(Cookie cookie : cookies){
+	    		
 	    		cookie.setMaxAge(0);
 	    		response.addCookie(cookie);
 	    	}

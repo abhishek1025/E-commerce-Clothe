@@ -1,3 +1,6 @@
+<%@page import="dao.UserDAO"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="appConstants.MyConstants"%>
 <%@page import="dao.ProductDAO"%>
 <%@page import="model.Product"%>
@@ -29,44 +32,28 @@
 
 <body>
 
- 	<%! Boolean isProductDeleted = false; %>
-	
-	<%
-    	String productID = request.getParameter("productID");
-		String operationType = request.getParameter("operationType");
-		
-		if(operationType != null && operationType.equals("delete")){		
-			isProductDeleted = ProductDAO.deleteProduct(Integer.parseInt(productID));
-		}
-	%>
+	<script src="https://kit.fontawesome.com/9c3cc2a6a3.js" crossorigin="anonymous"></script>
+ 	
+ 	<%! List<Product> products = null; %>
+ 	<% products = ProductDAO.getAllProducts(false); %>
+ 	
+ 	<%! String[] adminData = {}; %>
+	<% adminData = UserDAO.getCookiesData(request, "adminData"); %>
 
-	<sql:setDataSource var="dbConnect"
-		driver = "<%=MyConstants.DRIVER_NAME %>"
-		url= "<%=MyConstants.DB_URL %>"
-		user="root"
-		password=""		
-	/>
-
-	<sql:query var="productsFromDB" dataSource="${dbConnect}">
-		select * from products;	
-	</sql:query>
-		
-	<sql:query var="countProducts" dataSource="${dbConnect}">
-			SELECT COUNT(productID) as totalNoOfProducts FROM Products;
-	</sql:query>
-	
-	
-    <aside>
+ 	<aside>
 
         <section class="admin-details-wrapper">
+        
             <div class="admin-img">
-                <img src="${pageContext.request.contextPath}/assets/admin.png" alt="Admin" height="130px">
+            
+                <img src="http://localhost:8080/images/userImages/<%=adminData[2] %>" alt="Admin" height="130px">
+                
             </div>
 
             <div class="admin-details">
-                <h3>Admin</h3>
-                <p>admin@gmail.com</p>
+                <h3><%=adminData[0]%>  <%=adminData[1] %></h3>
             </div>
+            
         </section>
 
         <section class="panel-functions">
@@ -80,9 +67,11 @@
             </div>
 
             <div class="panel-function">
+            
                 <img src="${pageContext.request.contextPath}/assets/product.svg" alt="Dashboard" height="18.5px">
 
                 <a href="${pageContext.request.contextPath}/View/admin-panel/add-product/add-product.jsp"> Add Product </a>
+                
             </div>
 
             <div class="panel-function">
@@ -90,6 +79,14 @@
                 <img src="${pageContext.request.contextPath}/assets/cart.svg" alt="Dashboard" height="18.5px">
 
                 <a href="${pageContext.request.contextPath}/View/admin-panel/orders/view-orders.jsp">View Orders</a>
+
+            </div>
+            
+             <div class="panel-function">
+
+                <img src="${pageContext.request.contextPath}/assets/sign-out.svg" alt="Dashboard" height="18.5px">
+
+                <a href="${pageContext.request.contextPath}/SignOutServlet">Sign out</a>
 
             </div>
 
@@ -128,10 +125,7 @@
 
                     <div>
                         <p>Total Products</p>
-                        
-                        <c:forEach var="result" items="${countProducts.rows}">
-    						<span>${result.totalNoOfProducts}</span>
-						</c:forEach>
+						<span><%=products.size() %></span>
                     </div>
                 </div>
             </div>
@@ -144,35 +138,50 @@
 
                     <div class="product-cards-wrapper">
                     
+
                     	<!-- Displaying products -->
-                    	<c:forEach var="product" items="${productsFromDB.rows}" >
+                    <% 
+                    
+                    	int formIndex = 0;
+                    
+                    	for(Product product: products){ 
+                    %>
+                    	
 	                    	<div class="product-card">
-					            <img class="product-img" src="http://localhost:8080/images/${product.productImg}" alt="${product.productImg}">
-					            <p class="product-title">${product.productName}</p>
+					            <img class="product-img" src="http://localhost:8080/images/<%=product.getProductImgUrl()%>" alt="<%=product.getProductImgUrl()%>">
+					            <p class="product-title"><%=product.getProductName()%></p>
                                 
 					            <div class="product-desc">
-                                    <p><i>NPR ${product.productPrice} </i></p>
-                                    <p>In Stock (${product.productStock})</p>
+                                    <p><i>NPR <%=product.getProductPrice()%> </i></p>
+                                    <p>In Stock (<%=product.getProductStock()%>)</p>
                                 </div>
 					
 					            <div class="product-card-btn">
 					
-								<a href="edit-product.jsp?operationType=update&productID=${product.productID}">
+								<a href="edit-product.jsp?operationType=update&productID=<%=product.getProductID()%>">
 					                <button class="edit-btn">
 					                    <img src="${pageContext.request.contextPath}/assets/edit.svg" height="12px"> <span>Edit</span>
 					                </button>
 					             </a>
 					
-								<a href="dashboard.jsp?operationType=delete&productID=${product.productID}">
-					                <button class="delete-btn">
-					                    <img src="${pageContext.request.contextPath}/assets/delete.svg" height="12px"><span>Delete</span>
-					                </button>
-								</a>
+								
+					            <form method="POST" action="${pageContext.request.contextPath}/DeleteProduct" onsubmit="confirmDeltOperation(<%formIndex++;%>)" class="deletProductForm">
+					            
+					                <input type="hidden" name="productID" value="<%=product.getProductID()%>">
+					                
+									<button type="submit" class="delete-btn">
+						         		<img src="${pageContext.request.contextPath}/assets/delete.svg" height="12px"><span>Delete</span>
+						            </button>
+					                
+								</form>
+								
 								
 					            </div>
-					        </div>                    
-                    	</c:forEach>
-                    	
+					            
+					            
+					        </div>
+					       
+					  <% } %>                    
                     </div>
 
 
@@ -182,25 +191,24 @@
 
     </div>
     
+    <script>
     
-    <%
-		if(isProductDeleted){
-			
-			isProductDeleted = false;
-	%>
-			<script type="text/javascript">
-				setTimeout(() => alert('Product Deleted'), 300)
-			</script>
-	<%		
-		} 
-	%>
-
+	    const productDeltBtn = document.querySelector("#productDeltBtn");
+	    const deletProductForms = document.querySelectorAll(".deletProductForm");
+	    
+	  	function confirmDeltOperation(formIndex){
+	  		
+	        const deleteProduct = window.confirm("Are you sure you want to delete this product?")
 	
+	        if (deleteProduct) {
+	            deletProductForm[formIndex].submit();
+	        }
+	
+	
+	    } 
+    </script>
     
 
 </body>
 
-	
-
-	
 </html>

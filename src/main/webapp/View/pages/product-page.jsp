@@ -18,7 +18,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>T R E N D Y A T T I R E | PRODUCTS </title>
+  <title>TRENDY ATTIRE | PRODUCTS </title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/header-footer.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/product-page.css" />
   <script src="https://kit.fontawesome.com/1c6c06e40c.js" crossorigin="anonymous"></script>
@@ -36,12 +36,13 @@
       <img src="${pageContext.request.contextPath}/Images/product-page-banner.png" />
     </div>
 
-
+	<!-- Product Sidebar -->
     <div class="product-section-contents">
 
       <!-- Filter Details -->
       <div class="product-filter-details">
 
+		<!-- Filter Form -->
 		<form method="get">
 			
 			<input type="hidden" name="operationType" value="filterProducts">	
@@ -50,7 +51,7 @@
 	
 	          <h2>Categories</h2>
 	
-			  <p><a href="product-page.jsp">View All products</a></p>
+			  <p><a href="${pageContext.request.contextPath}/View/pages/product-page.jsp">View All products</a></p>
 			  
 			  <!-- Displaying Product category for filtering -->
 			  <%
@@ -95,10 +96,16 @@
 	        
 	          </p>
 	        
+
+	        
 	        </div>
 	        
 	        <div class="rating-product price-product">
+	        
+	        	
+	        
 	          <h2>Rating</h2>
+	          
 	          <div class="multi-range">
 	            <input type="range" min="0" max="5" step="0.1" value="0"  id="lowerRating" name="ratingFrom">
 	            <input type="range" min="0" max="5" step="0.2" value="5"  id="upperRating" name="ratingTo">
@@ -115,14 +122,18 @@
 	        </div>
 	        
 	        <div class="reset-apply-button">
+	        
 	          <a href="product-page.jsp"><button id="reset-button" type="button">Reset</button></a>
+	          
 	          <button id="apply-button" type="submit">Apply</button>
+	          
 	        </div>
 	
        </form>
 
       </div>
 
+	  <!-- Product display -->
       <div class="product-details">
 
         <div class="product-cards">
@@ -130,7 +141,8 @@
 	
 			<!-- Displaying products in product page  -->
 			<%
-				List<Product> products = HandleFilterProductsOperations.displayProductsInProductPage(request);
+				HandleFilterProductsOperations filterProduct = new HandleFilterProductsOperations();
+				List<Product> products = filterProduct.displayProductsInProductPage(request);
 			
 				for(Product product: products){
 			%>
@@ -155,30 +167,30 @@
 		
 		            <div class="add-to-card-btn">
 		              
-		              <form action="${pageContext.request.contextPath}/product-page" method="post">
+		              <form action="${pageContext.request.contextPath}/cartOperationsServelt" method="post">
 		             	
 		             	<input type="hidden" name="productID" value="<%=product.getProductID() %>"/>
 		             	<input type="hidden" name="productPrice" value="<%=product.getProductPrice() %>"/>
-		             <%
-		             
-		             	String[] userDataFromCookies = UserDAO.getCookiesData(request);
-		             			             			             				             		             	
-						if(userDataFromCookies.length != 0){
-					  %>
-		             
-		             	<input type="hidden" name="userID" value="<%=userDataFromCookies[0]%>"/>
-		             
-		             	<button type="submit">
-		             			<i class="fa-solid fa-bag-shopping"></i> Add to card
-		             	</button>
-		             	
-		             <% } else { %>
-		             
-		             	<button type="button" id="addToCartBtn" onclick="displayMsg()">
-		             			<i class="fa-solid fa-bag-shopping"></i> Add to card 
-		             	</button>
-		             	
-		             <% } %>		
+			             <%
+			             
+			            	 String[] userDataFromCookies = UserDAO.getCookiesData(request, "userData");
+			             			             			             				             		             	
+							if(userDataFromCookies.length != 0){
+						  %>
+			             
+			             	<input type="hidden" name="userID" value="<%=userDataFromCookies[0]%>"/>
+			             
+			             	<button type="submit">
+			             			<i class="fa-solid fa-bag-shopping"></i> Add to card
+			             	</button>
+			             	
+			             <% } else { %>
+			             
+			             	<button type="button" id="addToCartBtn" onclick="displayMsg()">
+			             			<i class="fa-solid fa-bag-shopping"></i> Add to card 
+			             	</button>
+			             	
+			             <% } %>		
 		             				             	
 		             			              
 		              </form>

@@ -55,6 +55,7 @@ public class userRegister extends HttpServlet {
 		int isUserRegistered = UserDAO.registerUser(MyConstants.INSERT_USER_QUERY, user);
 		
 		if(isUserRegistered == 1) {
+			 
 			request.getRequestDispatcher("sign-up.html").include(request, response);
 			
 			out.println("<script type=\"text/javascript\">");
@@ -63,6 +64,7 @@ public class userRegister extends HttpServlet {
 			
 			
 		} else if (isUserRegistered == 0) {
+			
 			request.getRequestDispatcher("sign-up.html").include(request, response);
 			
 			out.println("<script type=\"text/javascript\">");

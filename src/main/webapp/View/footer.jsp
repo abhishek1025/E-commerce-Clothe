@@ -35,7 +35,7 @@
                 <p>Account</p>
                 <br />
                 <a href="${pageContext.request.contextPath}/sign-up.html">Sign up</a>
-                <a href="${pageContext.request.contextPath}/sign-in.html">Sign in</a>
+                <a href="${pageContext.request.contextPath}/sign-in.jsp">Sign in</a>
             </div>
 
             <div class="quick-links">

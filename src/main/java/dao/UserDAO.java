@@ -4,26 +4,39 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import appConstants.MyConstants;
+import model.Admin;
 import model.PasswordEncryptionUsingAES;
 import model.User;
 
 public class UserDAO {
 	
-	public static Boolean findUser(String userEmail) throws SQLException {
+	public static Boolean findUser(String userEmail, String accountType) throws SQLException {
 		
 		Connection con = DbConnection.getDbConnection();
-		String query = MyConstants.GET_USER_BY_EMAIL_QUERY;
 		
+		String getUserQuery = MyConstants.GET_USER_BY_EMAIL_QUERY;
+		
+		String getAdminQuery = MyConstants.GET_ADMIN_BY_EMAIL_QUERY;
+		
+		PreparedStatement statement = null;
+				
 		if(con != null) {
 			
-			PreparedStatement statement = con.prepareStatement(query);
-			
+			if(accountType.equals("admin")) {
+				
+				statement = con.prepareStatement(getAdminQuery);
+				
+			} else {
+				
+				statement = con.prepareStatement(getUserQuery);
+				
+			}
+		
 			statement.setString(1, userEmail);
 			
 			ResultSet result = statement.executeQuery();
@@ -48,7 +61,7 @@ public class UserDAO {
 			
 			try {
 				
-				if(!findUser(user.getEmail())) {		
+				if(!findUser(user.getEmail(), "user")) {		
 
 					PreparedStatement statement = con.prepareStatement(query);
 					
@@ -128,18 +141,65 @@ public class UserDAO {
 	}
 	
 	
-	public static int logInUser(String userEmail, String userPassword) {
+	public static Admin getAminDataUsingEmail(String userEmail) {
+			
+			Connection con = DbConnection.getDbConnection();		
+			
+			String query = "SELECT name, email, adminImg FROM ADMINS WHERE email = ?";
+			
+			Admin admin = null;
+		
+			try {
+				
+				PreparedStatement statement = con.prepareStatement(query);
+				
+				statement.setString(1, userEmail);
+				
+				ResultSet queryResult = statement.executeQuery();
+				
+				while(queryResult.next()) {
+	
+					admin = new Admin(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3));
+					
+				}
+				
+				return admin;
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return admin;
+			}
+		
+		}
+		
+	
+	
+	public static int logInUser(String userEmail, String userPassword, String accountType) {
 		
 		Connection con = DbConnection.getDbConnection();
+		
+		String getEncryptedPasswordQuery = "";
 		
 		if(con != null ) {
 			
 			try {
 				
-				if(findUser(userEmail)) {
-					String getEncryptedPasswordQuery = "SELECT encryptedPassword FROM USERS WHERE email = ?";
+				if(findUser(userEmail, accountType)) {
+					
+					if(accountType.equals("admin")) {
+						
+						getEncryptedPasswordQuery =  "SELECT encryptedPassword FROM ADMINS WHERE email = ?";
+						
+					} else {
+						
+						getEncryptedPasswordQuery = "SELECT encryptedPassword FROM USERS WHERE email = ?";
+						
+					}
 					
 					PreparedStatement statement = con.prepareStatement(getEncryptedPasswordQuery);
+					
 					statement.setString(1, userEmail);
 					
 					ResultSet queryResult = statement.executeQuery();
@@ -149,6 +209,7 @@ public class UserDAO {
 					while(queryResult.next()) {
 						encryptedPassword = queryResult.getString(1);
 					}
+					
 					
 					String decryptedPassword = PasswordEncryptionUsingAES.decrypt(encryptedPassword, userEmail);
 										
@@ -174,31 +235,30 @@ public class UserDAO {
 	}
 	
 	
-	public static String[] getCookiesData(HttpServletRequest request) {
+	public static String[] getCookiesData(HttpServletRequest request, String cookieName) {
 		
 		Cookie[] cookies = request.getCookies();
 		
-		String[] userData = {};
+		String[] cookieData = {};
+		
 		
     	if(cookies != null){
     		
 	    	for(Cookie cookie : cookies){
 	    		
-	    		if(cookie.getName().equals("userData")) {
+	    		if(cookie.getName().equals(cookieName)) {
 	    			
 	    			String cookieValue = cookie.getValue();
 	    			
-	    			userData = cookieValue.split("\\|");
+	    			cookieData = cookieValue.split("\\|");
 	    			
-	    			return userData;
-	    			
-	    		}
+	    		} 
 	    		
 	    	}
 	    	
     	}
     	
-    	return userData;
+    	return cookieData;
 	}
 	
 }

@@ -39,6 +39,17 @@
           
           <div class="email-pass">
           
+          <select name="accountType" style="width:302px; height:36px; margin-top:20px;" required>
+          
+          	<option value="">Choose Account Type</option>
+          	<option value="admin">Admin</option>
+          	<option value="user">User</option>
+          
+          </select>
+          
+          <br />
+		  <br />
+          
           	<%
           		String isPasswordMatched = (String) request.getAttribute("isPasswordMatched");
           	
@@ -50,8 +61,7 @@
 	            	<input type="password" name="password" placeholder="Password" value="<%=request.getParameter("password") %>" required />
           	
           	<%} else { %>
-          	
-          
+         
 			 		<input type="text" name="email" placeholder="Email" required />
 		            <br />
 		            <br />

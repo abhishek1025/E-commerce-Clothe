@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
+import model.Admin;
 import model.User;
 
 /**
@@ -34,35 +35,49 @@ public class userLogIn extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String accountType = request.getParameter("accountType");
 		String userEmail = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		int isUserLoggedIn = UserDAO.logInUser(userEmail, password);
+		int isUserLoggedIn = UserDAO.logInUser(userEmail, password, accountType);
 		
 		PrintWriter out = response.getWriter();
 		
 		if(isUserLoggedIn == 1) {
-			/*
-			 * The boolean parameter 'false' has been passed so that a new session is not 
-			 * created since the session already exists
-			 * */
 			
-			User user = UserDAO.getUserDataUsingEmail(userEmail);
-			
-			HttpSession session = request.getSession();
-			
-			session.setAttribute("UserName", user.getfName());
-			
-			//setting session to expiry in 30 mins
-			session.setMaxInactiveInterval(30*60);
+			if(accountType.equals("user")) {
+				
+				User user = UserDAO.getUserDataUsingEmail(userEmail);
+				
+				HttpSession session = request.getSession();
+				session.setAttribute("userLogInSession", "log in session");
+				session.setMaxInactiveInterval(30*60);
+				
+				Cookie cookieObj = new Cookie("userData", user.getUserID() + "|" + user.getfName() + "|" + user.getlName() + "|" + user.getUserImgUrl());
+				
+				cookieObj.setMaxAge(30*60);
+				
+				response.addCookie(cookieObj);
+				
+				response.sendRedirect("home.jsp");
+				
+			} else {
+				
+				Admin admin = UserDAO.getAminDataUsingEmail(userEmail);
+				
+				HttpSession session = request.getSession();
+				session.setAttribute("adminLogInSession", "log in session");
+				session.setMaxInactiveInterval(30*60);
 
-			Cookie userName = new Cookie("userData", user.getUserID() + "|" +user.getfName() + "|" + user.getlName() + "|" + user.getUserImgUrl());
-			
-			userName.setMaxAge(30*60);
-			
-			response.addCookie(userName);
-			
-			response.sendRedirect("home.jsp");
+				Cookie cookieObj = new Cookie("adminData", admin.getName().replace(" ", "|") + "|" + admin.getAdminImg());
+				
+				cookieObj.setMaxAge(30*60);
+				
+				response.addCookie(cookieObj);
+				
+				response.sendRedirect("View/admin-panel/dashboard/dashboard.jsp");
+				
+			}
 			
 		} else if(isUserLoggedIn == 2) {
 			
@@ -71,7 +86,7 @@ public class userLogIn extends HttpServlet {
 			request.getRequestDispatcher("sign-in.jsp").include(request, response);
 			
 			out.println("<script type=\"text/javascript\">");
-			out.println("setTimeout(() => alert('Password does not match'), 500);");
+			out.println("setTimeout(() => alert('Password does not match', 600));");
 			out.println("</script>");
 			
 		} else if(isUserLoggedIn == 0) {
@@ -79,14 +94,14 @@ public class userLogIn extends HttpServlet {
 			request.getRequestDispatcher("sign-in.jsp").include(request, response);
 			
 			out.println("<script type=\"text/javascript\">");
-			out.println("setTimeout(() => alert('User not found, please create an account'), 500);");
+			out.println("setTimeout(() => alert('User not found', 600));");
 			out.println("</script>");
 			
 		} else {
 			request.getRequestDispatcher("sign-in.jsp").include(request, response);
 			
 			out.println("<script type=\"text/javascript\">");
-			out.println("setTimeout(() => alert('Server Error'), 500);");
+			out.println("setTimeout(() => alert('Server Error'), 600));");
 			out.println("</script>");
 			
 		}

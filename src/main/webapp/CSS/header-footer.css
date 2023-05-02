@@ -50,9 +50,10 @@
   display: flex;
   justify-content: space-evenly;
   list-style-type: none;
-  width: 30%;
+  width: 40%;
   margin: 20px auto;
   font-weight: 800;
+  column-gap:20px;
 }
 
 .header-section-2 a {

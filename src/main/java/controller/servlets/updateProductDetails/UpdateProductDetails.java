@@ -72,6 +72,7 @@ public class UpdateProductDetails extends HttpServlet {
 		try {
 			
 			PrintWriter out = response.getWriter();
+			
 			Boolean isProductDetailsChanged = ProductDAO.updateProductDetails(product);
 			
 			if(isProductDetailsChanged)

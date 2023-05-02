@@ -19,16 +19,11 @@
 	<!-- Declaring global variables -->
 	<%!String[] userData = {};%>
 	<%!int cartTotalCost;%> 
-	<%!int isCartItemDeleted = 0;%> 
 	
 	<%
-		userData = UserDAO.getCookiesData(request);
+		userData = UserDAO.getCookiesData(request, "userData");
  	%>
-	
-	<!-- Cart Item Delete Operations -->
-	<%
-	isCartItemDeleted = CartDAO.deletCartItem(request);
-	%>
+
 
     <script src="https://kit.fontawesome.com/1c6c06e40c.js" crossorigin="anonymous"></script>
     
@@ -82,8 +77,8 @@
                         <div>
                         
                         <%
-                                                if(userData.length != 0){
-                                                %>
+                           if(userData.length != 0){
+						%>
                         	<!-- User Image and name section -->
                             <div class="user-desc">
                             
@@ -96,16 +91,14 @@
                             
 							<div style="border-top: 1px solid #ccc; margin:15px 0;"></div>
                         	
-                        <%
-                        	                        }
-                        	                        %>
+                        <%}%>
                         
 							<!-- Links available for user-->
                             <ul class="user-functions">
                             
                             	<%
-                                                        	if(userData.length == 0){
-                                                        	%>
+									if(userData.length == 0){
+								%>
 		                                <!-- Display when user is not signed in -->
 		                                 <li>
 		                                    <a href="${pageContext.request.contextPath}/sign-in.jsp">
@@ -119,9 +112,8 @@
 		                                    </a>
 		                                </li> 
                                 
-                                 <%
-                                                                  } else{
-                                                                  %>
+                                 <% } else{ %>
+                                 
                                  		<li>
 		                                    <a href="#">
 		                                        <i class="fa-regular fa-user"></i> View Profile
@@ -176,6 +168,8 @@
                     <li><a href="${pageContext.request.contextPath}/View/pages/product-page.jsp">Products</a></li>
                     <hr />
                     <li><a href="${pageContext.request.contextPath}/View/pages/contact-us.jsp">Contact us</a></li>
+                    <hr />
+                    <li><a href="${pageContext.request.contextPath}/View/admin-panel/dashboard/dashboard.jsp">Dashboard</a></li>
                 </ul>
             </nav>
         </div>
@@ -200,15 +194,17 @@
 
 			<!-- Displaying Cart Items -->
 			<%
-			ResultSet cartItems = CartDAO.getAllCartItems(request);
-					int cartItemCount = 0;
-					cartTotalCost = 0;
-					if(cartItems != null){
+				CartDAO cartdao = new CartDAO();
+				ResultSet cartItems = cartdao.getAllCartItems(request);
+				int cartItemCount = 0;
+				cartTotalCost = 0;
+				
+				if(cartItems != null){
 										
-						while(cartItems.next()){
+					while(cartItems.next()){
 							
-							cartTotalCost += (cartItems.getInt(3) * cartItems.getInt(5));
-							cartItemCount++;
+						cartTotalCost += (cartItems.getInt(3) * cartItems.getInt(5));
+						cartItemCount++;
 			%>				
 						<!-- Cart Item -->
 		                <div class="cart-preview-item">
@@ -230,9 +226,9 @@
 		
 		                        <div class="cart-preview-item-delt-btn">
 		                        
-		                            <form method="POST">
+		                            <form method="GET" action="${pageContext.request.contextPath}/cartOperationsServelt">
 		                            
-		                        		<input type="hidden" name="cartOperationType" value="deletCartItem">
+		                        		<input type="hidden" name="cartOperationType" value="deleteCartItem">
 		                        		<input type="hidden" name="cartItemID" value="<%=cartItems.getInt(1)%>">
 		                        		
 		                            	<button type="submit">&#10005;</button>
@@ -242,7 +238,7 @@
 		                        
 		                   	</div>
 		                   </div> 
-		<%
+			<%
 					}
 					
 					if(cartItemCount == 0) {
@@ -277,16 +273,7 @@
 
     <script src="${pageContext.request.contextPath}/JS/header.js"></script>
     
-    <script type="text/javascript">
-    	
-    	<% 
-    		if(isCartItemDeleted == 1){
-    			isCartItemDeleted = 0;
-    	%>
-    			setTimeout(()=> alert("Cart Item Deleted Sucessfully"), 500);
-    	<%	} %>
-    
-    </script>
+
 </body>
 
 </html>
