@@ -158,7 +158,7 @@
 					
 					            <div class="product-card-btn">
 					
-								<a href="edit-product.jsp?operationType=update&productID=<%=product.getProductID()%>">
+								<a href="${pageContext.request.contextPath}/View/admin-panel/dashboard/edit-product.jsp?operationType=update&productID=<%=product.getProductID()%>">
 					                <button class="edit-btn">
 					                    <img src="${pageContext.request.contextPath}/assets/edit.svg" height="12px"> <span>Edit</span>
 					                </button>

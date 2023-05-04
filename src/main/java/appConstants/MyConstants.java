@@ -1,4 +1,4 @@
-package appConstants;
+ package appConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,9 +34,9 @@ public class MyConstants {
 	
 	public static final String UPDATE_CART_ITEM_QUERY = "UPDATE CARTITEMS SET quantity = ? WHERE cartItemID = ?";
 	
-	public static final String GET_CART_ITEM_QUERY = "SELECT  cartItemID, quantity FROM CARTITEMS WHERE userID = ? AND productID = ?";
+	public static final String GET_CART_ITEM_QUERY = "SELECT  cartItemID, quantity FROM CARTITEMS WHERE userID = ? AND productID = ? AND status = ?";
 	
-	public static final String GET_CART_ITEMS_DETAILS_QUERY = "SELECT CI.cartItemID, P.productName, P.productPrice, P.productImg, CI.quantity FROM CartItems as "
+	public static final String GET_CART_ITEMS_DETAILS_QUERY = "SELECT CI.cartItemID, P.productName, P.productPrice, P.productImg, CI.quantity, CI.productID, P.productStock FROM CartItems as "
 			+ "CI INNER JOIN Products as P ON CI.productID = P.productID WHERE CI.userID = ? AND CI.status = ?";
 
 	

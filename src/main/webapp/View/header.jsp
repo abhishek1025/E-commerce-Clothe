@@ -43,6 +43,7 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
 
+				<!-- Seach box form-->
                 <form action="${pageContext.request.contextPath}/View/pages/product-page.jsp" method="GET" class="search-form" id="search-box">
                     
                     <input type="hidden" name="operationType" value="searchProducts">
@@ -230,6 +231,8 @@
 		                            
 		                        		<input type="hidden" name="cartOperationType" value="deleteCartItem">
 		                        		<input type="hidden" name="cartItemID" value="<%=cartItems.getInt(1)%>">
+		                        		<input type="hidden" name="quantity" value="<%=cartItems.getInt(5)%>">
+		                        		<input type="hidden" name="productID" value="<%=cartItems.getInt(6)%>">
 		                        		
 		                            	<button type="submit">&#10005;</button>
 		                           		 

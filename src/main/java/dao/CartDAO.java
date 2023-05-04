@@ -30,6 +30,9 @@ public class CartDAO {
 				// fetching the quantity and cartItemID of cart item if it exists
 				CartItem updatedCartItemDetails = checkCartItemExits(cartitem);
 				
+				// the quantity of product is passed 1 because every time we add or re-add a product to a cart, the quantity will always be one
+				int queryResultFromUpdateProductStock = ProductDAO.manageProductStock("DECREASE STOCK", cartitem.getProductID(), 1);
+				
 				//if cartItemID is zero, that means the cart item does not exist. So, we are inserting new item.
 				if(updatedCartItemDetails.getCartItemID() == 0) {
 					
@@ -42,7 +45,7 @@ public class CartDAO {
 					
 					int queryResult = statement.executeUpdate();
 					
-					if(queryResult > 0) {
+					if(queryResult > 0 && queryResultFromUpdateProductStock > 0) {
 						return 1;
 					} 
 									
@@ -51,7 +54,7 @@ public class CartDAO {
 					// if cartItemID is not zero, the cart item exists and we are increasing the quantity by one. 
 					int queryResult = updateCartItem(updatedCartItemDetails.getCartItemID(), updatedCartItemDetails.getQuantity() + 1);
 					
-					if(queryResult > 0) {
+					if(queryResult > 0 && queryResultFromUpdateProductStock > 0) {
 						return 2;
 					} 
 											
@@ -92,6 +95,7 @@ public class CartDAO {
 			
 			statement.setInt(1, cartitem.getUserID());
 			statement.setInt(2, cartitem.getProductID());
+			statement.setString(3, "IN CART");
 			
 			ResultSet queryResult = statement.executeQuery();
 			
@@ -165,7 +169,6 @@ public class CartDAO {
 		Connection con = DbConnection.getDbConnection();
 		
 		ResultSet queryResult = null;
-		
 		
 		if(con != null && userData.length != 0) {
 			

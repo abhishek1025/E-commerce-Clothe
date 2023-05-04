@@ -173,7 +173,7 @@
                             </div>
 
                             <div>
-                                <input type="number" step="any" min="100" name="productPrice" value="<%=product.getProductPrice() %>" required>
+                                <input type="number" step="any" min="100" max="20000" name="productPrice" value="<%=product.getProductPrice() %>" required>
                             </div>
                         </div>
 

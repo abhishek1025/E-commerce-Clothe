@@ -65,8 +65,8 @@ public class HandleFilterProductsOperations {
 			
 
 			if(searchBy.equals("productPrice")) {
-				float price = Float.parseFloat(searchContent)
-						;
+				
+				float price = Float.parseFloat(searchContent);
 				filteredProducts = products.stream()
 						.filter(product -> product.getProductPrice() == price)
 						.collect(Collectors.toCollection(ArrayList::new));
@@ -83,7 +83,7 @@ public class HandleFilterProductsOperations {
 						.filter(product -> product.getBrandName().equals(searchContent))
 						.collect(Collectors.toCollection(ArrayList::new));
 				
-			}else if(searchBy.equals("productName")) {
+			} else if(searchBy.equals("productName")) {
 				
 				filteredProducts = products.stream()
 						.filter(product -> product.getProductName().toLowerCase().contains(searchContent))

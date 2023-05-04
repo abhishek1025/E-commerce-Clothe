@@ -84,8 +84,8 @@
 	          <h2>Price</h2>
 	        
 	          <div class="multi-range">
-	            <input type="range" min="100" max="5000" value="100" id="lower" name="priceFrom">
-	            <input type="range" min="100" max="5000" value="5000" id="upper" name="priceTo">
+	            <input type="range" min="100" max="20000" value="100" id="lower" name="priceFrom">
+	            <input type="range" min="100" max="20000" value="20000" id="upper" name="priceTo">
 	          </div>
 	        
 	          <p>

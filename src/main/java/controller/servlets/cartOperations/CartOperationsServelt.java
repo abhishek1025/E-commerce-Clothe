@@ -2,6 +2,7 @@ package controller.servlets.cartOperations;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.CartDAO;
+import dao.ProductDAO;
 import model.CartItem;
 
 /**
@@ -40,6 +42,17 @@ public class CartOperationsServelt extends HttpServlet {
 		if(operationType != null && operationType.equals("deleteCartItem")) {
 			
 			int cartItemID = Integer.parseInt(request.getParameter("cartItemID"));
+			int productID = Integer.parseInt(request.getParameter("productID"));
+			int quantity =  Integer.parseInt(request.getParameter("quantity"));
+			
+			try {
+				
+				ProductDAO.manageProductStock("INCREASE STOCK", productID, quantity);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			int queryResult = cartdao.deletCartItem(cartItemID);
 			
@@ -98,7 +111,7 @@ public class CartOperationsServelt extends HttpServlet {
 			} else if(queryResult == 2) {
 				
 				out.println("<script type=\"text/javascript\">");
-				out.println("setTimeout(() => alert('Product already exists in cart. The quantity of product is increase by 1'), 500);");
+				out.println("setTimeout(() => alert('Product already exists in cart. The quantity of product is increased by 1'), 500);");
 				out.println("</script>");
 				
 			} else {
@@ -110,7 +123,11 @@ public class CartOperationsServelt extends HttpServlet {
 		} else if(operationType.equals("updateCartQuantity")) {
 			
 			String[] cartItemIDs = request.getParameterValues("cartItemID");
-			String[] cartQuantities = request.getParameterValues("quantity");
+			String[] productIDs = request.getParameterValues("productID");
+			String[] cartOldQuantities = request.getParameterValues("oldQuantity");
+			String[] cartNewQuantities = request.getParameterValues("newQuantity");
+			
+			System.out.print(Arrays.toString(productIDs));
 
 			int totalUpdatedRows = 0;
 			
@@ -120,9 +137,34 @@ public class CartOperationsServelt extends HttpServlet {
 			for(int i = 0; i < cartItemIDs.length; i++ ) {
 				
 				int cartItemID = Integer.parseInt(cartItemIDs[i]);
-				int quantity = Integer.parseInt(cartQuantities[i]);
+				int oldQuantity = Integer.parseInt(cartOldQuantities[i]);
+				int newQuantity = Integer.parseInt(cartNewQuantities[i]);
+				
+				int productID = Integer.parseInt(productIDs[i]);
+				
+				int changeInQuantity = newQuantity - oldQuantity;
+				
+				/*
+				 * New Quantity | old Quantity |  -> changeInQuantity = new - old
+				 *	10	 		|	 5 		   |  -> 5 (+ve) decrease Stock 
+				 *	2	  		|    5 		   |  -> -3 (-ve) increase stock
+				 */
+				
+				try {
+					
+					if(changeInQuantity > 0) {
+						int result = ProductDAO.manageProductStock("DECREASE STOCK", productID, Math.abs(changeInQuantity));
+					} else {
+						int result = ProductDAO.manageProductStock("INCREASE STOCK", productID, Math.abs(changeInQuantity));
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			
-				int updatedRows = cartdao.updateCartItem(cartItemID, quantity);
+				int updatedRows = cartdao.updateCartItem(cartItemID, newQuantity);
 			
 				totalUpdatedRows += updatedRows;
 			}

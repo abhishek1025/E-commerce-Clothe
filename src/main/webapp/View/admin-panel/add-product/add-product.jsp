@@ -155,7 +155,7 @@
                             </div>
 
                             <div>
-                                <input type="number" step="any" min="100" name="productPrice" required>
+                                <input type="number" step="any" min="100" max="20000" name="productPrice" required>
                             </div>
                         </div>
 

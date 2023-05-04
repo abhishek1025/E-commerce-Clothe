@@ -218,6 +218,75 @@ public class ProductDAO {
 	}
 	
 	
+	public static int getProductStockByProductID(int productID) throws SQLException {
+		
+		Connection con = DbConnection.getDbConnection();
+		
+		String query = "SELECT productStock FROM products WHERE productID = ?";
+		
+		if(con != null) {
+			
+			PreparedStatement statement = con.prepareStatement(query);
+			
+			statement.setInt(1, productID);
+			
+			ResultSet queryResult = statement.executeQuery();
+			
+			while(queryResult.next()) {
+				return queryResult.getInt(1);
+			}
+			
+		}
+		
+		con.close();
+		
+		return 0;
+		
+	}
+	
+	
+	
+	public static int manageProductStock(String stockOperation, int productID, int quantity) throws SQLException {
+		
+		Connection con = DbConnection.getDbConnection();
+		
+		String query = "UPDATE Products SET productStock = ? WHERE productID = ?";
+		
+		if(con != null) {
+			
+			int productStock = getProductStockByProductID(productID);
+			
+			PreparedStatement statement = con.prepareStatement(query);
+			
+			//setting product id in query
+			statement.setInt(2, productID);
+						
+			// Stock will increase if the user delete the item from cart before purchasing it
+			if(stockOperation.equals("INCREASE STOCK")) {
+				
+				// setting stock in query
+				statement.setInt(1, productStock + quantity);
+				
+			}
+			// Stock will decrease if the user add or update the quantity of cart items
+			else if(stockOperation.equals("DECREASE STOCK")) {
+				
+				// setting stock in query
+				statement.setInt(1, productStock - quantity);
+				
+			}
+
+			int queryResult = statement.executeUpdate();
+			
+			if(queryResult > 0) {
+				return queryResult;
+			}
+			
+		}
+		
+		return 0;
+		
+	}
 	
 	
 

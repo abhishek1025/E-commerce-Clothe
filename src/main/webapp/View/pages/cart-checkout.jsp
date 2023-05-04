@@ -1,3 +1,4 @@
+<%@page import="dao.UserDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="dao.CartDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -82,18 +83,24 @@
 				                                    
 													<input type="hidden" name="cartItemID" value="<%=cartItems.getInt(1)%>"/>
 													
-				                                    <input type="number" min="1" name="quantity" value="<%=cartItems.getInt(5)%>" class="productQuantity">
+													<input type="hidden" name="oldQuantity" value="<%=cartItems.getInt(5)%>">
+													
+													<input type="hidden" name="productID" value="<%=cartItems.getInt(6)%>">
+													
+				                                    <input type="number" min="1" max="<%=cartItems.getInt(7) + cartItems.getInt(5)%>" name="newQuantity" value="<%=cartItems.getInt(5)%>" class="productQuantity">
+				                                    
 	
 				                                    <button type="button" class="increaseBtn" onclick="increaseQuantity(<%=itemSN%>)">
 				                                        +
 				                                    </button>
+				                                    
 				                                </div>
 	
 				                                
-				                                <a class="cart-checkout-delt-btn" href="${pageContext.request.contextPath}/cartOperationsServelt?cartOperationType=deleteCartItem&cartItemID=<%=cartItems.getInt(1)%>">
-				                                	<!-- <button type="button" class="cart-checkout-delt-btn"> -->
+				                                <a 
+				                                	class="cart-checkout-delt-btn" 
+				                                	href="${pageContext.request.contextPath}/cartOperationsServelt?cartOperationType=deleteCartItem&cartItemID=<%=cartItems.getInt(1)%>&productID=<%=cartItems.getInt(6)%>&quantity=<%=cartItems.getInt(5)%>">
 				                                   		 &#10005;
-				                               		<!-- </button> -->
 				                                </a>
 				                                	
 	
@@ -137,21 +144,36 @@
             </div>
 
 
-            <% if(totalCost != 0) { %>
+            <% 
+            	String[] userData = UserDAO.getCookiesData(request, "userData");
             
-				<div class="order-price-details">
-	                <p><span>Subtotal</span> <span>NPR <%=totalCost %></span></p>
-	                <p><span>Shipping Cost</span> <span>NPR 100</span></p>
-	                <div style="border-top: 1px solid #ccc; margin:20px 0;"></div>
-	                <p><span>Grand Total</span> <span>NPR <%=totalCost + 100 %></span></p>
-	
-	                <div class="cart-checkout-btn">
-	                    <button>
-	                        Proceed to Checkout
-	                    </button>
-	                </div>
-	
-	            </div>
+            	if(totalCost != 0) { 
+            %>
+					<div class="order-price-details">
+		                <p><span>Subtotal</span> <span>NPR <%=totalCost %></span></p>
+		                <p><span>Shipping Cost</span> <span>NPR 100</span></p>
+		                <div style="border-top: 1px solid #ccc; margin:20px 0;"></div>
+		                <p><span>Grand Total</span> <span>NPR <%=totalCost + 100 %></span></p>
+		
+		                <div class="cart-checkout-btn">
+		                   
+		                   <form action="${pageContext.request.contextPath}/PlaceOrderServlet" method="Post">
+		                   
+		                   		<input type="hidden" name="userID" value="<%=userData[0]%>">
+		                   		<input type="hidden" name="userFullName" value="<%=userData[1] + " " + userData[2]%>">
+		                   		
+		                   		<input type="hidden" name="orderTotal" value="<%=totalCost + 100 %>">
+		                   
+		                   	 	<button type="submit">
+		                    	    Proceed to Checkout
+		                    	</button>
+		                   
+		                   
+		                   </form>
+		                   
+		                </div>
+		
+		            </div>
             <% } %>
             
         </div>
