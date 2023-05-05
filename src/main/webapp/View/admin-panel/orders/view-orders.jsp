@@ -1,3 +1,6 @@
+<%@page import="dao.OrderDAO"%>
+<%@page import="model.OrderDetails"%>
+<%@page import="java.util.List"%>
 <%@page import="dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -86,22 +89,46 @@
             <div class="order-list">
                 <table>
                     <tr>
-                        <th style="width: 15%;">Order ID</th>
+                        <th style="width: 15%;">SN</th>
                         <th>Customer Name</th>
                         <th style="width: 20%;">Order Total</th>
-                        <th style="width: 20%;">Order Date</th>
+                        <th style="width: 23%;">Order Date</th>
                     </tr>
 
 
-                    <tr>
-                        <td>1</td>
-                        <td>Abhishek Shrestha</td>
-                        <td>5000</td>
-                        <td>2022/05/08</td>
-                        <td><a href="order-items.jsp">View Items</a></td>
-                    </tr>
+                    <%
+                    	OrderDAO orderdao = new OrderDAO();
+                    
+                    	List<OrderDetails> allOrders = orderdao.getAllOrderDetails();
+                    	
+                    	int SN = 1;
 
-                 
+                    	for(OrderDetails order: allOrders){
+					%>
+							<tr>
+		                        <td><%=SN++%></td>
+		                        <td><%=order.getCustomerName() %></td>
+		                        <td>NPR <%=order.getOrderTotal() %></td>
+		                        <td><%=order.getOrderDate().toString().replace("T", " ") %></td>
+		                        
+		                        <td>
+		                        	<%-- <a href="order-items.jsp?customerName=<%=order.getCustomerName()%>&orderID=<%=order.getOrderID()%>"> --%>
+		                        	<!-- </a> -->
+		                        	
+		                        	<form method="POST" action="order-items.jsp">
+		                        	
+		                        		<input type="hidden" name="orderID" value="<%=order.getOrderID()%>">
+		                        		<input type="hidden" name="customerName" value="<%=order.getCustomerName()%>">
+		                        		<input type="hidden" name="orderTotal" value="<%=order.getOrderTotal()%>">
+		                        		<input type="hidden" name="orderDate" value="<%=order.getOrderDate().toString().replace("T", " ")%>">
+		                        		
+		                        		<button type="submit" style="all:unset; cursor:pointer; color:blue;">View Items</button>
+		                        	
+		                        	</form>
+		                        </td>
+		                        
+		                    </tr>
+                    <%}%>
 
                 </table>
             </div>

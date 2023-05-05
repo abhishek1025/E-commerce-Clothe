@@ -116,19 +116,19 @@
                                  <% } else{ %>
                                  
                                  		<li>
-		                                    <a href="#">
+		                                    <a href="${pageContext.request.contextPath}/View/pages/profile-page.jsp">
 		                                        <i class="fa-regular fa-user"></i> View Profile
 		                                    </a>
 		                                </li>
 		
 		                                <li>
-		                                    <a href="#">
-		                                        <i class="fa-solid fa-pen-to-square"></i> Manage Profile
+		                                    <a href="${pageContext.request.contextPath}/View/pages/edit-profile.jsp">
+		                                        <i class="fa-solid fa-pen-to-square"></i> Edit Profile
 		                                    </a>
 		                                </li>
 		
 		                                <li>
-		                                    <a href="#">
+		                                    <a href="${pageContext.request.contextPath}/View/pages/change-password.jsp">
 		                                        <i class="fa-solid fa-lock"></i> Change Password
 		                                    </a>
 		                                </li>
@@ -168,15 +168,13 @@
                     <hr />
                     <li><a href="${pageContext.request.contextPath}/View/pages/product-page.jsp">Products</a></li>
                     <hr />
-                    <li><a href="${pageContext.request.contextPath}/View/pages/contact-us.jsp">Contact us</a></li>
-                    <hr />
                     <li><a href="${pageContext.request.contextPath}/View/admin-panel/dashboard/dashboard.jsp">Dashboard</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <div style="border-bottom: 1px solid #ccc; margin-bottom:10px;"></div>
+    <div style="border-bottom: 1px solid #ccc; padding-bottom:10px;"></div>
 
     <div class="cart-preview-wrapper-bg" id="cart-preview-bg">
     

@@ -1,3 +1,4 @@
+<%@page import="dao.OrderDAO"%>
 <%@page import="dao.UserDAO"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="java.util.ArrayList"%>
@@ -39,6 +40,11 @@
  	
  	<%! String[] adminData = {}; %>
 	<% adminData = UserDAO.getCookiesData(request, "adminData"); %>
+	
+	<%
+		OrderDAO orderdao = new OrderDAO();
+		double[] totalSalesAndOrdersData = orderdao.getTotalSalesAndTotalOrders();
+	%>
 
  	<aside>
 
@@ -107,7 +113,7 @@
 
                     <div>
                         <p>Total Sales</p>
-                        <span>124456</span>
+                        <span>NPR <%=totalSalesAndOrdersData[1] %></span>
                     </div>
                 </div>
 
@@ -116,7 +122,8 @@
 
                     <div>
                         <p>Total Orders</p>
-                        <span>124456</span>
+                        <!-- Type caseting-->
+                        <span><%=(int) totalSalesAndOrdersData[0]%></span>
                     </div>
                 </div>
 

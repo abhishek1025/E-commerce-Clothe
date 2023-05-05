@@ -1,3 +1,5 @@
+<%@page import="dao.OrderDAO"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page import="dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -85,17 +87,33 @@
             <h1>Orders</h1>
 
             <div class="order-item-list-wrapper">
+            
+            	                
+                <h1 style="text-align:center; margin:0;"> TRENDY ATTIRE</h1>
+                <h3 style="text-align:center;margin:0 0 20px 0;">INVOICE</h3>
+                
 
                 <div class="customer-details">
+                
+                <%
+                	int orderID = Integer.parseInt(request.getParameter("orderID"));
+                	String customerName = request.getParameter("customerName").toUpperCase();
+                	String orderDate = request.getParameter("orderDate");
+                	String orderTotal = request.getParameter("orderTotal");
+                	
+                	OrderDAO orderdao = new OrderDAO();
+                	
+                	ResultSet orderDetail = orderdao.getOrderDetailsByOrderID(orderID);
+                %>
 
                     <div>
-                        <h4>ABHISHEK SHRESTHA</h4>
-                        <p>New Baneshwor, Kathmandu</p>
+                        <h4><%=customerName %></h4>
+                        <p>Date: <%=orderDate %></p>
+                        <p>Grand Total: <i> NPR <%=orderTotal %></i> </p>
                     </div>
 
                     <div>
-                        <p>Date: 2023/05/07</p>
-                        <p>Order ID: 10</p>
+                        <p>Order ID: <%=orderID %></p>
                     </div>
 
                 </div>
@@ -107,50 +125,28 @@
                         <th style="width:21%">PRICE</th>
                         <th style="width:21%">TOTAL</th>
                     </tr>
+                    
+                    <%
+                    	while(orderDetail.next()){
+                    %>
+                    
+                    		<tr>
+		                        <td style="text-align: left;" class="order-list-item-name">
+		                            <img src="http://localhost:8080/images/<%=orderDetail.getString(2)%>"
+		                                height="40px" width="auto">
+		                            <p><%=orderDetail.getString(1) %></p>
+		                        </td>
+		                        <td><%=orderDetail.getInt(4)%></td>
+		                        <td><%=orderDetail.getFloat(3)%></td>
+		                        <td><%= orderDetail.getInt(4) * orderDetail.getFloat(3) %></td>
+                    		</tr>
+                    		
+                    <%		
+                    	}
+                    %>
 
-                    <tr>
-                        <td style="text-align: left;" class="order-list-item-name">
-                            <img src="https://cdn.shopify.com/s/files/1/0017/2100/8243/products/LRX-4_BLACK_2000x.jpg?v=1675198623"
-                                height="40px" width="auto">
-                            <p>Item Name</p>
-                        </td>
-                        <td>4</td>
-                        <td>400</td>
-                        <td>1600</td>
-                    </tr>
+                  
 
-                    <tr>
-                        <td style="text-align: left;" class="order-list-item-name">
-                            <img src="https://cdn.shopify.com/s/files/1/0017/2100/8243/products/LRX-4_BLACK_2000x.jpg?v=1675198623"
-                                height="40px" width="auto">
-                            <p>Item Name</p>
-                        </td>
-                        <td>4</td>
-                        <td>400</td>
-                        <td>1600</td>
-                    </tr>
-
-                    <tr>
-                        <td style="text-align: left;" class="order-list-item-name">
-                            <img src="https://cdn.shopify.com/s/files/1/0017/2100/8243/products/LRX-4_BLACK_2000x.jpg?v=1675198623"
-                                height="40px" width="auto">
-                            <p>Item Name</p>
-                        </td>
-                        <td>4</td>
-                        <td>400</td>
-                        <td>1600</td>
-                    </tr>
-
-                    <tr>
-                        <td style="text-align: left;" class="order-list-item-name">
-                            <img src="https://cdn.shopify.com/s/files/1/0017/2100/8243/products/LRX-4_BLACK_2000x.jpg?v=1675198623"
-                                height="40px" width="auto">
-                            <p>Item Name</p>
-                        </td>
-                        <td>4</td>
-                        <td>400</td>
-                        <td>1600</td>
-                    </tr>
                 </table>
 
             </div>

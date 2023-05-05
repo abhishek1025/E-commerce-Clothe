@@ -43,19 +43,9 @@
                 <br />
                 <a href="${pageContext.request.contextPath}/home.jsp">Home</a>
                 <a href="${pageContext.request.contextPath}/View/pages/product-page.jsp">Products</a>
-                <a href="${pageContext.request.contextPath}/View/pages/contact-us.jsp">Contact us</a>
+                <a href="${pageContext.request.contextPath}/View/admin-panel/dashboard.jsp">Dashboard</a>
             </div>
 
-            <div class="sign-up">
-                <p>Sign up for newsletter</p>
-                <br />
-                <div class="text-button">
-                    <input type="email" placeholder="Enter email address..." />
-                    <div class="button-div-subscribe">
-                        <button id="subscribe">Subscribe</button>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div style="border-top:1px solid white; margin:30px 0;"></div>

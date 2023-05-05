@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.CartDAO;
 import dao.OrderDAO;
+import model.OrderDetails;
 
 /**
  * Servlet implementation class PlaceOrderServlet
@@ -41,10 +43,16 @@ public class PlaceOrderServlet extends HttpServlet {
 		
 		double orderTotal = Double.parseDouble(request.getParameter("orderTotal"));
 		
+		LocalDateTime orderDate = LocalDateTime.now();
+		
 		OrderDAO orderdao = new OrderDAO();
 		CartDAO cartdao = new CartDAO();
 		
-		orderID =  orderdao.storeOrderDetails(userID, orderTotal, userFullName);
+		OrderDetails orderDetails = new OrderDetails(userFullName, orderDate, orderTotal);
+		orderDetails.setUserID(userID);
+		
+		
+		orderID =  orderdao.storeOrderDetails(orderDetails);
 		
 		ResultSet cartDetails = cartdao.getAllCartItems(request);
 		

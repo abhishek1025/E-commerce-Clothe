@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -252,6 +253,7 @@ public class UserDAO {
 	    			
 	    			cookieData = cookieValue.split("\\|");
 	    			
+	    			
 	    		} 
 	    		
 	    	}
@@ -259,6 +261,97 @@ public class UserDAO {
     	}
     	
     	return cookieData;
+	}
+	
+	
+	public static Boolean updateUserDetails(User user) {
+		
+		Connection con = DbConnection.getDbConnection();
+		
+		String query = "UPDATE users SET firstName = ?, lastName = ?, userImg = ?, phoneNumber = ?, address = ? WHERE email = ?";
+		
+		if(con != null) {
+			
+			try {
+				
+				PreparedStatement statement = con.prepareStatement(query);
+				
+				statement.setString(1, user.getfName());
+				statement.setString(2, user.getlName());
+				statement.setString(3, user.getUserImgUrl());
+				statement.setString(4, user.getPhoneNum());
+				statement.setString(5, user.getAddress());
+				statement.setString(6, user.getEmail());
+				
+				int queryResult = statement.executeUpdate();
+				
+				if(queryResult > 0) {
+					return true;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+				
+			} finally {
+			    try {
+			    	con.close();
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+			}
+			
+		}
+		
+		return null;
+	}
+	
+	
+	public static Boolean changePassword(String ecryptedPassword, String email, String oldPassword, String newPassword) {
+		
+		Connection con = DbConnection.getDbConnection();
+		
+		String query = "UPDATE users SET encryptedPassword = ? WHERE email = ?";
+		
+		if(con != null) {
+			
+			String decryptedPassword = PasswordEncryptionUsingAES.decrypt(ecryptedPassword, email);
+			
+			System.out.print(decryptedPassword);
+			
+			if(decryptedPassword.equals(oldPassword)) {
+				
+				try {
+					
+					String newEncryptedPassword = PasswordEncryptionUsingAES.encrypt(email, newPassword);
+					
+					PreparedStatement statement = con.prepareStatement(query);
+					
+					statement.setString(1, newEncryptedPassword);
+					statement.setString(2, email);
+					
+					int queryResult = statement.executeUpdate();
+					
+					if(queryResult > 0) {
+						
+						return true;
+					}
+					
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+					
+					return true;
+				}
+				
+			}
+			
+			return false;
+			
+		}
+		
+		return null;	
+			
 	}
 	
 }

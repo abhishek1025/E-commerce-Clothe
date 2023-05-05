@@ -36,49 +36,41 @@
             Collection
           </h1>
           <div class="shop-now-button">
-            <button id="shop-now">Shop Now</button>
+            <a href="View/pages/product-page.jsp"> <button id="shop-now">Shop Now</button> </a>
           </div>
         </div>
       </div>
-      <div class="code-discount">
-        <div class="ten-off">
-          <h1>Get 10% Off</h1>
-          <p>on orders over 1500</p>
-        </div>
-        <div class="twenty-off">
-          <h1>Get 20% Off</h1>
-          <p>on orders over 4000</p>
-        </div>
-        <div class="thirty-off">
-          <h1>Get 30% Off</h1>
-          <p>on orders over 10000</p>
-        </div>
-        <div class="code-discount-button">
-          <button id="code-discount">Code: Discount</button>
-        </div>
-      </div>
+      
+      
       <div class="dress-description-section">
         <div class="women-collection">
           <h1>Women's Collection</h1>
-          <a href="">Shop Now</a>
+          <a href="View/pages/product-page.jsp">Shop Now</a>
         </div>
         <div class="men-collection">
           <h1>Men's Collection</h1>
-          <a href="">Shop Now</a>
+          <a href="View/pages/product-page.jsp">Shop Now</a>
         </div>
         <div class="unisex-collection">
           <h1>Unisex's Collection</h1>
-          <a href="">Shop Now</a>
+          <a href="View/pages/product-page.jsp">Shop Now</a>
         </div>
         <div class="kids-collection">
           <h1>Kids Collection</h1>
-          <a href="">Shop Now</a>
+          <a href="View/pages/product-page.jsp">Shop Now</a>
         </div>
       </div>
 
+	      
+      <br>
+      <br>
+
       <!-- customer feedback section -->
       <h1 class="customer-feedback-heading">Customer Feedback</h1>
+      
       <div class="customer-feedback">
+
+      
         <div class="feedback-1">
           <div class="customer-image">
             <img src="Images/customer1.png" alt="" />
@@ -93,6 +85,7 @@
             <span>Mary Jane</span>
           </div>
         </div>
+        
         <div class="feedback-2">
           <div class="customer-image">
             <img src="Images/customer2.png" alt="" />
@@ -107,6 +100,7 @@
             <span>Olivia Gracia</span>
           </div>
         </div>
+        
         <div class="feedback-3">
           <div class="customer-image">
             <img src="Images/customer3.png" alt="" />
@@ -121,7 +115,12 @@
             <span>Ada Smith</span>
           </div>
         </div>
+        
       </div>
+      
+      <br>
+      <br>
+      
     </div>
 
 

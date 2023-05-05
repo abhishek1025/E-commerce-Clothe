@@ -53,7 +53,7 @@ public class userLogIn extends HttpServlet {
 				session.setAttribute("userLogInSession", "log in session");
 				session.setMaxInactiveInterval(30*60);
 				
-				Cookie cookieObj = new Cookie("userData", user.getUserID() + "|" + user.getfName() + "|" + user.getlName() + "|" + user.getUserImgUrl());
+				Cookie cookieObj = new Cookie("userData", user.getUserID() + "|" + user.getfName() + "|" + user.getlName() + "|" + user.getUserImgUrl() + "|" + userEmail);
 				
 				cookieObj.setMaxAge(30*60);
 				
