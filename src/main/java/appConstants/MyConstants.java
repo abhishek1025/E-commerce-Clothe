@@ -40,19 +40,6 @@ public class MyConstants {
 			+ "CI INNER JOIN Products as P ON CI.productID = P.productID WHERE CI.userID = ? AND CI.status = ?";
 
 	
-	public static String convertArrayToString(String[] array) {
-		
-		String result = "";
-		
-		for (String s : array) {
-		    result += "\"" + s.toLowerCase() + "\", ";
-		}
-		
-		result = result.substring(0, result.length() - 2);
-		
-		return result;
-	}
-	
 	
 	public static final String[] PRODUCT_BRANDS = {"nike", "h&m", "adidas", "zara", "lewis"};
 	public static final String[] PRODUCT_CATEGORIES = {"men", "women", "kids", "unisex"};

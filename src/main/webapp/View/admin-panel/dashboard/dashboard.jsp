@@ -1,3 +1,4 @@
+<%@page import="utils.ManageCookie"%>
 <%@page import="dao.OrderDAO"%>
 <%@page import="dao.UserDAO"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
@@ -39,7 +40,7 @@
  	<% products = ProductDAO.getAllProducts(false); %>
  	
  	<%! String[] adminData = {}; %>
-	<% adminData = UserDAO.getCookiesData(request, "adminData"); %>
+	<% adminData = ManageCookie.getCookiesData(request, "adminData"); %>
 	
 	<%
 		OrderDAO orderdao = new OrderDAO();
@@ -52,12 +53,18 @@
         
             <div class="admin-img">
             
-                <img src="http://localhost:8080/images/userImages/<%=adminData[2] %>" alt="Admin" height="130px">
+            	<% if(adminData.length != 0){ %>
+            
+               	 <img src="http://localhost:8080/images/userImages/<%=adminData[2] %>" alt="Admin" height="130px">
+               	 
+               	<%}%>
                 
             </div>
 
             <div class="admin-details">
-                <h3><%=adminData[0]%>  <%=adminData[1] %></h3>
+                <% if(adminData.length != 0){
+                	out.print("<h3>"+ adminData[0] + adminData[1]+"</h3>");
+                }%>
             </div>
             
         </section>

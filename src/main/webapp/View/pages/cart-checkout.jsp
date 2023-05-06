@@ -1,3 +1,4 @@
+<%@page import="utils.ManageCookie"%>
 <%@page import="dao.UserDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="dao.CartDAO"%>
@@ -145,7 +146,7 @@
 
 
             <% 
-            	String[] userData = UserDAO.getCookiesData(request, "userData");
+           		 String[] userData = ManageCookie.getCookiesData(request, "userData");
             
             	if(totalCost != 0) { 
             %>

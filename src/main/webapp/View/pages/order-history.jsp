@@ -1,3 +1,4 @@
+<%@page import="utils.ManageCookie"%>
 <%@page import="model.OrderDetails"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.OrderDAO"%>
@@ -64,7 +65,7 @@
 	
 	
 	                    <%
-	                   		String[] userData = UserDAO.getCookiesData(request, "userData");	
+	                   		String[] userData = ManageCookie.getCookiesData(request, "userData");	
 	                    
 	                    	OrderDAO orderdao = new OrderDAO();
 	                    

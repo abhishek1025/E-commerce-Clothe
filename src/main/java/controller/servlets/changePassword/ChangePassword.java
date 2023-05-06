@@ -36,12 +36,14 @@ public class ChangePassword extends HttpServlet {
 		String oldPassword = request.getParameter("currentPassword");
 		String newPassword = request.getParameter("newPassword");
 		
-		User user = UserDAO.getUserDataUsingEmail(email);
+		UserDAO userdao = new UserDAO();
+		
+		User user = userdao.getUserDataUsingEmail(email);
 		
 		System.out.println(user.getPassword());
 		System.out.println(oldPassword);
 		
-		Boolean isPasswordChanged = UserDAO.changePassword(user.getPassword(), email, oldPassword, newPassword);
+		Boolean isPasswordChanged = userdao.changePassword(user.getPassword(), email, oldPassword, newPassword);
 		
 		PrintWriter out = response.getWriter();
 		

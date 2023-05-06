@@ -37,7 +37,9 @@ public class DeleteProduct extends HttpServlet {
 		
 		if(productID != null) {
 			
-			Boolean isProductDeleted = ProductDAO.deleteProduct(Integer.parseInt(productID));
+			ProductDAO productdao = new ProductDAO();
+			
+			Boolean isProductDeleted = productdao.deleteProduct(Integer.parseInt(productID));
 			
 			request.getRequestDispatcher("View/admin-panel/dashboard/dashboard.jsp").include(request, response);
 			

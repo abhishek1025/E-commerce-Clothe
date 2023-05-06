@@ -65,8 +65,10 @@ public class AddProduct extends HttpServlet {
 		product.setProductImgUrl(fileName);
 		
 		try {
+			
+			ProductDAO productdao = new ProductDAO();
 
-			Boolean isProductAdded = ProductDAO.addProduct(product);
+			Boolean isProductAdded = productdao.addProduct(product);
 
 			PrintWriter out = response.getWriter();
 

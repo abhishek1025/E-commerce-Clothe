@@ -49,13 +49,15 @@ public class EditProfile extends HttpServlet {
 		
 		String fileName = MyConstants.getImageUrl(userImgPart,  imgFilePath);
 		
+		UserDAO userdao = new UserDAO();
+		
 		if(fileName.equals("no new img")) {
 			fileName = oldUserImg;
 		}
 		
 		User user = new User(firstName, lastName, phoneNum, address, email, "", fileName);
 		
-		Boolean isUserDetailsUpdated = UserDAO.updateUserDetails(user);
+		Boolean isUserDetailsUpdated = userdao.updateUserDetails(user);
 		
 		PrintWriter out = response.getWriter();
 		

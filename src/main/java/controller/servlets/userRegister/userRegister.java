@@ -49,10 +49,12 @@ public class userRegister extends HttpServlet {
 		String imgUrl = MyConstants.getImageUrl(userImgPart,imgFilePath);
 		
 		User user = new User(firstName, lastName, phoneNum, address, email, password, imgUrl);
-
-		PrintWriter out = response.getWriter();
 		
-		int isUserRegistered = UserDAO.registerUser(MyConstants.INSERT_USER_QUERY, user);
+		UserDAO userdao = new UserDAO();
+		
+		int isUserRegistered = userdao.registerUser(MyConstants.INSERT_USER_QUERY, user);
+		
+		PrintWriter out = response.getWriter();
 		
 		if(isUserRegistered == 1) {
 			 

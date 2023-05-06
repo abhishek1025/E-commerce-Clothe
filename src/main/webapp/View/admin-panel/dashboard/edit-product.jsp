@@ -1,3 +1,4 @@
+<%@page import="utils.ManageCookie"%>
 <%@page import="dao.UserDAO"%>
 <%@page import="appConstants.MyConstants"%>
 <%@page import="dao.ProductDAO"%>
@@ -28,17 +29,18 @@
     
     	<%
         		String operationType = request.getParameter("operationType");
-        		String productID = request.getParameter("productID");
-        		    		
+        		String productID = request.getParameter("productID");    		
+        		
         		if(operationType != null && productID != null && operationType.equals("update")){
         			
-        			product = ProductDAO.getProductById(Integer.parseInt(productID));
+        			ProductDAO productdao = new ProductDAO();        			
+        			product = productdao.getProductById(Integer.parseInt(productID));
         			
         		}
         	%>
     
     <%! String[] adminData = {}; %>
-	<% adminData = UserDAO.getCookiesData(request, "adminData"); %>
+	<% adminData = ManageCookie.getCookiesData(request, "adminData"); %>
 
  	<aside>
 

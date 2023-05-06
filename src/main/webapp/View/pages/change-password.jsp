@@ -1,3 +1,4 @@
+<%@page import="utils.ManageCookie"%>
 <%@page import="model.User"%>
 <%@page import="dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -46,7 +47,7 @@
             </div>
             
              <%
-	        	String[] userData = UserDAO.getCookiesData(request, "userData");
+	        	String[] userData = ManageCookie.getCookiesData(request, "userData");
         	%>
     
             <div class="profile-desc-page">

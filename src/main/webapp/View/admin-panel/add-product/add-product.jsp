@@ -1,3 +1,4 @@
+<%@page import="utils.ManageCookie"%>
 <%@page import="dao.UserDAO"%>
 <%@page import="appConstants.MyConstants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -24,7 +25,7 @@
     <body>
 
 	<%! String[] adminData = {}; %>
-	<% adminData = UserDAO.getCookiesData(request, "adminData"); %>
+	<% adminData = ManageCookie.getCookiesData(request, "adminData"); %>
 
  	<aside>
 

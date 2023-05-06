@@ -53,7 +53,7 @@ public class UserDAO {
 	}
 	
 	
-	public static int registerUser(String query, User user)  {
+	public int registerUser(String query, User user)  {
 		
 		Connection con = DbConnection.getDbConnection();
 		
@@ -98,7 +98,7 @@ public class UserDAO {
 	}
 	
 	
-	public static User getUserDataUsingEmail(String userEmail) {
+	public User getUserDataUsingEmail(String userEmail) {
 		
 		Connection con = DbConnection.getDbConnection();		
 		
@@ -142,7 +142,7 @@ public class UserDAO {
 	}
 	
 	
-	public static Admin getAminDataUsingEmail(String userEmail) {
+	public Admin getAminDataUsingEmail(String userEmail) {
 			
 			Connection con = DbConnection.getDbConnection();		
 			
@@ -177,7 +177,7 @@ public class UserDAO {
 		
 	
 	
-	public static int logInUser(String userEmail, String userPassword, String accountType) {
+	public int logInUser(String userEmail, String userPassword, String accountType) {
 		
 		Connection con = DbConnection.getDbConnection();
 		
@@ -236,35 +236,7 @@ public class UserDAO {
 	}
 	
 	
-	public static String[] getCookiesData(HttpServletRequest request, String cookieName) {
-		
-		Cookie[] cookies = request.getCookies();
-		
-		String[] cookieData = {};
-		
-		
-    	if(cookies != null){
-    		
-	    	for(Cookie cookie : cookies){
-	    		
-	    		if(cookie.getName().equals(cookieName)) {
-	    			
-	    			String cookieValue = cookie.getValue();
-	    			
-	    			cookieData = cookieValue.split("\\|");
-	    			
-	    			
-	    		} 
-	    		
-	    	}
-	    	
-    	}
-    	
-    	return cookieData;
-	}
-	
-	
-	public static Boolean updateUserDetails(User user) {
+	public Boolean updateUserDetails(User user) {
 		
 		Connection con = DbConnection.getDbConnection();
 		
@@ -307,7 +279,7 @@ public class UserDAO {
 	}
 	
 	
-	public static Boolean changePassword(String ecryptedPassword, String email, String oldPassword, String newPassword) {
+	public Boolean changePassword(String ecryptedPassword, String email, String oldPassword, String newPassword) {
 		
 		Connection con = DbConnection.getDbConnection();
 		

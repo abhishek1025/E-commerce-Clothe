@@ -1,3 +1,4 @@
+<%@page import="utils.ManageCookie"%>
 <%@page import="dao.ProductDAO"%>
 <%@page import="utils.HandleFilterProductsOperations"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -173,7 +174,7 @@
 		             	<input type="hidden" name="productPrice" value="<%=product.getProductPrice() %>"/>
 			             <%
 			             
-			            	 String[] userDataFromCookies = UserDAO.getCookiesData(request, "userData");
+			            	 String[] userDataFromCookies = ManageCookie.getCookiesData(request, "userData");
 			             			             			             				             		             	
 							if(userDataFromCookies.length != 0){
 						  %>

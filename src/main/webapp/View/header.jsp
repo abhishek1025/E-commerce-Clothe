@@ -1,3 +1,4 @@
+<%@page import="utils.ManageCookie"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="dao.CartDAO"%>
 <%@page import="dao.UserDAO"%>
@@ -21,7 +22,7 @@
 	<%!int cartTotalCost;%> 
 	
 	<%
-		userData = UserDAO.getCookiesData(request, "userData");
+		userData = ManageCookie.getCookiesData(request, "userData");
  	%>
 
 
@@ -272,7 +273,7 @@
     
     </div>
 
-    <script src="${pageContext.request.contextPath}/JS/header.js"></script>
+ 	<script src="${pageContext.request.contextPath}/JS/header.js"></script>
     
 
 </body>

@@ -14,7 +14,7 @@ import model.Product;
 
 public class ProductDAO {
 	
-	public static Boolean addProduct(Product product) throws SQLException {
+	public Boolean addProduct(Product product) throws SQLException {
 		
 		Connection con = DbConnection.getDbConnection();
 		
@@ -44,7 +44,7 @@ public class ProductDAO {
 		return false;
 	}
 	
-	public static Boolean deleteProduct(int productID) {
+	public Boolean deleteProduct(int productID) {
 		
 		Connection con = DbConnection.getDbConnection();
 		
@@ -80,7 +80,7 @@ public class ProductDAO {
 	}
 	
 	
-	public static Boolean updateProductDetails(Product product) throws SQLException {
+	public Boolean updateProductDetails(Product product) throws SQLException {
 		
 		Connection con = DbConnection.getDbConnection();
 		
@@ -114,7 +114,7 @@ public class ProductDAO {
 	}
 	
 	
-	public static Product getProductById(int productID) throws SQLException, IOException {
+	public Product getProductById(int productID) throws SQLException, IOException {
 		
 		Connection con = DbConnection.getDbConnection();
 		
@@ -247,7 +247,7 @@ public class ProductDAO {
 	
 	
 	
-	public static int manageProductStock(String stockOperation, int productID, int quantity) throws SQLException {
+	public int manageProductStock(String stockOperation, int productID, int quantity) throws SQLException {
 		
 		Connection con = DbConnection.getDbConnection();
 		

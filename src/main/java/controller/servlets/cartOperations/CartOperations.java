@@ -19,14 +19,14 @@ import model.CartItem;
  * Servlet implementation class cartOperationsServelt
  */
 @WebServlet("/cartOperationsServelt")
-public class CartOperationsServelt extends HttpServlet {
+public class CartOperations extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartOperationsServelt() {
+    public CartOperations() {
         super();
     }
 
@@ -46,8 +46,8 @@ public class CartOperationsServelt extends HttpServlet {
 			int quantity =  Integer.parseInt(request.getParameter("quantity"));
 			
 			try {
-				
-				ProductDAO.manageProductStock("INCREASE STOCK", productID, quantity);
+				ProductDAO productdao = new ProductDAO();
+				productdao.manageProductStock("INCREASE STOCK", productID, quantity);
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -84,6 +84,8 @@ public class CartOperationsServelt extends HttpServlet {
 		String operationType = request.getParameter("cartOperationType");
 		
 		CartDAO cartdao = new CartDAO();
+		
+		ProductDAO productdao = new ProductDAO();
 		
 		//Adding product to the cart
 		if(operationType == null) {
@@ -153,9 +155,9 @@ public class CartOperationsServelt extends HttpServlet {
 				try {
 					
 					if(changeInQuantity > 0) {
-						int result = ProductDAO.manageProductStock("DECREASE STOCK", productID, Math.abs(changeInQuantity));
+						int result = productdao.manageProductStock("DECREASE STOCK", productID, Math.abs(changeInQuantity));
 					} else {
-						int result = ProductDAO.manageProductStock("INCREASE STOCK", productID, Math.abs(changeInQuantity));
+						int result = productdao.manageProductStock("INCREASE STOCK", productID, Math.abs(changeInQuantity));
 					}
 					
 				} catch (SQLException e) {

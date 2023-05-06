@@ -1,6 +1,8 @@
 package controller.servlets.signOut;
 
 import java.io.IOException;
+import java.util.Arrays;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import utils.ManageCookie;
 
 /**
  * Servlet implementation class SignOutServlet
@@ -29,18 +33,10 @@ public class SignOutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// Clear cookie
-		Cookie[] cookies = request.getCookies();
-		
-    	if(cookies != null){
-    		
-	    	for(Cookie cookie : cookies){
-	    		
-	    		cookie.setMaxAge(0);
-	    		response.addCookie(cookie);
-	    	}
-    	}
+		//removing cookies
+		ManageCookie.removeCookies(request, response, "");
     	
+		
         // Clear session
     	HttpSession session = request.getSession(false);
     	

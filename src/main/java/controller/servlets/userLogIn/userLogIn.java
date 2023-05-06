@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import dao.UserDAO;
 import model.Admin;
 import model.User;
+import utils.ManageCookie;
 
 /**
  * Servlet implementation class userLogIn
@@ -39,19 +40,30 @@ public class userLogIn extends HttpServlet {
 		String userEmail = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		int isUserLoggedIn = UserDAO.logInUser(userEmail, password, accountType);
+		UserDAO userdao = new UserDAO();
+		
+		int isUserLoggedIn = userdao.logInUser(userEmail, password, accountType);
 		
 		PrintWriter out = response.getWriter();
 		
 		if(isUserLoggedIn == 1) {
 			
+			ManageCookie.removeCookies(request, response);
+			
 			if(accountType.equals("user")) {
 				
-				User user = UserDAO.getUserDataUsingEmail(userEmail);
+				User user = userdao.getUserDataUsingEmail(userEmail);
 				
-				HttpSession session = request.getSession();
+				HttpSession session = request.getSession(false);
+		    	
+		    	if(session != null){
+		    		session.invalidate();
+		    	}
+				
+		    	session = request.getSession(true);
+		    	
 				session.setAttribute("userLogInSession", "log in session");
-				session.setMaxInactiveInterval(30*60);
+				session.setMaxInactiveInterval(30 * 60);
 				
 				Cookie cookieObj = new Cookie("userData", user.getUserID() + "|" + user.getfName() + "|" + user.getlName() + "|" + user.getUserImgUrl() + "|" + userEmail);
 				
@@ -63,9 +75,16 @@ public class userLogIn extends HttpServlet {
 				
 			} else {
 				
-				Admin admin = UserDAO.getAminDataUsingEmail(userEmail);
+				Admin admin = userdao.getAminDataUsingEmail(userEmail);
 				
-				HttpSession session = request.getSession();
+				HttpSession session = request.getSession(false);
+		    	
+		    	if(session != null){
+		    		session.invalidate();
+		    	}
+				
+		    	session = request.getSession(true);
+		    	
 				session.setAttribute("adminLogInSession", "log in session");
 				session.setMaxInactiveInterval(30*60);
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import appConstants.MyConstants;
 import model.CartItem;
+import utils.ManageCookie;
 
 public class CartDAO {
 	
@@ -31,7 +32,8 @@ public class CartDAO {
 				CartItem updatedCartItemDetails = checkCartItemExits(cartitem);
 				
 				// the quantity of product is passed 1 because every time we add or re-add a product to a cart, the quantity will always be one
-				int queryResultFromUpdateProductStock = ProductDAO.manageProductStock("DECREASE STOCK", cartitem.getProductID(), 1);
+				ProductDAO productdao = new ProductDAO();
+				int queryResultFromUpdateProductStock = productdao.manageProductStock("DECREASE STOCK", cartitem.getProductID(), 1);
 				
 				//if cartItemID is zero, that means the cart item does not exist. So, we are inserting new item.
 				if(updatedCartItemDetails.getCartItemID() == 0) {
@@ -164,7 +166,7 @@ public class CartDAO {
 		 * We are using the user id, stored in the cookie. 
 		 */
 		
-		String[] userData = UserDAO.getCookiesData(request, "userData"); 
+		String[] userData = ManageCookie.getCookiesData(request, "userData"); 
 		
 		Connection con = DbConnection.getDbConnection();
 		

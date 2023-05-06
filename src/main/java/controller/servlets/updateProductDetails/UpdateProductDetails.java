@@ -67,13 +67,15 @@ public class UpdateProductDetails extends HttpServlet {
 		} else{
 			product.setProductImgUrl(fileName);
 		}
+		
+		ProductDAO productdao = new ProductDAO();
 	
 		
 		try {
 			
 			PrintWriter out = response.getWriter();
 			
-			Boolean isProductDetailsChanged = ProductDAO.updateProductDetails(product);
+			Boolean isProductDetailsChanged = productdao.updateProductDetails(product);
 			
 			if(isProductDetailsChanged)
 			{		
