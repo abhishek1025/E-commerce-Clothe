@@ -48,8 +48,33 @@ public class MyConstants {
 	public static final String URL_FOR_FILTERING_PRODUCTS = "View/pages/product-page.jsp?operationType=filterProducts&priceFrom=100&priceTo=5000"
 			+ "&ratingFrom=0&ratingTo=5";
 	
+	public static final String INSERT_ORDER_DETAILS_QUERY = "INSERT INTO ORDERS(userID, customerName, orderTotal, orderDate) VALUES(?,?,?,?);";
 
-
+	public static final String INSERT_ORDER_ITEMS_QUERY = "INSERT INTO ORDERITEMS(orderId, cartItemId) VALUES(?,?);";
+	
+	public static final String UPDATE_STATUS_OF_CART_ITEM_QUERY = "UPDATE CartItems SET status = ? WHERE cartItemID = ?";
+	
+	public static final String GET_ORDER_DETAILS_QUERY = "SELECT * FROM ORDERS;";
+	
+	public static final String GET_ORDER_DETAILS_BY_ID_QUERY = "SELECT P.productName, P.productImg, P.productPrice, CI.quantity FROM OrderItems OI INNER JOIN "
+			+ " CartItems CI ON OI.cartItemID = CI.cartItemID INNER JOIN Products P on P.productID = CI.productID"
+			+ " WHERE OI.orderID = ?";
+	
+	public static final String COUNT_ORDERS_QUERY = "SELECT COUNT(orderID) FROM orders";
+	
+	public static final String SUM_ALL_ORDER_TOTAL_QUERY = "SELECT SUM(orderTotal) FROM orders";
+	
+	public static final String DELETE_CART_ITEM_QUERY = "DELETE FROM CartItems WHERE cartItemID = ? AND status = ?";
+	
+	public static final String UPDATE_PRODUCT_DETAILS_QUERY =  "UPDATE Products SET productName = ?, brandName = ?, productCategory = ? , productImg = ?,"
+			+ "productPrice = ?, productRating = ?, productStock = ? WHERE productID = ?";
+	
+	public static final String GET_PRODUCT_STOCK_QUERY = "SELECT productStock FROM products WHERE productID = ?";
+	
+	public static final String UPDATE_PRODUCT_STOCK_QUERY = "UPDATE Products SET productStock = ? WHERE productID = ?";
+	
+	
+	//Method Start
 	public static String getImageUrl(Part imgPart, String filePath) {
 			
 			File fileSaveDir = new File(filePath);
@@ -84,7 +109,8 @@ public class MyConstants {
 			}
 		
 			return imageUrlFromPart;
-		}
+	}
+	//Method ends
 	
 	
 }

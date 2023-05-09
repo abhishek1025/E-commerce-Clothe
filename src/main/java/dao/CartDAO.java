@@ -13,7 +13,7 @@ import utils.ManageCookie;
 
 public class CartDAO {
 	
-	
+	//Method start
 	public int addProductToCart(CartItem cartitem) {
 		
 		/*
@@ -76,9 +76,9 @@ public class CartDAO {
 		return -1;
 		
 	}
+	//Method end
 	
-	
-	
+	//Method start
 	public CartItem checkCartItemExits(CartItem cartitem) throws SQLException {
 		
 		/*
@@ -115,8 +115,9 @@ public class CartDAO {
 		return cartitem;
 		
 	}
+	//Method end
 	
-	
+	//Method start	
 	public int updateCartItem(int cartItemID, int quantity){
 	
 		/*
@@ -156,8 +157,9 @@ public class CartDAO {
 		return 0;
 		
 	}
+	//Method end
 	
-	
+	//Method start
 	public ResultSet getAllCartItems(HttpServletRequest request) {
 		
 		/*
@@ -199,9 +201,9 @@ public class CartDAO {
 		
 		return queryResult;		
 	}
-	
+	//Method end
 
-	
+	//Method start
 	public  int deletCartItem(int cartItemID) {
 		
 		/*
@@ -210,7 +212,7 @@ public class CartDAO {
 		
 		Connection con = DbConnection.getDbConnection();
 		
-		String DELETE_CART_ITEM_QUERY = "DELETE FROM CartItems WHERE cartItemID = ? AND status = ?";
+		String DELETE_CART_ITEM_QUERY = MyConstants.DELETE_CART_ITEM_QUERY;
 		
 		if(con != null){
 			
@@ -230,8 +232,6 @@ public class CartDAO {
 				}
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 				
 				return -1;
 			}
@@ -241,5 +241,5 @@ public class CartDAO {
 		return -1;
 		
 	}
-	
+	//Method end
 }

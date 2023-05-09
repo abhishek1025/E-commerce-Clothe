@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ManageCookie {
 
+	//Method start
 	public static void removeCookies(HttpServletRequest request,  HttpServletResponse response, String cookieName) {
 		// Clear cookie
 		Cookie[] cookies = request.getCookies();
@@ -27,8 +28,9 @@ public class ManageCookie {
 	    	
     	}   	
 	}
+	//Method end
 	
-
+	//Method start
 	public static String[] getCookiesData(HttpServletRequest request, String cookieName) {
 		
 		Cookie[] cookies = request.getCookies();
@@ -55,5 +57,6 @@ public class ManageCookie {
     	
     	return cookieData;
 	}
+	//Method end
 	
 }

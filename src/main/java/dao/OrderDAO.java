@@ -10,15 +10,21 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import appConstants.MyConstants;
 import model.OrderDetails;
 
 public class OrderDAO {
 
-	
+	//Method start
 	public int storeOrderDetails(OrderDetails orderdetails) {
 		
+		/*
+		 * This method is used to insert order details in order table;
+		 */
+		
 		Connection con = DbConnection.getDbConnection();
-		String query = "INSERT INTO ORDERS(userID, customerName, orderTotal, orderDate) VALUES(?,?,?,?);";
+		
+		String query = MyConstants.INSERT_ORDER_DETAILS_QUERY;
 		
 		if(con != null) {
 			
@@ -58,13 +64,13 @@ public class OrderDAO {
 		return 0;
 			
 	}
+	//Method end
 	
-	
-	
+	//Method start
 	public void storeOrderItems(int cartItemID, int orderID) {
 		
 		Connection con = DbConnection.getDbConnection();
-		String query = "INSERT INTO ORDERITEMS(orderId, cartItemId) VALUES(?,?);";
+		String query = MyConstants.INSERT_ORDER_ITEMS_QUERY;;
 		
 		System.out.print(orderID);
 		System.out.print(cartItemID);
@@ -91,15 +97,15 @@ public class OrderDAO {
 			
 			
 		}
-
-		
+	
 	}
+	//Method end
 	
-	
+	//Method start
 	public void updateStatusOfCartItems(int cartItemID) { 
 		
 		Connection con = DbConnection.getDbConnection();
-		String query = "UPDATE CartItems SET status = ? WHERE cartItemID = ?";
+		String query = MyConstants.UPDATE_STATUS_OF_CART_ITEM_QUERY;
 		
 		if(con != null) {
 			
@@ -121,14 +127,16 @@ public class OrderDAO {
 		}
 				
 	}
+	//Method end
 	
 	
+	//Method start
 	public List<OrderDetails> getAllOrderDetails() {
 		
 		List<OrderDetails> allOrders = new ArrayList<OrderDetails>();
 		
 		Connection con = DbConnection.getDbConnection();
-		String query = "SELECT * FROM ORDERS;";
+		String query = MyConstants.GET_ORDER_DETAILS_QUERY;
 		
 		if(con != null) {
 			
@@ -167,14 +175,15 @@ public class OrderDAO {
 		return allOrders;
 		
 	}
+	//Method end
 	
+	
+	//Method start
 	public ResultSet getOrderDetailsByOrderID(int orderID) {
 		
 		Connection con = DbConnection.getDbConnection();
 		
-		String query = "SELECT P.productName, P.productImg, P.productPrice, CI.quantity FROM OrderItems OI INNER JOIN "
-				+ " CartItems CI ON OI.cartItemID = CI.cartItemID INNER JOIN Products P on P.productID = CI.productID"
-				+ " WHERE OI.orderID = ?";
+		String query = MyConstants.GET_ORDER_DETAILS_BY_ID_QUERY;
 		
 		if(con != null) {
 			
@@ -198,14 +207,15 @@ public class OrderDAO {
 		return null;
 		
 	}
+	//Method end
 	
-	
+	//Method start
 	public double[] getTotalSalesAndTotalOrders() {
 		
 		Connection con = DbConnection.getDbConnection();
 		
-		String query1 = "SELECT COUNT(orderID) FROM orders";
-		String query2 = "SELECT SUM(orderTotal) FROM orders";
+		String query1 = MyConstants.COUNT_ORDERS_QUERY;
+		String query2 = MyConstants.SUM_ALL_ORDER_TOTAL_QUERY;
 		
 		if(con != null) {
 				
@@ -236,10 +246,9 @@ public class OrderDAO {
 			}
 			
 		}
-		
 		return null;
-		
 	}
+	//Method start
 
 	
 }

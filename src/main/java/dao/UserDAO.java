@@ -16,6 +16,7 @@ import model.User;
 
 public class UserDAO {
 	
+	//Method start
 	public static Boolean findUser(String userEmail, String accountType) throws SQLException {
 		
 		Connection con = DbConnection.getDbConnection();
@@ -51,8 +52,9 @@ public class UserDAO {
 		
 		return false;		
 	}
+	//Method end
 	
-	
+	//Method start
 	public int registerUser(String query, User user)  {
 		
 		Connection con = DbConnection.getDbConnection();
@@ -96,8 +98,9 @@ public class UserDAO {
 		
 		return -1;
 	}
+	//Method end
 	
-	
+	//Method start
 	public User getUserDataUsingEmail(String userEmail) {
 		
 		Connection con = DbConnection.getDbConnection();		
@@ -140,43 +143,45 @@ public class UserDAO {
 
 		return user;		
 	}
+	//Method end
 	
-	
+	//Method start
 	public Admin getAminDataUsingEmail(String userEmail) {
 			
-			Connection con = DbConnection.getDbConnection();		
-			
-			String query = "SELECT name, email, adminImg FROM ADMINS WHERE email = ?";
-			
-			Admin admin = null;
+		Connection con = DbConnection.getDbConnection();		
 		
-			try {
-				
-				PreparedStatement statement = con.prepareStatement(query);
-				
-				statement.setString(1, userEmail);
-				
-				ResultSet queryResult = statement.executeQuery();
-				
-				while(queryResult.next()) {
+		String query = "SELECT name, email, adminImg FROM ADMINS WHERE email = ?";
+		
+		Admin admin = null;
 	
-					admin = new Admin(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3));
-					
-				}
+		try {
+			
+			PreparedStatement statement = con.prepareStatement(query);
+			
+			statement.setString(1, userEmail);
+			
+			ResultSet queryResult = statement.executeQuery();
+			
+			while(queryResult.next()) {
+
+				admin = new Admin(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3));
 				
-				return admin;
-				
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return admin;
 			}
-		
+			
+			return admin;
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return admin;
 		}
 		
+	}
+	//Method end
+		
 	
-	
+	//Method start
 	public int logInUser(String userEmail, String userPassword, String accountType) {
 		
 		Connection con = DbConnection.getDbConnection();
@@ -234,8 +239,10 @@ public class UserDAO {
 		
 		return -1;
 	}
+	//Method end
 	
 	
+	//Method start
 	public Boolean updateUserDetails(User user) {
 		
 		Connection con = DbConnection.getDbConnection();
@@ -277,8 +284,10 @@ public class UserDAO {
 		
 		return null;
 	}
+	//Method end
 	
 	
+	//Method start
 	public Boolean changePassword(String ecryptedPassword, String email, String oldPassword, String newPassword) {
 		
 		Connection con = DbConnection.getDbConnection();
@@ -288,8 +297,6 @@ public class UserDAO {
 		if(con != null) {
 			
 			String decryptedPassword = PasswordEncryptionUsingAES.decrypt(ecryptedPassword, email);
-			
-			System.out.print(decryptedPassword);
 			
 			if(decryptedPassword.equals(oldPassword)) {
 				
@@ -311,9 +318,7 @@ public class UserDAO {
 					
 				} catch (SQLException e) {
 					
-					e.printStackTrace();
-					
-					return true;
+					return false;
 				}
 				
 			}
@@ -325,5 +330,6 @@ public class UserDAO {
 		return null;	
 			
 	}
+	//Method end
 	
 }

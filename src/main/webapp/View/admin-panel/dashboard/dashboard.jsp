@@ -63,7 +63,7 @@
 
             <div class="admin-details">
                 <% if(adminData.length != 0){
-                	out.print("<h3>"+ adminData[0] + adminData[1]+"</h3>");
+                	out.print("<h3>"+ adminData[0] + " " + adminData[1]+"</h3>");
                 }%>
             </div>
             
@@ -164,12 +164,15 @@
 	                    	<div class="product-card">
 					            <img class="product-img" src="http://localhost:8080/images/<%=product.getProductImgUrl()%>" alt="<%=product.getProductImgUrl()%>">
 					            <p class="product-title"><%=product.getProductName()%></p>
-                                
+					            
+					            <p style="margin:0px;">Brand: <i><%=product.getBrandName()%></i></p>
+					                                            
 					            <div class="product-desc">
                                     <p><i>NPR <%=product.getProductPrice()%> </i></p>
                                     <p>In Stock (<%=product.getProductStock()%>)</p>
                                 </div>
-					
+                                
+
 					            <div class="product-card-btn">
 					
 								<a href="${pageContext.request.contextPath}/View/admin-panel/dashboard/edit-product.jsp?operationType=update&productID=<%=product.getProductID()%>">

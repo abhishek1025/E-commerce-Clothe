@@ -14,6 +14,7 @@ import model.Product;
 
 public class ProductDAO {
 	
+	//Method start
 	public Boolean addProduct(Product product) throws SQLException {
 		
 		Connection con = DbConnection.getDbConnection();
@@ -43,7 +44,10 @@ public class ProductDAO {
 		
 		return false;
 	}
+	//Method end
 	
+	
+	//Method start
 	public Boolean deleteProduct(int productID) {
 		
 		Connection con = DbConnection.getDbConnection();
@@ -68,7 +72,6 @@ public class ProductDAO {
 				
 			} catch (SQLException e) {
 				
-				System.out.println("An error occured: " + e.getMessage());
 				
 				return false;
 			}
@@ -78,14 +81,14 @@ public class ProductDAO {
 		return false;
 		
 	}
+	//Method end
 	
-	
+	//Method start
 	public Boolean updateProductDetails(Product product) throws SQLException {
 		
 		Connection con = DbConnection.getDbConnection();
 		
-		String updateQuery = "UPDATE Products SET productName = ?, brandName = ?, productCategory = ? , productImg = ?,"
-				+ "productPrice = ?, productRating = ?, productStock = ? WHERE productID = ?";
+		String updateQuery = MyConstants.UPDATE_PRODUCT_DETAILS_QUERY;
 		
 		if(con != null) {
 			
@@ -112,8 +115,10 @@ public class ProductDAO {
 		
 		return false;
 	}
+	//Method end
 	
 	
+	//Method start
 	public Product getProductById(int productID) throws SQLException, IOException {
 		
 		Connection con = DbConnection.getDbConnection();
@@ -151,10 +156,10 @@ public class ProductDAO {
 		con.close();
 		
 		return product;	
-		
 	}
+	//Method end
 	
-	
+	//Method start
 	public static List<Product> getAllProducts(boolean filterProductUsingStock){
 		
 		//createing an arrray list
@@ -217,13 +222,14 @@ public class ProductDAO {
 		
 		return allProducts;
 	}
+	//Method end
 	
-	
+	//Method start
 	public static int getProductStockByProductID(int productID) throws SQLException {
 		
 		Connection con = DbConnection.getDbConnection();
 		
-		String query = "SELECT productStock FROM products WHERE productID = ?";
+		String query = MyConstants.GET_PRODUCT_STOCK_QUERY;
 		
 		if(con != null) {
 			
@@ -244,14 +250,15 @@ public class ProductDAO {
 		return 0;
 		
 	}
+	//Method end
 	
 	
-	
+	//Method start
 	public int manageProductStock(String stockOperation, int productID, int quantity) throws SQLException {
 		
 		Connection con = DbConnection.getDbConnection();
 		
-		String query = "UPDATE Products SET productStock = ? WHERE productID = ?";
+		String query = MyConstants.UPDATE_PRODUCT_STOCK_QUERY;
 		
 		if(con != null) {
 			
@@ -288,7 +295,7 @@ public class ProductDAO {
 		return 0;
 		
 	}
-	
+	//Method end
 	
 
 	

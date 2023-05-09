@@ -44,7 +44,8 @@ public class AuthenticationFilter implements Filter {
 				"/Advance-Programming-CW/sign-up.html", 
 				"/Advance-Programming-CW/userRegister", 
 				"/Advance-Programming-CW/userLogIn",
-				"/Advance-Programming-CW/SignOutServlet"
+				"/Advance-Programming-CW/SignOutServlet",
+				"/Advance-Programming-CW/error-file.html"
 		};
 		
 		String[] allowedURLForAdminAfterAuthentication = {
@@ -54,24 +55,15 @@ public class AuthenticationFilter implements Filter {
 				"/Advance-Programming-CW/View/admin-panel/orders/view-orders.jsp",
 				"/Advance-Programming-CW/View/admin-panel/orders/order-items.jsp",
 				"/Advance-Programming-CW/View/admin-panel/dashboard/edit-product.jsp",
-				"/Advance-Programming-CW/UpdateProductDetails"				
+				"/Advance-Programming-CW/UpdateProductDetails",
+				"/Advance-Programming-CW/DeleteProduct",
+				
 		};
 		
 
-		
-	
+
 		String uri = req.getRequestURI();
 		
-		
-		if(!isUserloggedIn) {
-			ManageCookie.removeCookies(req, res, "userData");
-		}
-		
-		if(!isAdminloggedIn) {
-			ManageCookie.removeCookies(req, res, "adminData");
-		}
-
-
 		// When user is logged in
 	    if(uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".svg")) {
 	    	
@@ -80,7 +72,6 @@ public class AuthenticationFilter implements Filter {
 	    } else {
 	    	if (isUserloggedIn) {
 	    		
-	    		System.out.print("1");
 	    		
 		        // Check if user is trying to access allowedURLForAdminAfterAuthentication
 		        if (Arrays.asList(allowedURLForAdminAfterAuthentication).contains(uri)) {
@@ -91,6 +82,8 @@ public class AuthenticationFilter implements Filter {
 		    }
 		    // Admin is logged in
 		    else if (isAdminloggedIn) {
+		    	
+		    	
 		        // Check if admin is trying to access other URLs than allowedURLForUser and allowedURLForAdminAfterAuthentication
 		        if (!Arrays.asList(allowedURLForUser).contains(uri) && !Arrays.asList(allowedURLForAdminAfterAuthentication).contains(uri)) {
 		        	res.sendRedirect(req.getContextPath() + "/sign-in.jsp");
@@ -100,6 +93,7 @@ public class AuthenticationFilter implements Filter {
 		    }
 		    // User or admin is not logged in
 		    else {
+		    	
 		        // Check if user is trying to access allowedURLForUser
 		        if (Arrays.asList(allowedURLForUser).contains(uri)) {
 		            chain.doFilter(request, response);
@@ -110,7 +104,10 @@ public class AuthenticationFilter implements Filter {
 		        }
 		    }
 	    }
+	    
 	}
+	
+	
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

@@ -41,16 +41,16 @@ public class DeleteProduct extends HttpServlet {
 			
 			Boolean isProductDeleted = productdao.deleteProduct(Integer.parseInt(productID));
 			
-			request.getRequestDispatcher("View/admin-panel/dashboard/dashboard.jsp").include(request, response);
-			
 			if(isProductDeleted) {
+				
+				request.getRequestDispatcher("View/admin-panel/dashboard/dashboard.jsp").include(request, response);
+				
 				out.println("<script type=\"text/javascript\">");
 				out.println("setTimeout(() => alert('Product is deleted sucessfully'), 500);");
 				out.println("</script>");		
-			} else {
-				out.println("<script type=\"text/javascript\">");
-				out.println("setTimeout(() => alert('Unable to delete the product'), 500);");
-				out.println("</script>");
+			}
+			else {
+				response.sendRedirect(request.getContextPath() + "/error-file.html");
 			}
 			
 		}

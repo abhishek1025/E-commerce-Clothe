@@ -8,7 +8,11 @@ public class DbConnection {
 	
 	private static Connection con = null;
 	
+	//Method start
 	public static  Connection getDbConnection() {
+		/*
+		 * This method establishes the connection with database.
+		 */
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String URL = "jdbc:mysql://localhost:3306/TrendyAttire";
@@ -24,4 +28,5 @@ public class DbConnection {
 		
 		return con;
 	}
+	//Method end
 }

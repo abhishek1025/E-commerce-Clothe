@@ -48,7 +48,7 @@ public class userLogIn extends HttpServlet {
 		
 		if(isUserLoggedIn == 1) {
 			
-			ManageCookie.removeCookies(request, response);
+			ManageCookie.removeCookies(request, response, "");
 			
 			if(accountType.equals("user")) {
 				

@@ -50,28 +50,25 @@ public class CartOperations extends HttpServlet {
 				productdao.manageProductStock("INCREASE STOCK", productID, quantity);
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				response.sendRedirect(request.getContextPath() + "/error-file.html");
 			}
 			
 			int queryResult = cartdao.deletCartItem(cartItemID);
 			
 			PrintWriter out = response.getWriter();
 			
-			request.getRequestDispatcher("View/pages/cart-checkout.jsp").include(request, response);
-
 					
 			if(queryResult == 1) {
+				
+				request.getRequestDispatcher("View/pages/cart-checkout.jsp").include(request, response);
 				
 				out.println("<script type=\"text/javascript\">");
 				out.println("setTimeout(() => alert('Cart item is deleted sucessfully'), 500);");
 				out.println("</script>");
 				
-			} else if(queryResult == 2) {
+			} else if(queryResult == -1 ) {
 				
-				out.println("<script type=\"text/javascript\">");
-				out.println("setTimeout(() => alert('Unable to delete the cart item'), 500);");
-				out.println("</script>");
+				response.sendRedirect(request.getContextPath() + "/error-file.html");
 			}
 			
 		}
@@ -117,9 +114,7 @@ public class CartOperations extends HttpServlet {
 				out.println("</script>");
 				
 			} else {
-				out.println("<script type=\"text/javascript\">");
-				out.println("setTimeout(() => alert('Server Error'), 500);");
-				out.println("</script>");
+				response.sendRedirect(request.getContextPath() + "/error-file.html");
 			}
 			
 		} else if(operationType.equals("updateCartQuantity")) {
@@ -161,8 +156,7 @@ public class CartOperations extends HttpServlet {
 					}
 					
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					response.sendRedirect(request.getContextPath() + "/error-file.html");
 				}
 
 			
@@ -171,17 +165,17 @@ public class CartOperations extends HttpServlet {
 				totalUpdatedRows += updatedRows;
 			}
 			
-			request.getRequestDispatcher("View/pages/cart-checkout.jsp").include(request, response);
 			
 			if(totalUpdatedRows == cartItemIDs.length) {
+				
+				request.getRequestDispatcher("View/pages/cart-checkout.jsp").include(request, response);
+				
 				out.println("<script type=\"text/javascript\">");
 				out.println("setTimeout(() => alert('Cart Updated'), 500);");
 				out.println("</script>");
 				
 			} else {
-				out.println("<script type=\"text/javascript\">");
-				out.println("setTimeout(() => alert('Unable to update quantity'), 500);");
-				out.println("</script>");
+				response.sendRedirect(request.getContextPath() + "/error-file.html");
 			}
 			
 		}

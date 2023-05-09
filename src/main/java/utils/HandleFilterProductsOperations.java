@@ -13,6 +13,7 @@ import model.Product;
 
 public class HandleFilterProductsOperations {
 	
+	//Method start
 	public List<Product> displayProductsInProductPage(HttpServletRequest request){
 		
 		List<Product> filteredProducts = new ArrayList<Product>();
@@ -89,14 +90,10 @@ public class HandleFilterProductsOperations {
 						.filter(product -> product.getProductName().toLowerCase().contains(searchContent))
 						.collect(Collectors.toCollection(ArrayList::new));	
 			}
-			
-			
 			return filteredProducts;
-			
 		}
-		
-		return products;
-					
+		return products;	
 	}
+	//Method end
 	
 }

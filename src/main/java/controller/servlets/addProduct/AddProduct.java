@@ -73,7 +73,7 @@ public class AddProduct extends HttpServlet {
 			PrintWriter out = response.getWriter();
 
 			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("./View/admin-panel/add-product/add-product.jsp");
+					.getRequestDispatcher("View/admin-panel/add-product/add-product.jsp");
 			dispatcher.include(request, response);
 
 			if (isProductAdded) {
@@ -88,7 +88,8 @@ public class AddProduct extends HttpServlet {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
+			response.sendRedirect(request.getContextPath() + "/error-file.html");
 		}
 	}
 
